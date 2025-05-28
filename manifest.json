@@ -1,0 +1,31 @@
+{
+  "name": "Floating Keyboard",
+  "version": "0.1.0",
+  "description": "Assisting Language Keyboard",
+  "permissions": ["storage", "activeTab", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches":["<all_urls>"],
+      "js": ["content-script.js"],
+      "run_at": "document_idle"
+    }
+  ],
+ "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/x-icon.png",
+        "assets/collapse-icon.svg",
+        "assets/keyboard-icon.svg", 
+        "assets/sun-icon.svg",
+        "assets/moon-icon.svg",
+        "assets/collapse-icon-dark.svg"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "manifest_version": 3
+}
