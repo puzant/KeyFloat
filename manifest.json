@@ -11,18 +11,24 @@
     {
       "matches":["<all_urls>"],
       "js": ["content-script.js"],
+      "all_frames": true,
       "run_at": "document_idle"
     }
   ],
  "web_accessible_resources": [
     {
       "resources": [
+        "assets/shutdown-icon.svg",
+        "assets/shutdown-icon-dark.svg",
+        "assets/arrow-down-icon.svg",
+        "assets/arrow-down-icon-dark.svg",
         "assets/x-icon.png",
         "assets/collapse-icon.svg",
         "assets/keyboard-icon.svg", 
         "assets/sun-icon.svg",
         "assets/moon-icon.svg",
-        "assets/collapse-icon-dark.svg"
+        "assets/collapse-icon-dark.svg",
+        "pageScript.js"
       ],
       "matches": ["<all_urls>"]
     }
