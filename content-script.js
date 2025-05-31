@@ -63,7 +63,15 @@ const applyStyles = (el, styles) => Object.assign(el.style, styles)
 // ===== WRAPPER RENDERING ======
 function renderWrapper() {
   const existing = document.getElementById("keyboard-wrapper")
-  if (existing) existing.remove();
+  if (existing) existing.remove()
+
+  const shadowHost = createEl("div", {
+    id: "keyboard-shadow-host",
+  })
+  
+  document.body.appendChild(shadowHost)
+
+  const shadowRoot = shadowHost.attachShadow({ mode: 'open' });
 
   const wrapper = createEl("div", {
     id: "keyboard-wrapper",
