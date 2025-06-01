@@ -45,6 +45,13 @@ const macLayout = [
   ],
 ]
 
+//  inject script into page context
+const script = document.createElement('script')
+script.src = chrome.runtime.getURL('injection-script.js')
+script.type = 'module';
+(document.head || document.documentElement).appendChild(script)
+script.onload = () => script.remove();
+
 // ====== UTILITIES ======
 const createEl = (tag, options = {}) => {
   const el = document.createElement(tag)
