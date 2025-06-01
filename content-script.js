@@ -243,12 +243,13 @@ chrome.runtime.onMessage.addListener((message) => {
 })
 
 window.addEventListener('keydown', (e) => {
-  console.log("Pressed:", e.key);
+  const keyboardShadowHost = document.querySelector("#keyboard-shadow-host")
+  const shadowRoot = keyboardShadowHost.shadowRoot
 
   const pressedKey = codeMap[e.code] || e.code;
-  document.querySelectorAll('.key.highlight').forEach(el => el.classList.remove('highlight'))
+  shadowRoot.querySelectorAll('.key.highlight').forEach(el => el.classList.remove('highlight'))
   
-  const btn = document.querySelector(`.key[data-key="${pressedKey}"]`)
+  const btn = shadowRoot.querySelector(`.key[data-key="${pressedKey}"]`)
   
   if (btn) {
     btn.classList.add('highlight', 'pressed')
@@ -257,7 +258,7 @@ window.addEventListener('keydown', (e) => {
       btn.classList.remove('pressed')
     }, { once: true });
   }
-}, true);
+});
 
 // ====== INJECT STYLES ======
 function injectStyles(shadowRoot) {
