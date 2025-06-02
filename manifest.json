@@ -18,6 +18,7 @@
  "web_accessible_resources": [
     {
       "resources": [
+        "injection-script.js",
         "assets/shutdown-icon.svg",
         "assets/shutdown-icon-dark.svg",
         "assets/arrow-down-icon.svg",
@@ -27,8 +28,7 @@
         "assets/keyboard-icon.svg", 
         "assets/sun-icon.svg",
         "assets/moon-icon.svg",
-        "assets/collapse-icon-dark.svg",
-        "pageScript.js"
+        "assets/collapse-icon-dark.svg"
       ],
       "matches": ["<all_urls>"]
     }
