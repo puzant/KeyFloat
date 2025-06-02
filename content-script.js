@@ -89,16 +89,16 @@ function renderWrapper() {
       left: `${window.innerWidth - 700 - 20}px`,
       zIndex: 999999,
     }
-  });
+  })
 
-  document.body.appendChild(wrapper);
-  return wrapper;
+  shadowRoot.appendChild(wrapper)
+  return { shadowRoot, wrapper }
 }
 
 // ====== KEYBOARD RENDERING ======
-function renderKeyboard(wrapper, language) {
-  const existing = document.getElementById('keyboard-box');
-  if (existing) existing.remove();
+function renderKeyboard(shadowRoot, wrapper, language) {
+  const existing = shadowRoot.getElementById('keyboard-box')
+  if (existing) existing.remove()
 
   const box = createEl("div", {
     id: "keyboard-box",
@@ -110,14 +110,17 @@ function renderKeyboard(wrapper, language) {
     }
   })
 
-  const isDark = document.documentElement.classList.contains("dark");
-
   const header = `
     <div style="margin: 7px 0; color: var(--key-color); display: flex; justify-content: space-between; align-items: center">
-      <span style="font-size: 18px">Keyboard for ${languagesMap[language]}</span>
+      <div style="width:220px; display: flex; align-items: center; padding: 1px 5px; font-size: 18px"> 
+        <span>${language.toUpperCase()}</span> 
+        <img id="language-select" style="cursor: pointer" src=${chrome.runtime.getURL("assets/arrow-down-icon-dark.svg")} />
+      </div>
+
       <div style="display: flex; gap: 12px;">
-        <img id="toggle-theme" style="cursor: pointer" src=${isDark ? chrome.runtime.getURL("assets/sun-icon.svg") : chrome.runtime.getURL("assets/moon-icon.svg")} />
-        <img id="collapse-btn" style="cursor: pointer" src=${isDark ? chrome.runtime.getURL("assets/collapse-icon.svg") : chrome.runtime.getURL("assets/collapse-icon-dark.svg")} />
+        <img id="toggle-theme" style="cursor: pointer" src=${chrome.runtime.getURL("assets/moon-icon.svg")} />
+        <img id="shutdown-btn" style="cursor: pointer" src=${chrome.runtime.getURL("assets/shutdown-icon-dark.svg")} />
+        <img id="collapse-btn" style="cursor: pointer" src=${chrome.runtime.getURL("assets/collapse-icon-dark.svg")} />
       </div>
     </div>
   `;
@@ -182,15 +185,22 @@ function renderToggleBtn(wrapper) {
 chrome.runtime.onMessage.addListener((message) => {
   if (!message.lng) return
   
-  const wrapper = renderWrapper()
-  const box = renderKeyboard(wrapper, message.lng)
+  const { wrapper, shadowRoot } = renderWrapper()
+  const box = renderKeyboard(shadowRoot, wrapper, message.lng)
   const toggleBtn = renderToggleBtn(wrapper)
   
+  const themeToggleBtn = shadowRoot.getElementById("toggle-theme")
+  const collapsdeBtn = shadowRoot.getElementById("collapse-btn")
+  const lanaugeSelect = shadowRoot.getElementById("language-select")
+  const shutdownBtn = shadowRoot.getElementById("shutdown-btn")
+
   let isDragging = false
   let dragged = false
   let offsetX = 0, offsetY = 0
 
-  toggleBtn.addEventListener('mousedown', (e) => {
+  injectStyles(shadowRoot)
+
+  function onToggleMouseDown(e) {
     e.preventDefault()
     isDragging = true
     offsetX = e.clientX - wrapper.offsetLeft
@@ -198,29 +208,26 @@ chrome.runtime.onMessage.addListener((message) => {
     wrapper.style.cursor = 'grabbing'
 
     toggleBtn.classList.add("noselect")
-  })
+  }
 
-  document.addEventListener('mousemove', (e) => {
+  function onMouseMove(e) {
     if (isDragging) {
       dragged = true
       wrapper.style.left = `${e.clientX - offsetX}px`
       wrapper.style.top = `${e.clientY - offsetY}px`
     }
-  })
+  }
 
-  document.addEventListener('mouseup', () => {
+  function onMouseUp() {
     isDragging = false
     wrapper.style.cursor = 'grab'
     toggleBtn.classList.remove("noselect")
-  })
+  }
 
-  const themeToggleBtn = document.getElementById("toggle-theme")
-  const collapsdeBtn = document.getElementById("collapse-btn")
+  function onThemeToggleClick() {
+    wrapper.classList.toggle("dark");
 
-  themeToggleBtn.addEventListener('click', () => {
-    document.documentElement.classList.toggle("dark");
-
-    const isDarkNow = document.documentElement.classList.contains("dark")
+    const isDarkNow = wrapper.classList.contains("dark")
     themeToggleBtn.src = isDarkNow
       ? chrome.runtime.getURL("assets/sun-icon.svg")
       : chrome.runtime.getURL("assets/moon-icon.svg")
@@ -228,15 +235,23 @@ chrome.runtime.onMessage.addListener((message) => {
       collapsdeBtn.src = isDarkNow
       ? chrome.runtime.getURL("assets/collapse-icon.svg")
       : chrome.runtime.getURL("assets/collapse-icon-dark.svg")
-  })
 
-  document.getElementById("collapse-btn").addEventListener('click', () => {
+      lanaugeSelect.src = isDarkNow
+      ? chrome.runtime.getURL("assets/arrow-down-icon.svg")
+      : chrome.runtime.getURL("assets/arrow-down-icon-dark.svg")
+
+      shutdownBtn.src = isDarkNow
+      ? chrome.runtime.getURL("assets/shutdown-icon.svg")
+      : chrome.runtime.getURL("assets/shutdown-icon-dark.svg")
+  }
+
+  function onCollapseClick() {
     box.classList.add("collapsing")
     toggleBtn.classList.add("show")
-    document.querySelectorAll('.key.highlight').forEach(el => el.classList.remove('highlight'))
-  })
+    wrapper.querySelectorAll('.key.highlight').forEach(el => el.classList.remove('highlight'))
+  }
 
-  toggleBtn.addEventListener('click', (e) => {
+  function onToggleClick(e) {
     if (dragged) {
       e.preventDefault()
       e.stopImmediatePropagation()
@@ -246,14 +261,35 @@ chrome.runtime.onMessage.addListener((message) => {
 
     box.classList.remove("collapsing")
     toggleBtn.classList.remove("show")
-  })
+  }
+
+  function shutdown() {
+    toggleBtn.removeEventListener('mousedown', onToggleMouseDown)
+    shadowRoot.removeEventListener('mousemove', onMouseMove)
+    shadowRoot.removeEventListener('mouseup', onMouseUp)
+    themeToggleBtn.removeEventListener('click', onThemeToggleClick)
+    collapsdeBtn.removeEventListener('click', onCollapseClick)
+    toggleBtn.removeEventListener('click', onToggleClick)
+
+    const keyboardShadowHost = document.querySelector("#keyboard-shadow-host")
+    keyboardShadowHost.remove()
+  }
+
+  toggleBtn.addEventListener('mousedown', onToggleMouseDown)
+  shadowRoot.addEventListener('mousemove', onMouseMove)
+  shadowRoot.addEventListener('mouseup', onMouseUp)
+  themeToggleBtn.addEventListener('click', onThemeToggleClick)
+  collapsdeBtn.addEventListener('click', onCollapseClick)
+  toggleBtn.addEventListener('click', onToggleClick)
+  shutdownBtn.addEventListener('click', shutdown)
 })
 
-window.addEventListener('keydown', (e) => {
+window.addEventListener('FROM_INJECTED_KEYDOWN', (e) => {
   const keyboardShadowHost = document.querySelector("#keyboard-shadow-host")
   const shadowRoot = keyboardShadowHost.shadowRoot
+  const { code } = e.detail
 
-  const pressedKey = codeMap[e.code] || e.code;
+  const pressedKey = codeMap[code] || code;
   shadowRoot.querySelectorAll('.key.highlight').forEach(el => el.classList.remove('highlight'))
   
   const btn = shadowRoot.querySelector(`.key[data-key="${pressedKey}"]`)
@@ -337,3 +373,4 @@ function injectStyles(shadowRoot) {
   
   shadowRoot.appendChild(style)
   
+}
