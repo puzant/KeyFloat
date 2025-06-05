@@ -4,9 +4,9 @@ function attachKeyListenerToIframe(iframe) {
       iframe.contentWindow.addEventListener('keydown', (e) => {
         window.dispatchEvent(new CustomEvent('FROM_INJECTED_KEYDOWN', {
           detail: { code: e.code }
-        }));
-      });
-      iframe.__keyListenerAttached = true;
+        }))
+      })
+      iframe.__keyListenerAttached = true
     }
   } catch (err) {
     // Ignore cross-origin iframe errors
@@ -15,25 +15,22 @@ function attachKeyListenerToIframe(iframe) {
 
 function observeForEditors() {
   const observer = new MutationObserver(() => {
-    const iframes = document.querySelectorAll('iframe');
-    iframes.forEach(iframe => {
-      // Check for Microsoft Word iframe (use better selector if possible)
-      if (
-        iframe.src.includes('word-edit.officeapps.live.com') || 
-        iframe.className.includes('docs-texteventtarget-iframe') // for Google Docs
-      ) {
-        attachKeyListenerToIframe(iframe);
-      }
-    });
-  });
+    const iframes = document.querySelectorAll('iframe')
 
-  observer.observe(document.body, { childList: true, subtree: true });
+    iframes.forEach(iframe => {
+      if (iframe.className.includes('docs-texteventtarget-iframe')) {
+        attachKeyListenerToIframe(iframe)
+      }
+    })
+  })
+
+  observer.observe(document.body, { childList: true, subtree: true })
 }
 
 window.addEventListener('keydown', (e) => {
   window.dispatchEvent(new CustomEvent('FROM_INJECTED_KEYDOWN', {
     detail: { code: e.code }
-  }));
-});
+  }))
+})
 
-observeForEditors();
+observeForEditors()
