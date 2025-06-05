@@ -30,18 +30,18 @@ const codeMap = {
 
 const macLayout = [
   [
-    { en: 'Q', ar: [' َ', 'ض'] }, { en: 'W', ar: [' ً', 'ص'] }, { en: 'E', ar: ['ث',' ِ'] }, 
-    { en: 'R', ar: ['ق', ' ٍ'] }, { en: 'T', ar: [' ُ', 'ف'] }, { en: 'Y', ar: [' ٌ', 'غ'] }, 
-    { en: 'U', ar: [' ْ', 'ع'] }, { en: 'I', ar: [' ّ', 'ه'] }, { en: 'O', ar: ['خ'] }, { en: 'P', ar: ['ح'] }, { en: "{", ar: ["ج"] }, { en: "}", ar: ["ة"] }
+    { en: 'Q', ar: [' َ', 'ض'] }, { en: 'W', ar: [' ً', 'ص'] }, { en: 'E', ar: [' ِ', 'ث'] }, 
+    { en: 'R', ar: [' ٍ', 'ق'] }, { en: 'T', ar: [' ُ', 'ف'] }, { en: 'Y', ar: [' ٌ', 'غ'] }, 
+    { en: 'U', ar: [' ْ', 'ع'] }, { en: 'I', ar: [' ّ', 'ه'] }, { en: 'O', ar: ['', 'خ'] }, { en: 'P', ar: ['', 'ح'] }, { en: "{", ar: ['', "ج"] }, { en: "}", ar: ['', "ة"] }
   ],
   [
-    { en: 'A', ar: ['ش'] }, { en: 'S', ar: ['س'] }, { en: 'D', ar: ['ي', 'ى'] }, 
-    { en: 'F', ar: ['ب'] }, { en: 'G', ar: ['ل'] }, { en: 'H', ar: ['ا', 'آ'] }, 
-    { en: 'J', ar: ['ت'] }, { en: 'K', ar: ['ن'] }, { en: 'L', ar: ['م'] }, { en: ';', ar: ['ك'] }, { en: '" "', ar: ['؛'] }
+    { en: 'A', ar: [ '', 'ش'] }, { en: 'S', ar: ['', 'س'] }, { en: 'D', ar: ['ي', 'ى'] }, 
+    { en: 'F', ar: ['', 'ب'] }, { en: 'G', ar: ['', 'ل'] }, { en: 'H', ar: ['آ', 'ا'] }, 
+    { en: 'J', ar: ['', 'ت'] }, { en: 'K', ar: ['', 'ن'] }, { en: 'L', ar: ['', 'م'] }, { en: ';', ar: ['', 'ك'] }, { en: '" "', ar: ['', '؛'] }
   ],
   [
-    { en: 'Z', ar: ['ظ'] }, { en: 'X', ar: ['ط'] }, { en: 'C', ar: ['ئ', 'ذ'] }, 
-    { en: 'V', ar: ['د', 'ء'] }, { en: 'B', ar: ['ز', 'أ'] }, { en: 'N', ar: ['ر', 'إ'] }, { en: 'M', ar: ['و', 'ؤ'] }, { en: ',', ar: ['،'] }, { en: '.', ar: ['.'] }, { en: '/', ar: ['/'] }
+    { en: 'Z', ar: ['', 'ظ'] }, { en: 'X', ar: ['', 'ط'] }, { en: 'C', ar: ['ئ', 'ذ'] }, 
+    { en: 'V', ar: ['ء', 'د'] }, { en: 'B', ar: ['أ', 'ز'] }, { en: 'N', ar: ['إ', 'ر'] }, { en: 'M', ar: ['ؤ', 'و'] }, { en: ',', ar: ['', '،'] }, { en: '.', ar: ['', '.'] }, { en: '/', ar: ['', '/'] }
   ],
 ]
 
@@ -134,12 +134,12 @@ function renderKeyboard(shadowRoot, wrapper, language) {
 
     row.forEach(key => {
       const keyContent = `
-        <div style="display: flex; flex-direction: column; line-height: 1;">
-          <small style="font-size: 12px; align-self: flex-start">${key.en}</small>
-          <strong style="font-size: 16px; display: flex; flex-direction: column">
-            <span>${key[language]?.[0] ?? ""}</span>
-            <span style="margin-left: 25px">${key[language]?.[1] ?? ""}</span>
-          </strong>
+        <div style="display: flex; flex-direction: column; line-height: 1; height: 100%; justify-content: space-evenly;">
+          <div style="display: flex; justify-content: space-around">
+            <span>${key.en}</span>
+            <span style="font-size: 22px;">${key[language]?.[0] ?? ""}</span>
+          </div>
+          <span style="font-size: 20px; margin: 0 18px;">${key[language]?.[1] ?? ""}</span>
         </div>
       `;
 
@@ -148,8 +148,8 @@ function renderKeyboard(shadowRoot, wrapper, language) {
         innerHTML: keyContent,
         "data-key": `Key${key.en}`,
         style: {
-          width: "50px", height: "50px", margin: "4px", padding: "3px",
-          fontSize: "14px", border: "none", borderRadius: "8px",
+          width: "50px", height: "50px", margin: "4px",
+          fontSize: "14px", border: "none", borderRadius: "4px",
           cursor: "pointer", color: "var(--key-color)", background: "var(--key-bg)"
         }
       })
