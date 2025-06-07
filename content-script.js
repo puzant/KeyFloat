@@ -30,20 +30,25 @@ const codeMap = {
 
 const windowsLayout = [
   [
-    { en: 'Q', ar: [' َ', 'ض'] }, { en: 'W', ar: [' ً', 'ص'] }, { en: 'E', ar: [' ِ', 'ث'] }, 
-    { en: 'R', ar: [' ٍ', 'ق'] }, { en: 'T', ar: [' ُ', 'ف'] }, { en: 'Y', ar: [' ٌ', 'غ'] }, 
-    { en: 'U', ar: [' ْ', 'ع'] }, { en: 'I', ar: [' ّ', 'ه'] }, { en: 'O', ar: ['', 'خ'] }, { en: 'P', ar: ['', 'ح'] }, { en: "{", ar: ['', "ج"] }, { en: "}", ar: ['', "د"] }
+    { en: 'Q', ar: ['َ', 'ض'] }, { en: 'W', ar: ['ً', 'ص'] }, { en: 'E', ar: ['ِ', 'ث'] },
+    { en: 'R', ar: ['ٍ', 'ق'] }, { en: 'T', ar: ['ُ', 'ف'] }, { en: 'Y', ar: ['ٌ', 'غ'] },
+    { en: 'U', ar: ['ْ', 'ع'] }, { en: 'I', ar: ['ِ', 'ه'] }, { en: 'O', ar: ['', 'خ'] },
+    { en: 'P', ar: ['', 'ح'] }, { en: '[', ar: ['', 'ج'] }, { en: ']', ar: ['', 'د'] }
   ],
   [
-    { en: 'A', ar: [ '', 'ش'] }, { en: 'S', ar: ['', 'س'] }, { en: 'D', ar: ['ى', 'ي'] }, 
-    { en: 'F', ar: ['', 'ب'] }, { en: 'G', ar: ['لأ', 'ل'] }, { en: 'H', ar: ['آ', 'ا'] }, 
-    { en: 'J', ar: ['', 'ت'] }, { en: 'K', ar: ['', 'ن'] }, { en: 'L', ar: ['', 'م'] }, { en: ';', ar: ['', 'ك'] }, { en: '" "', ar: ['', '؛'] }
+    { en: 'A', ar: ['', 'ش'] }, { en: 'S', ar: ['', 'س'] }, { en: 'D', ar: ['', 'ي'] },
+    { en: 'F', ar: ['', 'ب'] }, { en: 'G', ar: ['', 'ل'] }, { en: 'H', ar: ['', 'ا'] },
+    { en: 'J', ar: ['', 'ت'] }, { en: 'K', ar: ['', 'ن'] }, { en: 'L', ar: ['', 'م'] },
+    { en: ';', ar: ['', 'ك'] }, { en: "'", ar: ['', 'ط'] }
   ],
   [
-    { en: 'Z', ar: ['', 'ظ'] }, { en: 'X', ar: ['', 'ط'] }, { en: 'C', ar: ['ئ', 'ذ'] }, 
-    { en: 'V', ar: ['', 'ئ'] }, { en: 'B', ar: ['أ', 'ز'] }, { en: 'N', ar: ['إ', 'ر'] }, { en: 'M', ar: ['ؤ', 'و'] }, { en: ',', ar: ['', '،'] }, { en: '.', ar: ['', '.'] }, { en: '/', ar: ['', '/'] }
-  ],
-]
+    { en: 'Z', ar: ['', 'ئ'] }, { en: 'X', ar: ['', 'ء'] }, { en: 'C', ar: ['', 'ؤ'] },
+    { en: 'V', ar: ['', 'ر'] }, { en: 'B', ar: ['', 'لا'] }, { en: 'N', ar: ['', 'ى'] },
+    { en: 'M', ar: ['', 'ة'] }, { en: ',', ar: ['', 'و'] }, { en: '.', ar: ['', 'ز'] },
+    { en: '/', ar: ['', 'ظ'] }
+  ]
+];
+
 
 const macLayout = [
   [
@@ -114,6 +119,20 @@ function renderWrapper() {
 
 // ====== KEYBOARD RENDERING ======
 function renderKeyboard(shadowRoot, wrapper, language) {
+  const numbersArr = [
+    { key: 'ذ', keyCode: 'Backquote'  },
+    { key: '١', keyCode: 'Digit1'  },
+    { key: '٢', keyCode: 'Digit2'  },
+    { key: '٣', keyCode: 'Digit3'  },
+    { key: '٤', keyCode: 'Digit4'  },
+    { key: '٥', keyCode: 'Digit5'  },
+    { key: '٦', keyCode: 'Digit6'  },
+    { key: '٧', keyCode: 'Digit7'  },
+    { key: '٨', keyCode: 'Digit8'  },
+    { key: '٩', keyCode: 'Digit9'  },
+    { key: '٠', keyCode: 'Digit0'  },
+  ]
+
   const existing = shadowRoot.getElementById('keyboard-box')
   if (existing) existing.remove()
 
@@ -144,7 +163,37 @@ function renderKeyboard(shadowRoot, wrapper, language) {
   box.innerHTML = header
   wrapper.appendChild(box)
 
-  macLayout.forEach(row => {
+  if (navigator.userAgentData.platform.includes("Windows")) {
+    const numbersRows = createEl("div", {
+      id: "numbers-row",
+      style: {
+        textAlign: "center"
+      }
+    })
+  
+    numbersArr.forEach(element => {
+      const numberBtn = createEl("button", {
+        id: "number-btn",
+        innerHTML: element.key,
+        "data-key": element.keyCode,
+        classList: ["key"],
+        style: {
+          width: "50px",  margin: "4px",
+          fontSize: "14px", border: "none", borderRadius: "4px",
+          cursor: "pointer", color: "var(--key-color)", background: "var(--key-bg)"
+        }
+      })
+  
+      numbersRows.appendChild(numberBtn)
+    });
+  
+    box.appendChild(numbersRows)
+  
+  }
+
+  const layout = navigator.userAgentData.platform.includes("macOS") ? macLayout : windowsLayout
+
+  layout.forEach(row => {
     const rowDiv = createEl("div", {
       style: { marginBottom: "2px", textAlign: "center", display: "flex", justifyContent: "center" }
     })
@@ -170,6 +219,7 @@ function renderKeyboard(shadowRoot, wrapper, language) {
           cursor: "pointer", color: "var(--key-color)", background: "var(--key-bg)"
         }
       })
+
 
       rowDiv.appendChild(keyBtn)
     })
@@ -202,6 +252,7 @@ function renderToggleBtn(wrapper) {
 chrome.runtime.onMessage.addListener((message) => {
   if (!message.lng) return
   
+
   const { wrapper, shadowRoot } = renderWrapper()
   const box = renderKeyboard(shadowRoot, wrapper, message.lng)
   const toggleBtn = renderToggleBtn(wrapper)
