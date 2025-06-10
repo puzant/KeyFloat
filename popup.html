@@ -4,19 +4,66 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="popup.css" type="text/css">
-  <title>Document</title>
+  <title>FloatKeys</title>
 </head>
 
 <body>
   <div class="container">
-    <h2 >Floating Keyboard</h2>
-    <h3>Select A Language</h3>
-
-    <div>
-      <label><input type="radio" name="language" value="fr"> French</label>
-      <label><input type="radio" name="language" value="ar"> Arabic</label>  
-      <button id="apply-btn">Select</button>
+    <div class="header">
+      <img src="./assets/keyboard-icon-dark.png" alt="">
+      <p>KeyFloat</p>
     </div>
+
+    <div class="controls">
+      <div class="language-select">
+        <div>
+          <span style="font-weight: 500; font-size: 15px;">Selected Language</span>
+
+          <span class="tooltip-icon">
+            <img style="width: 15px; height: 15px;" src="./assets/info-icon.svg" alt="">
+            <span class="tooltip-text">More languages coming soon.</span>
+          </span>
+        </div>
+        
+        <img style="width: 30px; height: 30px;" src="./assets/arabic-flag.svg" alt="">
+      </div>
+
+      <div class="enable-keyboard">
+        <p style="font-weight: 500; font-size: 15px;">Enable Keyboard</p>
+      
+        <label class="switch">
+          <input type="checkbox" />
+          <div></div>
+        </label>
+      </div>
+
+      <div class="enable-sound">
+        <p style="font-weight: 500; font-size: 15px;">Sound on KeyPress</p>
+      
+        <label class="switch">
+          <input class="sound-toggle" type="checkbox" />
+          <div></div>
+        </label>
+      </div>
+
+      <div class="keyboard-opacity">
+        <div class="opacity-level-indicator">
+          <p style="font-weight: 500; font-size: 15px;"">Keyboard Visibility</p>
+          <p class="opacity-level">100%</p>
+        </div>
+        
+        <input
+          id="visibility-input"
+          type="range"
+          min="1"
+          max="100"
+          value="1"
+        />
+      </div>
+
+    </div>
+
+    <p class="version">v1.0.0</p>
   </div>
 
   <script src="popup.js"></script>
