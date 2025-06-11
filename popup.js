@@ -1,39 +1,48 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const toggle = document.querySelector('.switch input')
-  const soundToggle = document.querySelector('.switch .sound-toggle')
+document.addEventListener("DOMContentLoaded", () => {
+  const keyboardToggle = document.querySelector(".switch input");
+  const soundToggle = document.querySelector(".switch .sound-toggle");
+  const visibilityInput = document.querySelector("#visibility-input");
+  const opacityLevel = document.querySelector(".opacity-level");
 
- chrome.storage.local.get(['keyboardEnabled', 'soundEnabled'], (result) => {
-    toggle.checked = result.keyboardEnabled || false
-    soundToggle.checked = result.soundEnabled || false
-  })
+  chrome.storage.local.get(["keyboardEnabled", "soundEnabled"], (result) => {
+    keyboardToggle.checked = result.keyboardEnabled || false;
+    soundToggle.checked = result.soundEnabled || false;
+    visibilityInput.disabled = !result.keyboardEnabled;
+  });
 
-  soundToggle.addEventListener('change', async (e) => {
-    const isSoundChecked = e.target.checked
-    chrome.storage.local.set({ soundEnabled: isSoundChecked })
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
+  keyboardToggle.addEventListener("change", (e) => {
+    const isKeyboardChecked = e.target.checked;
+    chrome.storage.local.set({ keyboardEnabled: isKeyboardChecked });
 
-    chrome.tabs.sendMessage(tab.id, { isSoundEnabled: isSoundChecked })
-  })
+    chrome.runtime.sendMessage({
+      type: "TOGGLE_KEYBOARD",
+      payload: { enabled: isKeyboardChecked },
+    });
 
-  toggle.addEventListener('change', async (e) => {
-    const isChecked = e.target.checked
-    chrome.storage.local.set({ keyboardEnabled: isChecked })
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
+    //  Turn on visibility slider if keyboard is enabled
+    visibilityInput.disabled = !isKeyboardChecked;
 
-     await chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        files: ['content-script.js'],
-      })
-      
-    if (isChecked) {
-      chrome.tabs.sendMessage(tab.id, { lng: 'ar' })
-      setTimeout(() => window.close(), 1000)
-    } else {
-      chrome.tabs.sendMessage(tab.id, { action: 'closeKeyboard' })
+    // Turn off sound toggle if keyboard is disabled
+    if (!isKeyboardChecked) {
+      chrome.storage.local.set({ soundEnabled: false });
+      soundToggle.checked = false;
     }
+  });
 
-    await chrome.storage.sync.set({ keyboardEnabled: e.target.checked })
-  })
+  soundToggle.addEventListener("change", (e) => {
+    const isSoundChecked = e.target.checked;
+    chrome.storage.local.set({ soundEnabled: isSoundChecked });
 
-})
+    chrome.runtime.sendMessage({
+      type: "TOGGLE_SOUND",
+      payload: { enabled: isSoundChecked },
+    });
+  });
 
+  visibilityInput.addEventListener("input", (e) => {
+    const value = e.target.value;
+
+    opacityLevel.textContent = `${value}%`;
+    visibilityInput.style.background = `linear-gradient(to right, #ff5733 0%, #ff5733 ${value}%, #bdb9a6 ${value}%, #bdb9a6 100%)`;
+  });
+});
