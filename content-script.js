@@ -19,33 +19,54 @@ const languagesMap = {
 }
 
 const codeMap = {
-  Semicolon: 'Key;',
-  Quote: 'Key" "',
-  BracketRight: 'Key}',
-  BracketLeft: 'Key{',
-  Comma: 'Key,',
-  Period: 'Key.',
-  Slash: 'Key/'
+  Semicolon: "Key;",
+  Quote: "KeyQuote ''",
+  BracketRight: "Key}",
+  BracketLeft: "Key{",
+  Comma: "Key,",
+  Period: "Key.",
+  Slash: "Key/"
 }
 
 const windowsLayout = [
   [
-    { en: 'Q', ar: ['َ', 'ض'] }, { en: 'W', ar: ['ً', 'ص'] }, { en: 'E', ar: ['ِ', 'ث'] },
-    { en: 'R', ar: ['ٍ', 'ق'] }, { en: 'T', ar: ['ُ', 'ف'] }, { en: 'Y', ar: ['ٌ', 'غ'] },
-    { en: 'U', ar: ['ْ', 'ع'] }, { en: 'I', ar: ['ِ', 'ه'] }, { en: 'O', ar: ['', 'خ'] },
-    { en: 'P', ar: ['', 'ح'] }, { en: '[', ar: ['', 'ج'] }, { en: ']', ar: ['', 'د'] }
+    { en: 'Q', ar: ['َ', 'ض'] }, // Fatha
+    { en: 'W', ar: ['ً', 'ص'] }, // Tanwin Fatha
+    { en: 'E', ar: ['ُ', 'ث'] }, // Damma
+    { en: 'R', ar: ['ٌ', 'ق'] }, // Tanwin Damma
+    { en: 'T', ar: ['ِ', 'ف'] }, // Kasra
+    { en: 'Y', ar: ['ٍ', 'غ'] }, // Tanwin Kasra
+    { en: 'U', ar: ['ْ', 'ع'] }, // Sukun
+    { en: 'I', ar: ['ّ', 'ه'] }, // Shadda
+    { en: 'O', ar: [']', 'خ'] },
+    { en: 'P', ar: ['[', 'ح'] },
+    { en: '[', ar: ['}', 'ج'] },
+    { en: ']', ar: ['{', 'د'] }
   ],
   [
-    { en: 'A', ar: ['', 'ش'] }, { en: 'S', ar: ['', 'س'] }, { en: 'D', ar: ['', 'ي'] },
-    { en: 'F', ar: ['', 'ب'] }, { en: 'G', ar: ['', 'ل'] }, { en: 'H', ar: ['', 'ا'] },
-    { en: 'J', ar: ['', 'ت'] }, { en: 'K', ar: ['', 'ن'] }, { en: 'L', ar: ['', 'م'] },
-    { en: ';', ar: ['', 'ك'] }, { en: "'", ar: ['', 'ط'] }
+    { en: 'A', ar: ['ـ', 'ش'] }, // Tatwil
+    { en: 'S', ar: ['', 'س'] },
+    { en: 'D', ar: ['', 'ي'] },
+    { en: 'F', ar: ['', 'ب'] },
+    { en: 'G', ar: ['', 'ل'] },
+    { en: 'H', ar: ['', 'ا'] },
+    { en: 'J', ar: ['', 'ت'] },
+    { en: 'K', ar: ['', 'ن'] },
+    { en: 'L', ar: ['', 'م'] },
+    { en: ';', ar: ['ك', 'ك'] }, // Shift doesn't change
+    { en: "'", ar: ['ط', 'ط'] }  // Same
   ],
   [
-    { en: 'Z', ar: ['', 'ئ'] }, { en: 'X', ar: ['', 'ء'] }, { en: 'C', ar: ['', 'ؤ'] },
-    { en: 'V', ar: ['', 'ر'] }, { en: 'B', ar: ['', 'لا'] }, { en: 'N', ar: ['', 'ى'] },
-    { en: 'M', ar: ['', 'ة'] }, { en: ',', ar: ['', 'و'] }, { en: '.', ar: ['', 'ز'] },
-    { en: '/', ar: ['', 'ظ'] }
+    { en: 'Z', ar: ['ِ', 'ئ'] }, // Shifted seems to be Kasra (historically), but can be left blank
+    { en: 'X', ar: ['', 'ء'] },
+    { en: 'C', ar: ['', 'ؤ'] },
+    { en: 'V', ar: ['', 'ر'] },
+    { en: 'B', ar: ['', 'لا'] },
+    { en: 'N', ar: ['', 'ى'] },
+    { en: 'M', ar: ['', 'ة'] },
+    { en: ',', ar: ['<', 'و'] },
+    { en: '.', ar: ['>', 'ز'] },
+    { en: '/', ar: ['؟', 'ظ'] } // Arabic question mark
   ]
 ];
 
@@ -59,7 +80,7 @@ const macLayout = [
   [
     { en: 'A', ar: [ '', 'ش'] }, { en: 'S', ar: ['', 'س'] }, { en: 'D', ar: ['ى', 'ي'] }, 
     { en: 'F', ar: ['', 'ب'] }, { en: 'G', ar: ['', 'ل'] }, { en: 'H', ar: ['آ', 'ا'] }, 
-    { en: 'J', ar: ['', 'ت'] }, { en: 'K', ar: ['', 'ن'] }, { en: 'L', ar: ['', 'م'] }, { en: ';', ar: ['', 'ك'] }, { en: '" "', ar: ['', '؛'] }
+    { en: 'J', ar: ['', 'ت'] }, { en: 'K', ar: ['', 'ن'] }, { en: 'L', ar: ['', 'م'] }, { en: ';', ar: ['', 'ك'] }, { en: "Quote ''", ar: ['', '؛'] }
   ],
   [
     { en: 'Z', ar: ['', 'ظ'] }, { en: 'X', ar: ['', 'ط'] }, { en: 'C', ar: ['ئ', 'ذ'] }, 
@@ -120,17 +141,17 @@ function renderWrapper() {
 // ====== KEYBOARD RENDERING ======
 function renderKeyboard(shadowRoot, wrapper, language) {
   const numbersArr = [
-    { key: 'ذ', keyCode: 'Backquote'  },
-    { key: '١', keyCode: 'Digit1'  },
-    { key: '٢', keyCode: 'Digit2'  },
-    { key: '٣', keyCode: 'Digit3'  },
-    { key: '٤', keyCode: 'Digit4'  },
-    { key: '٥', keyCode: 'Digit5'  },
-    { key: '٦', keyCode: 'Digit6'  },
-    { key: '٧', keyCode: 'Digit7'  },
-    { key: '٨', keyCode: 'Digit8'  },
-    { key: '٩', keyCode: 'Digit9'  },
-    { key: '٠', keyCode: 'Digit0'  },
+    { key: 'ذ', keyCode: 'Backquote' },
+    { key: '١', keyCode: 'Digit1' },
+    { key: '٢', keyCode: 'Digit2' },
+    { key: '٣', keyCode: 'Digit3' },
+    { key: '٤', keyCode: 'Digit4' },
+    { key: '٥', keyCode: 'Digit5' },
+    { key: '٦', keyCode: 'Digit6' },
+    { key: '٧', keyCode: 'Digit7' },
+    { key: '٨', keyCode: 'Digit8' },
+    { key: '٩', keyCode: 'Digit9' },
+    { key: '٠', keyCode: 'Digit0' },
   ]
 
   const existing = shadowRoot.getElementById('keyboard-box')
@@ -148,10 +169,7 @@ function renderKeyboard(shadowRoot, wrapper, language) {
 
   const header = `
     <div style="margin: 7px 0; color: var(--key-color); display: flex; justify-content: space-between; align-items: center">
-      <div style="width:220px; display: flex; align-items: center; padding: 1px 5px; font-size: 18px"> 
-        <span>${language.toUpperCase()}</span> 
-        <img id="language-select" style="cursor: pointer" src=${chrome.runtime.getURL("assets/arrow-down-icon-dark.svg")} />
-      </div>
+      <span>${language.toUpperCase()}</span> 
 
       <div style="display: flex; gap: 12px;">
         <img id="toggle-theme" style="cursor: pointer" src=${chrome.runtime.getURL("assets/moon-icon.svg")} />
@@ -250,8 +268,11 @@ function renderToggleBtn(wrapper) {
 
 // ====== EVENT LISTENERS ======
 chrome.runtime.onMessage.addListener((message) => {
-  if (!message.lng) return
-  
+  if (message.action === 'closeKeyboard') {
+    const keyboardShadowHost = document.querySelector("#keyboard-shadow-host")
+    keyboardShadowHost.remove()
+    return
+  }
 
   const { wrapper, shadowRoot } = renderWrapper()
   const box = renderKeyboard(shadowRoot, wrapper, message.lng)
@@ -259,7 +280,6 @@ chrome.runtime.onMessage.addListener((message) => {
   
   const themeToggleBtn = shadowRoot.getElementById("toggle-theme")
   const collapsdeBtn = shadowRoot.getElementById("collapse-btn")
-  const lanaugeSelect = shadowRoot.getElementById("language-select")
   const shutdownBtn = shadowRoot.getElementById("shutdown-btn")
 
   let isDragging = false
@@ -304,10 +324,6 @@ chrome.runtime.onMessage.addListener((message) => {
       ? chrome.runtime.getURL("assets/collapse-icon.svg")
       : chrome.runtime.getURL("assets/collapse-icon-dark.svg")
 
-      lanaugeSelect.src = isDarkNow
-      ? chrome.runtime.getURL("assets/arrow-down-icon.svg")
-      : chrome.runtime.getURL("assets/arrow-down-icon-dark.svg")
-
       shutdownBtn.src = isDarkNow
       ? chrome.runtime.getURL("assets/shutdown-icon.svg")
       : chrome.runtime.getURL("assets/shutdown-icon-dark.svg")
@@ -341,6 +357,7 @@ chrome.runtime.onMessage.addListener((message) => {
 
     const keyboardShadowHost = document.querySelector("#keyboard-shadow-host")
     keyboardShadowHost.remove()
+    chrome.storage.local.set({ keyboardEnabled: false })
   }
 
   toggleBtn.addEventListener('mousedown', onToggleMouseDown)
@@ -361,12 +378,18 @@ window.addEventListener('FROM_INJECTED_KEYDOWN', (e) => {
   shadowRoot.querySelectorAll('.key.highlight').forEach(el => el.classList.remove('highlight'))
   
   const btn = shadowRoot.querySelector(`.key[data-key="${pressedKey}"]`)
-  
+
+  const clickSound = new Audio(chrome.runtime.getURL("assets/key-press-sound.mp3"))
+
   if (btn) {
     btn.classList.add('highlight', 'pressed')
     
     btn.addEventListener('animationend', () => {
       btn.classList.remove('pressed')
+
+      chrome.storage.local.get(['soundEnabled'], (result) => {
+        if (result.soundEnabled) clickSound.play()
+      })
     }, { once: true });
   }
 });
@@ -442,3 +465,31 @@ function injectStyles(shadowRoot) {
   shadowRoot.appendChild(style)
   
 }
+
+
+
+
+
+// switch (message.action) {
+//     case 'closeKeyboard': {
+//       const keyboardShadowHost = document.querySelector("#keyboard-shadow-host")
+//       keyboardShadowHost.remove()
+
+//       break
+//     }
+
+//     case 'enableKeyboard': {
+ 
+//       break
+//     }
+
+//     case 'disableSound': {
+
+//       break
+//     }
+
+//     case 'enableSound': {
+
+//       break
+//     }
+//   }
