@@ -1,13 +1,20 @@
+import { debounce, updateSliderTrackColor } from "./utils.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   const keyboardToggle = document.querySelector(".switch input");
   const soundToggle = document.querySelector(".switch .sound-toggle");
   const visibilityInput = document.querySelector("#visibility-input");
   const opacityLevel = document.querySelector(".opacity-level");
 
-  chrome.storage.local.get(["keyboardEnabled", "soundEnabled"], (result) => {
+  chrome.storage.local.get(["keyboardEnabled", "soundEnabled", "opacityLevel"], (result) => {
     keyboardToggle.checked = result.keyboardEnabled || false;
     soundToggle.checked = result.soundEnabled || false;
+
+    //  Initialize visibility input
     visibilityInput.disabled = !result.keyboardEnabled;
+    visibilityInput.value = result.opacityLevel;
+    opacityLevel.textContent = `${result.opacityLevel}%`;
+    updateSliderTrackColor(visibilityInput, result.opacityLevel);
   });
 
   keyboardToggle.addEventListener("change", (e) => {
@@ -21,6 +28,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //  Turn on visibility slider if keyboard is enabled
     visibilityInput.disabled = !isKeyboardChecked;
+    if (!isKeyboardChecked) {
+      visibilityInput.value = 100;
+      opacityLevel.textContent = "100%";
+      updateSliderTrackColor(visibilityInput, 100);
+    }
 
     // Turn off sound toggle if keyboard is disabled
     if (!isKeyboardChecked) {
@@ -39,10 +51,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  const debounceVisibilityHandler = debounce((value) => {
+    chrome.storage.local.set({ opacityLevel: value });
+    chrome.runtime.sendMessage({
+      type: "UPDATE_VISIBILITY",
+      payload: { opacityLevel: value },
+    });
+  }, 200);
+
   visibilityInput.addEventListener("input", (e) => {
     const value = e.target.value;
-
     opacityLevel.textContent = `${value}%`;
-    visibilityInput.style.background = `linear-gradient(to right, #ff5733 0%, #ff5733 ${value}%, #bdb9a6 ${value}%, #bdb9a6 100%)`;
+    updateSliderTrackColor(visibilityInput, value);
+    debounceVisibilityHandler(value);
   });
 });
