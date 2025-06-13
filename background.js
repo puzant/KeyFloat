@@ -27,5 +27,12 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
         });
       }
       break;
+
+    case "UPDATE_VISIBILITY":
+      chrome.tabs.sendMessage(tab.id, {
+        type: "UPDATE_VISIBILITY",
+        payload: { opacityLevel: message.payload.opacityLevel },
+      });
+      break;
   }
 });
