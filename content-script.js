@@ -397,7 +397,7 @@ function shutdown() {
 
   const keyboardShadowHost = document.querySelector("#keyboard-shadow-host");
   keyboardShadowHost.remove();
-  chrome.storage.local.set({ keyboardEnabled: false, soundEnabled: false });
+  chrome.storage.local.set({ keyboardEnabled: false, soundEnabled: false, opacityLevel: 100 });
 }
 
 // ====== EVENT LISTENERS ======
@@ -410,24 +410,24 @@ chrome.runtime.onMessage.addListener((message) => {
     case "KEYBOARD_CLOSE":
       shutdown();
       break;
+
+    case "UPDATE_VISIBILITY":
+      const keyboardBox = shadowRoot.getElementById("keyboard-box");
+      keyboardBox.style.opacity = message.payload.opacityLevel / 100;
+      break;
   }
 });
 
 window.addEventListener("FROM_INJECTED_KEYDOWN", (e) => {
-  const keyboardShadowHost = document.querySelector("#keyboard-shadow-host");
-  const shadowRoot = keyboardShadowHost.shadowRoot;
   const { code } = e.detail;
-
   const pressedKey = codeMap[code] || code;
   shadowRoot.querySelectorAll(".key.highlight").forEach((el) => el.classList.remove("highlight"));
 
   const btn = shadowRoot.querySelector(`.key[data-key="${pressedKey}"]`);
-
   const clickSound = new Audio(chrome.runtime.getURL("assets/key-press-sound.mp3"));
 
   if (btn) {
     btn.classList.add("highlight", "pressed");
-
     btn.addEventListener(
       "animationend",
       () => {
