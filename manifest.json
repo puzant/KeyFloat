@@ -1,7 +1,7 @@
 {
   "name": "Floating Keyboard",
-  "version": "0.1.0",
-  "description": "Assisting Language Keyboard",
+  "version": "1.0.0",
+  "description": "A floating multilingual keyboard that displays native character mappings for physical English keyboards. Supports Arabic, French, and more with drag, dark mode, key sounds, and dynamic layouts for Windows and macOS.",
   "permissions": ["storage", "activeTab", "scripting"],
   "host_permissions": ["<all_urls>"],
   "action": {
@@ -10,15 +10,13 @@
   "background": {
     "service_worker": "background.js"
   },
-  "content_scripts": [
-    {
-      "matches":["<all_urls>"],
-      "js": ["content-script.js"],
-      "all_frames": true,
-      "run_at": "document_idle"
-    }
-  ],
- "web_accessible_resources": [
+  "icons": {
+    "16": "assets/extension-icon.png",
+    "32": "assets/extension-icon.png",
+    "48": "assets/extension-icon.png",
+    "128": "assets/extension-icon.png"
+  },
+  "web_accessible_resources": [
     {
       "resources": [
         "injection-script.js",
@@ -32,7 +30,7 @@
         "assets/arrow-down-icon-dark.svg",
         "assets/x-icon.png",
         "assets/collapse-icon.svg",
-        "assets/keyboard-icon.svg", 
+        "assets/keyboard-icon.svg",
         "assets/sun-icon.svg",
         "assets/moon-icon.svg",
         "assets/collapse-icon-dark.svg"
