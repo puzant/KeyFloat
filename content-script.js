@@ -10,104 +10,87 @@
  * * color: #DADCE0
  */
 
-// ====== CONSTANTS ======
-const languagesMap = {
-  en: "English",
-  ar: "Arabic",
-  fr: "French",
-};
-
-const codeMap = {
-  Semicolon: "Key;",
-  Quote: "qoute",
-  BracketRight: "Key]",
-  BracketLeft: "Key[",
-  Comma: "Key,",
-  Period: "Key.",
-  Slash: "Key/",
-};
-
 const windowsLayout = [
   [
-    { en: "Q", ar: ["َ", "ض"] }, // Fatha
-    { en: "W", ar: ["ً", "ص"] }, // Tanwin Fatha
-    { en: "E", ar: ["ُ", "ث"] }, // Damma
-    { en: "R", ar: ["ٌ", "ق"] }, // Tanwin Damma
-    { en: "T", ar: ["لإ", "ف"] }, // Kasra
-    { en: "Y", ar: ["إ", "غ"] }, // Tanwin Kasra
-    { en: "U", ar: ["‘", "ع"] }, // Sukun
-    { en: "I", ar: ["", "ه"] },
-    { en: "O", ar: ["", "خ"] },
-    { en: "P", ar: ["", "ح"] },
-    { en: "[", ar: ["", "ج"] },
-    { en: "]", ar: ["", "د"] },
+    { en: "Q", ar: ["َ", "ض"], eventName: "KeyQ" }, // Fatha
+    { en: "W", ar: ["ً", "ص"], eventName: "KeyW" }, // Tanwin Fatha
+    { en: "E", ar: ["ُ", "ث"], eventName: "KeyE" }, // Damma
+    { en: "R", ar: ["ٌ", "ق"], eventName: "KeyR" }, // Tanwin Damma
+    { en: "T", ar: ["لإ", "ف"], eventName: "KeyT" }, // Kasra
+    { en: "Y", ar: ["إ", "غ"], eventName: "KeyY" }, // Tanwin Kasra
+    { en: "U", ar: ["‘", "ع"], eventName: "KeyU" }, // Sukun
+    { en: "I", ar: ["", "ه"], eventName: "KeyI" },
+    { en: "O", ar: ["", "خ"], eventName: "KeyQO" },
+    { en: "P", ar: ["", "ح"], eventName: "KeyP" },
+    { en: "[", ar: ["", "ج"], eventName: "BracketLeft" },
+    { en: "]", ar: ["", "د"], eventName: "BracketRight" },
   ],
   [
-    { en: "A", ar: [" ِ", "ش"] }, // Tatwil
-    { en: "S", ar: [" ٍ", "س"] },
-    { en: "D", ar: ["", "ي"] },
-    { en: "F", ar: ["", "ب"] },
-    { en: "G", ar: ["لأ", "ل"] },
-    { en: "H", ar: ["أ", "ا"] },
-    { en: "J", ar: ["", "ت"] },
-    { en: "K", ar: ["", "ن"] },
-    { en: "L", ar: ["", "م"] },
-    { en: ";", ar: ["ك", "ك"] }, // Shift doesn't change
-    { en: "'", ar: ["ط", "ط"] }, // Same
+    { en: "A", ar: [" ِ", "ش"], eventName: "KeyA" }, // Tatwil
+    { en: "S", ar: [" ٍ", "س"], eventName: "KeyS" },
+    { en: "D", ar: ["", "ي"], eventName: "KeyD" },
+    { en: "F", ar: ["", "ب"], eventName: "KeyF" },
+    { en: "G", ar: ["لأ", "ل"], eventName: "KeyG" },
+    { en: "H", ar: ["أ", "ا"], eventName: "KeyH" },
+    { en: "J", ar: ["", "ت"], eventName: "KeyJ" },
+    { en: "K", ar: ["", "ن"], eventName: "KeyK" },
+    { en: "L", ar: ["", "م"], eventName: "KeyL" },
+    { en: ";", ar: ["ك", "ك"], eventName: "Semicolon" }, // Shift doesn't change
+    { en: "'", ar: ["ط", "ط"], eventName: "Quote" }, // Same
   ],
   [
-    { en: "Z", ar: ["", "ئ"] }, // Shifted seems to be Kasra (historically), but can be left blank
-    { en: "X", ar: [" ْ", "ء"] },
-    { en: "C", ar: ["", "ؤ"] },
-    { en: "V", ar: ["", "ر"] },
-    { en: "B", ar: ["لآ", "لا"] },
-    { en: "N", ar: ["آ", "ى"] },
-    { en: "M", ar: ["", "ة"] },
-    { en: ",", ar: ["", "و"] },
-    { en: ".", ar: ["", "ز"] },
-    { en: "/", ar: ["؟", "ظ"] }, // Arabic question mark
+    { en: "Z", ar: ["", "ئ"], eventName: "KeyZ" }, // Shifted seems to be Kasra (historically), but can be left blank
+    { en: "X", ar: [" ْ", "ء"], eventName: "KeyX" },
+    { en: "C", ar: ["", "ؤ"], eventName: "KeyC" },
+    { en: "V", ar: ["", "ر"], eventName: "KeyV" },
+    { en: "B", ar: ["لآ", "لا"], eventName: "KeyB" },
+    { en: "N", ar: ["آ", "ى"], eventName: "KeyN" },
+    { en: "M", ar: ["", "ة"], eventName: "KeyM" },
+    { en: ",", ar: ["", "و"], eventName: "Comma" },
+    { en: ".", ar: ["", "ز"], eventName: "Period" },
+    { en: "/", ar: ["؟", "ظ"], eventName: "Slash" }, // Arabic question mark
   ],
 ];
 
 const macLayout = [
   [
-    { en: "Q", ar: [" َ", "ض"] },
-    { en: "W", ar: [" ً", "ص"] },
-    { en: "E", ar: [" ِ", "ث"] },
-    { en: "R", ar: [" ٍ", "ق"] },
-    { en: "T", ar: [" ُ", "ف"] },
-    { en: "Y", ar: [" ٌ", "غ"] },
-    { en: "U", ar: [" ْ", "ع"] },
-    { en: "I", ar: [" ّ", "ه"] },
-    { en: "O", ar: ["", "خ"] },
-    { en: "P", ar: ["", "ح"] },
-    { en: "{", ar: ["", "ج"] },
-    { en: "}", ar: ["", "ة"] },
+    { en: "Q", ar: [" َ", "ض"], eventName: "KeyQ" },
+    { en: "W", ar: [" ً", "ص"], eventName: "KeyW" },
+    { en: "E", ar: [" ِ", "ث"], eventName: "KeyE" },
+    { en: "R", ar: [" ٍ", "ق"], eventName: "KeyR" },
+    { en: "T", ar: [" ُ", "ف"], eventName: "KeyT" },
+    { en: "Y", ar: [" ٌ", "غ"], eventName: "KeyY" },
+    { en: "U", ar: [" ْ", "ع"], eventName: "KeyU" },
+    { en: "I", ar: [" ّ", "ه"], eventName: "KeyI" },
+    { en: "O", ar: ["", "خ"], eventName: "KeyO" },
+    { en: "P", ar: ["", "ح"], eventName: "KeyP" },
+    { en: "{", ar: ["", "ج"], eventName: "BracketLeft" },
+    { en: "}", ar: ["", "ة"], eventName: "BracketRight" },
   ],
   [
-    { en: "A", ar: ["", "ش"] },
-    { en: "S", ar: ["", "س"] },
-    { en: "D", ar: ["ى", "ي"] },
-    { en: "F", ar: ["", "ب"] },
-    { en: "G", ar: ["", "ل"] },
-    { en: "H", ar: ["آ", "ا"] },
-    { en: "J", ar: ["", "ت"] },
-    { en: "K", ar: ["", "ن"] },
-    { en: "L", ar: ["", "م"] },
-    { en: ";", ar: ["", "ك"] },
-    { en: "Quote ''", ar: ["", "؛"] },
+    { en: "A", ar: ["", "ش"], eventName: "KeyA" },
+    { en: "S", ar: ["", "س"], eventName: "KeyS" },
+    { en: "D", ar: ["ى", "ي"], eventName: "KeyD" },
+    { en: "F", ar: ["", "ب"], eventName: "KeyF" },
+    { en: "G", ar: ["", "ل"], eventName: "KeyG" },
+    { en: "H", ar: ["آ", "ا"], eventName: "KeyH" },
+    { en: "J", ar: ["", "ت"], eventName: "KeyJ" },
+    { en: "K", ar: ["", "ن"], eventName: "KeyK" },
+    { en: "L", ar: ["", "م"], eventName: "KeyL" },
+    { en: ";", ar: ["", "ك"], eventName: "Semicolon" },
+    { en: "", ar: ["", "؛"], eventName: "Quote" },
   ],
   [
-    { en: "Z", ar: ["", "ظ"] },
-    { en: "X", ar: ["", "ط"] },
-    { en: "C", ar: ["ئ", "ذ"] },
-    { en: "V", ar: ["ء", "د"] },
-    { en: "B", ar: ["أ", "ز"] },
-    { en: "N", ar: ["إ", "ر"] },
-    { en: "M", ar: ["ؤ", "و"] },
-    { en: ",", ar: ["", "،"] },
-    { en: ".", ar: ["", "."] },
-    { en: "/", ar: ["", "/"] },
+    { en: "Z", ar: ["", "ظ"], eventName: "KeyZ" },
+    { en: "X", ar: ["", "ط"], eventName: "KeyX" },
+    { en: "C", ar: ["ئ", "ذ"], eventName: "KeyC" },
+    { en: "V", ar: ["ء", "د"], eventName: "KeyV" },
+    { en: "B", ar: ["أ", "ز"], eventName: "KeyB" },
+    { en: "N", ar: ["إ", "ر"], eventName: "KeyN" },
+    { en: "M", ar: ["ؤ", "و"], eventName: "KeyM" },
+    { en: ",", ar: ["", "،"], eventName: "Comma" },
+    { en: ".", ar: ["", "."], eventName: "Period" },
+    { en: "/", ar: ["", "/"], eventName: "Slash" },
   ],
 ];
 
@@ -216,15 +199,22 @@ function renderKeyboard(language) {
     });
 
     numbersArr.forEach((element) => {
+      const numberKeyContent = `
+        <div style="display: flex; justify-content: space-between">
+          <span>${element.key[0]}</span>
+          <span>${element.key[1] ?? ""}</span>
+        </div>
+      `;
+
       const numberBtn = createEl("button", {
         id: "number-btn",
-        innerHTML: element.key.map((k) => k).join(" "),
+        innerHTML: numberKeyContent,
         "data-key": element.keyCode,
         classList: ["key"],
         style: {
           width: "50px",
           margin: "4px",
-          fontSize: "14px",
+          fontSize: "17px",
           border: "none",
           borderRadius: "4px",
           cursor: "pointer",
@@ -260,7 +250,7 @@ function renderKeyboard(language) {
       const keyBtn = createEl("button", {
         classList: ["key"],
         innerHTML: keyContent,
-        "data-key": `Key${key.en}`,
+        "data-key": key.eventName,
         style: {
           width: "50px",
           height: "50px",
@@ -420,8 +410,8 @@ chrome.runtime.onMessage.addListener((message) => {
 
 window.addEventListener("FROM_INJECTED_KEYDOWN", (e) => {
   const { code } = e.detail;
-  console.log("🚀 ~ window.addEventListener ~ e.detail:", e.detail);
-  const pressedKey = codeMap[code] || code;
+  const pressedKey = code;
+
   shadowRoot.querySelectorAll(".key.highlight").forEach((el) => el.classList.remove("highlight"));
 
   const btn = shadowRoot.querySelector(`.key[data-key="${pressedKey}"]`);
