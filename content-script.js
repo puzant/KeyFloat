@@ -19,9 +19,9 @@ const languagesMap = {
 
 const codeMap = {
   Semicolon: "Key;",
-  Quote: "KeyQuote ''",
-  BracketRight: "Key}",
-  BracketLeft: "Key{",
+  Quote: "qoute",
+  BracketRight: "Key]",
+  BracketLeft: "Key[",
   Comma: "Key,",
   Period: "Key.",
   Slash: "Key/",
@@ -33,22 +33,22 @@ const windowsLayout = [
     { en: "W", ar: ["ً", "ص"] }, // Tanwin Fatha
     { en: "E", ar: ["ُ", "ث"] }, // Damma
     { en: "R", ar: ["ٌ", "ق"] }, // Tanwin Damma
-    { en: "T", ar: ["ِ", "ف"] }, // Kasra
-    { en: "Y", ar: ["ٍ", "غ"] }, // Tanwin Kasra
-    { en: "U", ar: ["ْ", "ع"] }, // Sukun
-    { en: "I", ar: ["ّ", "ه"] }, // Shadda
-    { en: "O", ar: ["]", "خ"] },
-    { en: "P", ar: ["[", "ح"] },
-    { en: "[", ar: ["}", "ج"] },
-    { en: "]", ar: ["{", "د"] },
+    { en: "T", ar: ["لإ", "ف"] }, // Kasra
+    { en: "Y", ar: ["إ", "غ"] }, // Tanwin Kasra
+    { en: "U", ar: ["‘", "ع"] }, // Sukun
+    { en: "I", ar: ["", "ه"] },
+    { en: "O", ar: ["", "خ"] },
+    { en: "P", ar: ["", "ح"] },
+    { en: "[", ar: ["", "ج"] },
+    { en: "]", ar: ["", "د"] },
   ],
   [
-    { en: "A", ar: ["ـ", "ش"] }, // Tatwil
-    { en: "S", ar: ["", "س"] },
+    { en: "A", ar: [" ِ", "ش"] }, // Tatwil
+    { en: "S", ar: [" ٍ", "س"] },
     { en: "D", ar: ["", "ي"] },
     { en: "F", ar: ["", "ب"] },
-    { en: "G", ar: ["", "ل"] },
-    { en: "H", ar: ["", "ا"] },
+    { en: "G", ar: ["لأ", "ل"] },
+    { en: "H", ar: ["أ", "ا"] },
     { en: "J", ar: ["", "ت"] },
     { en: "K", ar: ["", "ن"] },
     { en: "L", ar: ["", "م"] },
@@ -56,15 +56,15 @@ const windowsLayout = [
     { en: "'", ar: ["ط", "ط"] }, // Same
   ],
   [
-    { en: "Z", ar: ["ِ", "ئ"] }, // Shifted seems to be Kasra (historically), but can be left blank
-    { en: "X", ar: ["", "ء"] },
+    { en: "Z", ar: ["", "ئ"] }, // Shifted seems to be Kasra (historically), but can be left blank
+    { en: "X", ar: [" ْ", "ء"] },
     { en: "C", ar: ["", "ؤ"] },
     { en: "V", ar: ["", "ر"] },
-    { en: "B", ar: ["", "لا"] },
-    { en: "N", ar: ["", "ى"] },
+    { en: "B", ar: ["لآ", "لا"] },
+    { en: "N", ar: ["آ", "ى"] },
     { en: "M", ar: ["", "ة"] },
-    { en: ",", ar: ["<", "و"] },
-    { en: ".", ar: [">", "ز"] },
+    { en: ",", ar: ["", "و"] },
+    { en: ".", ar: ["", "ز"] },
     { en: "/", ar: ["؟", "ظ"] }, // Arabic question mark
   ],
 ];
@@ -167,17 +167,17 @@ function renderWrapper() {
 // ====== KEYBOARD RENDERING ======
 function renderKeyboard(language) {
   const numbersArr = [
-    { key: "ذ", keyCode: "Backquote" },
-    { key: "١", keyCode: "Digit1" },
-    { key: "٢", keyCode: "Digit2" },
-    { key: "٣", keyCode: "Digit3" },
-    { key: "٤", keyCode: "Digit4" },
-    { key: "٥", keyCode: "Digit5" },
-    { key: "٦", keyCode: "Digit6" },
-    { key: "٧", keyCode: "Digit7" },
-    { key: "٨", keyCode: "Digit8" },
-    { key: "٩", keyCode: "Digit9" },
-    { key: "٠", keyCode: "Digit0" },
+    { key: [" ّ", "ذ"], keyCode: "Backquote" }, // Shadda
+    { key: ["١"], keyCode: "Digit1" },
+    { key: ["٢"], keyCode: "Digit2" },
+    { key: ["٣"], keyCode: "Digit3" },
+    { key: ["٤"], keyCode: "Digit4" },
+    { key: ["٥"], keyCode: "Digit5" },
+    { key: ["٦"], keyCode: "Digit6" },
+    { key: ["٧"], keyCode: "Digit7" },
+    { key: ["٨"], keyCode: "Digit8" },
+    { key: ["٩"], keyCode: "Digit9" },
+    { key: ["٠"], keyCode: "Digit0" },
   ];
 
   const existing = shadowRoot.getElementById("keyboard-box");
@@ -218,7 +218,7 @@ function renderKeyboard(language) {
     numbersArr.forEach((element) => {
       const numberBtn = createEl("button", {
         id: "number-btn",
-        innerHTML: element.key,
+        innerHTML: element.key.map((k) => k).join(" "),
         "data-key": element.keyCode,
         classList: ["key"],
         style: {
@@ -420,6 +420,7 @@ chrome.runtime.onMessage.addListener((message) => {
 
 window.addEventListener("FROM_INJECTED_KEYDOWN", (e) => {
   const { code } = e.detail;
+  console.log("🚀 ~ window.addEventListener ~ e.detail:", e.detail);
   const pressedKey = codeMap[code] || code;
   shadowRoot.querySelectorAll(".key.highlight").forEach((el) => el.classList.remove("highlight"));
 
