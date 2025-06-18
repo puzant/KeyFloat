@@ -20,7 +20,7 @@ const windowsLayout = [
     { en: "Y", ar: ["إ", "غ"], eventName: "KeyY" }, // Tanwin Kasra
     { en: "U", ar: ["‘", "ع"], eventName: "KeyU" }, // Sukun
     { en: "I", ar: ["", "ه"], eventName: "KeyI" },
-    { en: "O", ar: ["", "خ"], eventName: "KeyQO" },
+    { en: "O", ar: ["", "خ"], eventName: "KeyO" },
     { en: "P", ar: ["", "ح"], eventName: "KeyP" },
     { en: "[", ar: ["", "ج"], eventName: "BracketLeft" },
     { en: "]", ar: ["", "د"], eventName: "BracketRight" },
