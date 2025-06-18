@@ -101,6 +101,25 @@ script.type = "module";
 (document.head || document.documentElement).appendChild(script);
 script.onload = () => script.remove();
 
+const SOUND_POOL_SIZE = 5;
+const clickSounds = [];
+let currentSoundIndex = 0;
+
+for (let i = 0; i < SOUND_POOL_SIZE; i++) {
+  const sound = new Audio(chrome.runtime.getURL("assets/key-press-sound.mp3"));
+  sound.preload = "auto";
+  clickSounds.push(sound);
+}
+
+function playClickSound() {
+  const sound = clickSounds[currentSoundIndex];
+  sound.pause();
+  sound.currentTime = 0;
+  sound.play();
+
+  currentSoundIndex = (currentSoundIndex + 1) % SOUND_POOL_SIZE;
+}
+
 let themeToggleBtn, toggleBtn, collapsdeBtn, shutdownBtn, box, offsetX, offsetY;
 let shadowRoot, wrapper;
 let isDragging = false,
@@ -415,7 +434,6 @@ window.addEventListener("FROM_INJECTED_KEYDOWN", (e) => {
   shadowRoot.querySelectorAll(".key.highlight").forEach((el) => el.classList.remove("highlight"));
 
   const btn = shadowRoot.querySelector(`.key[data-key="${pressedKey}"]`);
-  const clickSound = new Audio(chrome.runtime.getURL("assets/key-press-sound.mp3"));
 
   if (btn) {
     btn.classList.add("highlight", "pressed");
@@ -425,7 +443,7 @@ window.addEventListener("FROM_INJECTED_KEYDOWN", (e) => {
         btn.classList.remove("pressed");
 
         chrome.storage.local.get(["soundEnabled"], (result) => {
-          if (result.soundEnabled) clickSound.play();
+          if (result.soundEnabled) playClickSound();
         });
       },
       { once: true }
