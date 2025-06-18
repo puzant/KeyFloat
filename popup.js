@@ -7,14 +7,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const opacityLevel = document.querySelector(".opacity-level");
 
   chrome.storage.local.get(["keyboardEnabled", "soundEnabled", "opacityLevel"], (result) => {
-    keyboardToggle.checked = result.keyboardEnabled || false;
-    soundToggle.checked = result.soundEnabled || false;
+    const keyboardEnabled = result.keyboardEnabled ?? false;
+    const soundEnabled = result.soundEnabled ?? false;
+    const storedOpacity = result.opacityLevel ?? 100;
+
+    keyboardToggle.checked = keyboardEnabled;
+    soundToggle.checked = soundEnabled;
 
     //  Initialize visibility input
-    visibilityInput.disabled = !result.keyboardEnabled;
-    visibilityInput.value = result.opacityLevel;
-    opacityLevel.textContent = `${result.opacityLevel}%`;
-    updateSliderTrackColor(visibilityInput, result.opacityLevel);
+    visibilityInput.disabled = !keyboardEnabled;
+    visibilityInput.value = storedOpacity;
+    opacityLevel.textContent = `${storedOpacity}%`;
+    updateSliderTrackColor(visibilityInput, storedOpacity);
   });
 
   keyboardToggle.addEventListener("change", (e) => {
