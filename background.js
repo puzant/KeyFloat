@@ -1,3 +1,11 @@
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.storage.local.set({
+    keyboardEnabled: false,
+    soundEnabled: false,
+    opacityLevel: 100,
+  });
+});
+
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if (!tab?.id) return;
