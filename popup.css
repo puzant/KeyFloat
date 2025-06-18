@@ -1,4 +1,12 @@
+@font-face {
+  font-family: "Poppins-regular";
+  src: url("./assets/fonts/Poppins-Regular.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
+  font-family: "Poppins-regular", sans-serif;
   margin: 0;
   padding: 0;
 }
