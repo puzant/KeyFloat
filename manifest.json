@@ -1,7 +1,7 @@
 {
   "name": "KeyFloat",
   "version": "1.0.0",
-  "description": "A floating multilingual keyboard that displays native character mappings for physical English keyboards. Supports Arabic, French, and more with drag, dark mode, key sounds, and dynamic layouts for Windows and macOS.",
+  "description": "Floating multilingual keyboard with native key mappings, drag, dark mode, sounds, and dynamic layouts for macOS & Windows",
   "permissions": ["storage", "activeTab", "scripting"],
   "host_permissions": ["<all_urls>"],
   "action": {
