@@ -105,6 +105,11 @@ const SOUND_POOL_SIZE = 5;
 const clickSounds = [];
 let currentSoundIndex = 0;
 
+let themeToggleBtn, toggleBtn, collapsdeBtn, shutdownBtn, box, offsetX, offsetY;
+let shadowRoot, wrapper;
+let isDragging = false,
+  dragged = false;
+
 for (let i = 0; i < SOUND_POOL_SIZE; i++) {
   const sound = new Audio(chrome.runtime.getURL("assets/key-press-sound.mp3"));
   sound.preload = "auto";
@@ -119,11 +124,6 @@ function playClickSound() {
 
   currentSoundIndex = (currentSoundIndex + 1) % SOUND_POOL_SIZE;
 }
-
-let themeToggleBtn, toggleBtn, collapsdeBtn, shutdownBtn, box, offsetX, offsetY;
-let shadowRoot, wrapper;
-let isDragging = false,
-  dragged = false;
 
 // ====== UTILITIES ======
 const createEl = (tag, options = {}) => {
