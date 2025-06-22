@@ -27,7 +27,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
         chrome.tabs.sendMessage(tab.id, {
           type: "KEYBOARD_OPEN",
-          payload: { lng: "ar" },
+          payload: { lng: "fr" },
         });
       } else {
         chrome.tabs.sendMessage(tab.id, {
