@@ -10,47 +10,59 @@
  * * color: #DADCE0
  */
 
-// { num: "", ar: [" ّ", "ذ"], fr: ["#"], keyCode: "Backquote" },
+const numbersWindowsLayout = [
+  { num: "`", ar: [" ّ", "ذ"], fr: ["#"], keyCode: "Backquote" },
+  { num: "1", ar: [], fr: ["&"], keyCode: "Digit1" },
+  { num: "2", ar: [], fr: ["é"], keyCode: "Digit2" },
+  { num: "3", ar: [], fr: [""], keyCode: "Digit3" },
+  { num: "4", ar: [], fr: ["'"], keyCode: "Digit4" },
+  { num: "5", ar: [], fr: [""], keyCode: "Digit5" },
+  { num: "6", ar: [], fr: ["§"], keyCode: "Digit6" },
+  { num: "7", ar: [], fr: ["è"], keyCode: "Digit7" },
+  { num: "8", ar: [], fr: ["!"], keyCode: "Digit8" },
+  { num: "9", ar: [], fr: ["ç"], keyCode: "Digit9" },
+  { num: "0", ar: [], fr: ["à"], keyCode: "Digit0" },
+];
 
 const windowsLayout = [
   [
-    { en: "Q", ar: ["َ", "ض"], eventName: "KeyQ" }, // Fatha
-    { en: "W", ar: ["ً", "ص"], eventName: "KeyW" }, // Tanwin Fatha
-    { en: "E", ar: ["ُ", "ث"], eventName: "KeyE" }, // Damma
-    { en: "R", ar: ["ٌ", "ق"], eventName: "KeyR" }, // Tanwin Damma
-    { en: "T", ar: ["لإ", "ف"], eventName: "KeyT" }, // Kasra
-    { en: "Y", ar: ["إ", "غ"], eventName: "KeyY" }, // Tanwin Kasra
-    { en: "U", ar: ["‘", "ع"], eventName: "KeyU" }, // Sukun
-    { en: "I", ar: ["", "ه"], eventName: "KeyI" },
-    { en: "O", ar: ["", "خ"], eventName: "KeyO" },
-    { en: "P", ar: ["", "ح"], eventName: "KeyP" },
-    { en: "[", ar: ["", "ج"], eventName: "BracketLeft" },
-    { en: "]", ar: ["", "د"], eventName: "BracketRight" },
+    { en: "Q", ar: ["َ", "ض"], fr: ["", "A"], eventName: "KeyQ" }, // Fatha
+    { en: "W", ar: ["ً", "ص"], fr: ["", "Z"], eventName: "KeyW" }, // Tanwin Fatha
+    { en: "E", ar: ["ُ", "ث"], fr: ["", "E"], eventName: "KeyE" }, // Damma
+    { en: "R", ar: ["ٌ", "ق"], fr: ["", "R"], eventName: "KeyR" }, // Tanwin Damma
+    { en: "T", ar: ["لإ", "ف"], fr: ["", "T"], eventName: "KeyT" }, // Kasra
+    { en: "Y", ar: ["إ", "غ"], fr: ["", "Y"], eventName: "KeyY" }, // Tanwin Kasra
+    { en: "U", ar: ["‘", "ع"], fr: ["", "U"], eventName: "KeyU" }, // Sukun
+    { en: "I", ar: ["", "ه"], fr: ["", "I"], eventName: "KeyI" },
+    { en: "O", ar: ["", "خ"], fr: ["", "O"], eventName: "KeyO" },
+    { en: "P", ar: ["", "ح"], fr: ["", "P"], eventName: "KeyP" },
+    { en: "[", ar: ["", "ج"], fr: ["", "^"], eventName: "BracketLeft" },
+    { en: "]", ar: ["", "د"], fr: ["", "$"], eventName: "BracketRight" },
   ],
   [
-    { en: "A", ar: [" ِ", "ش"], eventName: "KeyA" }, // Tatwil
-    { en: "S", ar: [" ٍ", "س"], eventName: "KeyS" },
-    { en: "D", ar: ["", "ي"], eventName: "KeyD" },
-    { en: "F", ar: ["", "ب"], eventName: "KeyF" },
-    { en: "G", ar: ["لأ", "ل"], eventName: "KeyG" },
-    { en: "H", ar: ["أ", "ا"], eventName: "KeyH" },
-    { en: "J", ar: ["", "ت"], eventName: "KeyJ" },
-    { en: "K", ar: ["", "ن"], eventName: "KeyK" },
-    { en: "L", ar: ["", "م"], eventName: "KeyL" },
-    { en: ";", ar: ["ك", "ك"], eventName: "Semicolon" }, // Shift doesn't change
-    { en: "'", ar: ["ط", "ط"], eventName: "Quote" }, // Same
+    { en: "A", ar: [" ِ", "ش"], fr: ["", "Q"], eventName: "KeyA" }, // Tatwil
+    { en: "S", ar: [" ٍ", "س"], fr: ["", "S"], eventName: "KeyS" },
+    { en: "D", ar: ["", "ي"], fr: ["", "D"], eventName: "KeyD" },
+    { en: "F", ar: ["", "ب"], fr: ["", "F"], eventName: "KeyF" },
+    { en: "G", ar: ["لأ", "ل"], fr: ["", "G"], eventName: "KeyG" },
+    { en: "H", ar: ["أ", "ا"], fr: ["", "H"], eventName: "KeyH" },
+    { en: "J", ar: ["", "ت"], fr: ["", "J"], eventName: "KeyJ" },
+    { en: "K", ar: ["", "ن"], fr: ["", "K"], eventName: "KeyK" },
+    { en: "L", ar: ["", "م"], fr: ["", "L"], eventName: "KeyL" },
+    { en: ";", ar: ["ك", "ك"], fr: ["", "M"], eventName: "Semicolon" }, // Shift doesn't change
+    { en: "'", ar: ["ط", "ط"], fr: ["", "ù"], eventName: "Quote" }, // Same
   ],
   [
-    { en: "Z", ar: ["", "ئ"], eventName: "KeyZ" }, // Shifted seems to be Kasra (historically), but can be left blank
-    { en: "X", ar: [" ْ", "ء"], eventName: "KeyX" },
-    { en: "C", ar: ["", "ؤ"], eventName: "KeyC" },
-    { en: "V", ar: ["", "ر"], eventName: "KeyV" },
-    { en: "B", ar: ["لآ", "لا"], eventName: "KeyB" },
-    { en: "N", ar: ["آ", "ى"], eventName: "KeyN" },
-    { en: "M", ar: ["", "ة"], eventName: "KeyM" },
-    { en: ",", ar: ["", "و"], eventName: "Comma" },
-    { en: ".", ar: ["", "ز"], eventName: "Period" },
-    { en: "/", ar: ["؟", "ظ"], eventName: "Slash" }, // Arabic question mark
+    { en: "Z", ar: ["", "ئ"], fr: ["", "W"], eventName: "KeyZ" }, // Shifted seems to be Kasra (historically), but can be left blank
+    { en: "X", ar: [" ْ", "ء"], fr: ["", "X"], eventName: "KeyX" },
+    { en: "C", ar: ["", "ؤ"], fr: ["", "C"], eventName: "KeyC" },
+    { en: "V", ar: ["", "ر"], fr: ["", "V"], eventName: "KeyV" },
+    { en: "B", ar: ["لآ", "لا"], fr: ["", "B"], eventName: "KeyB" },
+    { en: "N", ar: ["آ", "ى"], fr: ["", "N"], eventName: "KeyN" },
+    { en: "M", ar: ["", "ة"], fr: ["", "?"], eventName: "KeyM" },
+    { en: ",", ar: ["", "و"], fr: ["", ";"], eventName: "Comma" },
+    { en: ".", ar: ["", "ز"], fr: ["", ":"], eventName: "Period" },
+    { en: "/", ar: ["؟", "ظ"], fr: ["", "+"], eventName: "Slash" }, // Arabic question mark
   ],
 ];
 
@@ -187,6 +199,9 @@ function renderKeyboard(language) {
   const existing = shadowRoot.getElementById("keyboard-box");
   if (existing) existing.remove();
 
+  const numbersLayout = navigator.userAgentData.platform.includes("macOS") ? numbersMacLayout : numbersWindowsLayout;
+  const layout = navigator.userAgentData.platform.includes("macOS") ? macLayout : windowsLayout;
+
   const box = createEl("div", {
     id: "keyboard-box",
     style: {
@@ -211,7 +226,6 @@ function renderKeyboard(language) {
   box.innerHTML = header;
   wrapper.appendChild(box);
 
-  // if (navigator.userAgentData.platform.includes("Windows")) {
   const numbersRows = createEl("div", {
     id: "numbers-row",
     style: {
@@ -219,7 +233,7 @@ function renderKeyboard(language) {
     },
   });
 
-  numbersMacLayout.forEach((element) => {
+  numbersLayout.forEach((element) => {
     const numberKeyContent = `
         <div style="display: flex; justify-content: space-between">
           <span>${element.num}</span>
@@ -248,9 +262,6 @@ function renderKeyboard(language) {
   });
 
   box.appendChild(numbersRows);
-  // }
-
-  const layout = navigator.userAgentData.platform.includes("macOS") ? macLayout : windowsLayout;
 
   layout.forEach((row) => {
     const rowDiv = createEl("div", {
