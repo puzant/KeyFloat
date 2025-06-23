@@ -34,10 +34,20 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   dropdownContent.addEventListener("click", (e) => {
-    if (e.target.classList.contains("dropdown-item")) {
+    const item = e.target.closest(".dropdown-item");
+
+    if (item) {
       const selectedLang = e.target.dataset.lang;
       chrome.storage.local.set({ selectedLang: selectedLang });
-      dropdownBtn.innerHTML = `${e.target.innerHTML} <span class="arrow">▼</span>`;
+
+      const langName = item.querySelector("span")?.textContent || "Lanauge";
+      const langImgSrc = item.querySelector("img")?.src;
+
+      dropdownBtn.innerHTML = `
+      <img src="${langImgSrc}" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px;" />
+      ${langName} <span class="arrow">▼</span>
+    `;
+
       dropdown.classList.remove("open");
     }
   });

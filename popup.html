@@ -1,72 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="popup.css" type="text/css">
-  <title>FloatKeys</title>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="popup.css" type="text/css" />
+    <title>FloatKeys</title>
+  </head>
 
-<body>
-  <div class="container">
-    <div class="header">
-      <img src="./assets/keyboard-icon-dark.png" alt="">
-      <p>KeyFloat</p>
+  <body>
+    <div class="container">
+      <div class="header">
+        <img src="./assets/keyboard-icon-dark.png" alt="" />
+        <p>KeyFloat</p>
+      </div>
+
+      <div class="controls">
+        <div class="language-select">
+          <div>
+            <span style="font-weight: 500; font-size: 15px">Language</span>
+
+            <span class="tooltip-icon">
+              <img style="width: 15px; height: 15px" src="./assets/info-icon.svg" alt="" />
+              <span class="tooltip-text">More languages coming soon.</span>
+            </span>
+          </div>
+
+          <div class="dropdown" id="dropdown">
+            <button class="dropdown-btn" id="dropdownBtn">
+              <span>Select Language</span>
+              <span class="arrow">▼</span>
+            </button>
+
+            <div class="dropdown-content" id="dropdownContent">
+              <div class="dropdown-item" data-lang="fr">
+                <img src="./assets/french-lang.svg" alt="" /> <span>Français</span>
+              </div>
+              <div class="dropdown-item" data-lang="ar">
+                <img src="./assets/arabic-lang.svg" alt="" /> <span>العربية</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="enable-keyboard">
+          <p style="font-weight: 500; font-size: 15px">Enable Keyboard</p>
+
+          <label class="switch">
+            <input type="checkbox" />
+            <div></div>
+          </label>
+        </div>
+
+        <div class="enable-sound" id="enableSound">
+          <p style="font-weight: 500; font-size: 15px">Sound on KeyPress</p>
+
+          <label class="switch">
+            <input disabled class="sound-toggle" type="checkbox" />
+            <div></div>
+          </label>
+        </div>
+
+        <div class="keyboard-opacity">
+          <div class="opacity-level-indicator">
+            <p style="font-weight: 500; font-size: 15px">Keyboard Visibility</p>
+            <p class="opacity-level">100%</p>
+          </div>
+
+          <input disabled id="visibility-input" type="range" min="1" max="100" value="100" />
+        </div>
+      </div>
+
+      <p class="version">v1.0.0</p>
     </div>
 
-    <div class="controls">
-      <div class="language-select">
-        <div>
-          <span style="font-weight: 500; font-size: 15px;">Selected Language</span>
-
-          <span class="tooltip-icon">
-            <img style="width: 15px; height: 15px;" src="./assets/info-icon.svg" alt="">
-            <span class="tooltip-text">More languages coming soon.</span>
-          </span>
-        </div>
-        
-        <img style="width: 30px; height: 30px;" src="./assets/arabic-flag.svg" alt="">
-      </div>
-
-      <div class="enable-keyboard">
-        <p style="font-weight: 500; font-size: 15px;">Enable Keyboard</p>
-      
-        <label class="switch">
-          <input type="checkbox" />
-          <div></div>
-        </label>
-      </div>
-
-      <div class="enable-sound">
-        <p style="font-weight: 500; font-size: 15px;">Sound on KeyPress</p>
-      
-        <label class="switch">
-          <input class="sound-toggle" type="checkbox" />
-          <div></div>
-        </label>
-      </div>
-
-      <div class="keyboard-opacity">
-        <div class="opacity-level-indicator">
-          <p style="font-weight: 500; font-size: 15px;"">Keyboard Visibility</p>
-          <p class="opacity-level">100%</p>
-        </div>
-        
-        <input
-          disabled
-          id="visibility-input"
-          type="range"
-          min="1"
-          max="100"
-          value="100"
-        />
-      </div>
-
-    </div>
-
-    <p class="version">v1.0.0</p>
-  </div>
-
-  <script type="module" src="popup.js"></script>
-</body>
+    <script type="module" src="popup.js"></script>
+  </body>
 </html>
