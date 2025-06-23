@@ -11,46 +11,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const visibilityInput = document.querySelector("#visibility-input");
   const opacityLevel = document.querySelector(".opacity-level");
 
-  chrome.storage.local.get(["keyboardEnabled", "soundEnabled", "opacityLevel"], (result) => {
-    const keyboardEnabled = result.keyboardEnabled ?? false;
-    const soundEnabled = result.soundEnabled ?? false;
-    const storedOpacity = result.opacityLevel ?? 100;
+  loadInitialSettings();
 
-    keyboardToggle.checked = keyboardEnabled;
-    soundToggle.checked = soundEnabled;
-
-    soundToggle.disabled = !keyboardEnabled;
-    soundToggleWrapper.style.opacity = keyboardEnabled ? 1 : 0.5;
-
-    //  Initialize visibility input
-    visibilityInput.disabled = !keyboardEnabled;
-    visibilityInput.value = storedOpacity;
-    opacityLevel.textContent = `${storedOpacity}%`;
-    updateSliderTrackColor(visibilityInput, storedOpacity);
-  });
-
-  dropdownBtn.addEventListener("click", () => {
-    dropdown.classList.toggle("open");
-  });
-
-  dropdownContent.addEventListener("click", (e) => {
-    const item = e.target.closest(".dropdown-item");
-
-    if (item) {
-      const selectedLang = e.target.dataset.lang;
-      chrome.storage.local.set({ selectedLang: selectedLang });
-
-      const langName = item.querySelector("span")?.textContent || "Lanauge";
-      const langImgSrc = item.querySelector("img")?.src;
-
-      dropdownBtn.innerHTML = `
-      <img src="${langImgSrc}" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px;" />
-      ${langName} <span class="arrow">▼</span>
-    `;
-
-      dropdown.classList.remove("open");
-    }
-  });
+  dropdownBtn.addEventListener("click", toggleDropdownMenu);
+  dropdownContent.addEventListener("click", handleDropdownSelection);
+  keyboardToggle.addEventListener("change", toggleKeyboard);
+  soundToggle.addEventListener("change", toggleSound);
+  visibilityInput.addEventListener("input", handleKeyboardVisibility);
 
   document.addEventListener("click", (e) => {
     if (!dropdown.contains(e.target)) {
@@ -58,7 +25,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  keyboardToggle.addEventListener("change", (e) => {
+  const debounceVisibilityHandler = debounce((value) => {
+    chrome.storage.local.set({ opacityLevel: value });
+    chrome.runtime.sendMessage({
+      type: "UPDATE_VISIBILITY",
+      payload: { opacityLevel: value },
+    });
+  }, 200);
+
+  function handleKeyboardVisibility(e) {
+    const value = e.target.value;
+    opacityLevel.textContent = `${value}%`;
+    updateSliderTrackColor(visibilityInput, value);
+    debounceVisibilityHandler(value);
+  }
+
+  function toggleSound(e) {
+    const isSoundChecked = e.target.checked;
+    chrome.storage.local.set({ soundEnabled: isSoundChecked });
+
+    chrome.runtime.sendMessage({
+      type: "TOGGLE_SOUND",
+      payload: { enabled: isSoundChecked },
+    });
+  }
+
+  function toggleKeyboard(e) {
     const isKeyboardChecked = e.target.checked;
     chrome.storage.local.set({ keyboardEnabled: isKeyboardChecked });
 
@@ -85,30 +77,60 @@ document.addEventListener("DOMContentLoaded", () => {
       chrome.storage.local.set({ soundEnabled: false });
       soundToggle.checked = false;
     }
-  });
+  }
 
-  soundToggle.addEventListener("change", (e) => {
-    const isSoundChecked = e.target.checked;
-    chrome.storage.local.set({ soundEnabled: isSoundChecked });
+  function toggleDropdownMenu() {
+    dropdown.classList.toggle("open");
+  }
 
-    chrome.runtime.sendMessage({
-      type: "TOGGLE_SOUND",
-      payload: { enabled: isSoundChecked },
+  function handleDropdownSelection(e) {
+    const item = e.target.closest(".dropdown-item");
+
+    if (item) {
+      const selectedLang = item.dataset.lang;
+
+      chrome.storage.local.set({ selectedLang });
+
+      const langName = item.querySelector("span")?.textContent || "Language";
+      const langImgSrc = item.querySelector("img")?.src;
+
+      let langFlag = document.getElementById("langFlag");
+      let langNameSpan = document.getElementById("langName");
+
+      langFlag.src = langImgSrc;
+      langNameSpan.textContent = langName;
+
+      dropdown.classList.remove("open");
+    }
+  }
+
+  function loadInitialSettings() {
+    chrome.storage.local.get(["keyboardEnabled", "soundEnabled", "opacityLevel", "selectedLang"], (result) => {
+      const languageElement = document.querySelector(`[data-lang=${result.selectedLang}]`);
+      const targetElementLangText = languageElement.querySelector("span")?.textContent;
+      const tragetElementLangImageSrc = languageElement.querySelector("img")?.src;
+
+      let langNameSpan = document.getElementById("langName");
+      let langFlag = document.getElementById("langFlag");
+
+      langFlag.src = tragetElementLangImageSrc;
+      langNameSpan.textContent = targetElementLangText;
+
+      const keyboardEnabled = result.keyboardEnabled ?? false;
+      const soundEnabled = result.soundEnabled ?? false;
+      const storedOpacity = result.opacityLevel ?? 100;
+
+      keyboardToggle.checked = keyboardEnabled;
+      soundToggle.checked = soundEnabled;
+
+      soundToggle.disabled = !keyboardEnabled;
+      soundToggleWrapper.style.opacity = keyboardEnabled ? 1 : 0.5;
+
+      //  Initialize visibility input
+      visibilityInput.disabled = !keyboardEnabled;
+      visibilityInput.value = storedOpacity;
+      opacityLevel.textContent = `${storedOpacity}%`;
+      updateSliderTrackColor(visibilityInput, storedOpacity);
     });
-  });
-
-  const debounceVisibilityHandler = debounce((value) => {
-    chrome.storage.local.set({ opacityLevel: value });
-    chrome.runtime.sendMessage({
-      type: "UPDATE_VISIBILITY",
-      payload: { opacityLevel: value },
-    });
-  }, 200);
-
-  visibilityInput.addEventListener("input", (e) => {
-    const value = e.target.value;
-    opacityLevel.textContent = `${value}%`;
-    updateSliderTrackColor(visibilityInput, value);
-    debounceVisibilityHandler(value);
-  });
+  }
 });
