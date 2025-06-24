@@ -1,10 +1,11 @@
-import { debounce, updateSliderTrackColor } from "./utils.js";
+import { debounce, updateSliderTrackColor, getFromStorage } from "./utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const dropdown = document.getElementById("dropdown");
   const dropdownBtn = document.getElementById("dropdownBtn");
   const dropdownContent = document.getElementById("dropdownContent");
 
+  const keyboardToggleWrapper = document.querySelector("#enableKeyboard");
   const keyboardToggle = document.querySelector(".switch input");
   const soundToggleWrapper = document.querySelector("#enableSound");
   const soundToggle = document.querySelector(".switch .sound-toggle");
@@ -50,14 +51,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function toggleKeyboard(e) {
+  async function toggleKeyboard(e) {
     const isKeyboardChecked = e.target.checked;
+    const result = await getFromStorage(["keyboardEnabled", "selectedLang"]);
+
     chrome.storage.local.set({ keyboardEnabled: isKeyboardChecked });
 
     chrome.runtime.sendMessage({
       type: "TOGGLE_KEYBOARD",
       payload: {
         enabled: isKeyboardChecked,
+        selectedLang: result.selectedLang,
       },
     });
 
@@ -88,49 +92,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (item) {
       const selectedLang = item.dataset.lang;
-
       chrome.storage.local.set({ selectedLang });
 
       const langName = item.querySelector("span")?.textContent || "Language";
       const langImgSrc = item.querySelector("img")?.src;
 
-      let langFlag = document.getElementById("langFlag");
-      let langNameSpan = document.getElementById("langName");
-
-      langFlag.src = langImgSrc;
-      langNameSpan.textContent = langName;
-
+      updateLangDisplay(langName, langImgSrc);
       dropdown.classList.remove("open");
+
+      keyboardToggleWrapper.style.opacity = selectedLang ? 1 : 0.5;
+      keyboardToggle.disabled = !selectedLang;
     }
   }
 
-  function loadInitialSettings() {
-    chrome.storage.local.get(["keyboardEnabled", "soundEnabled", "opacityLevel", "selectedLang"], (result) => {
-      const languageElement = document.querySelector(`[data-lang=${result.selectedLang}]`);
-      const targetElementLangText = languageElement.querySelector("span")?.textContent;
-      const tragetElementLangImageSrc = languageElement.querySelector("img")?.src;
+  async function loadInitialSettings() {
+    const result = await getFromStorage(["keyboardEnabled", "soundEnabled", "opacityLevel", "selectedLang"]);
 
-      let langNameSpan = document.getElementById("langName");
-      let langFlag = document.getElementById("langFlag");
+    const languageElement = document.querySelector(`[data-lang=${result.selectedLang}]`);
+    const targetElementLangText = languageElement.querySelector("span")?.textContent;
+    const tragetElementLangImageSrc = languageElement.querySelector("img")?.src;
 
-      langFlag.src = tragetElementLangImageSrc;
-      langNameSpan.textContent = targetElementLangText;
+    updateLangDisplay(targetElementLangText, tragetElementLangImageSrc);
 
-      const keyboardEnabled = result.keyboardEnabled ?? false;
-      const soundEnabled = result.soundEnabled ?? false;
-      const storedOpacity = result.opacityLevel ?? 100;
+    const keyboardEnabled = result.keyboardEnabled ?? false;
+    const soundEnabled = result.soundEnabled ?? false;
+    const storedOpacity = result.opacityLevel ?? 100;
 
-      keyboardToggle.checked = keyboardEnabled;
-      soundToggle.checked = soundEnabled;
+    keyboardToggleWrapper.style.opacity = result.selectedLang ? 1 : 0.5;
+    keyboardToggle.disabled = !result.selectedLang;
+    keyboardToggle.checked = keyboardEnabled;
 
-      soundToggle.disabled = !keyboardEnabled;
-      soundToggleWrapper.style.opacity = keyboardEnabled ? 1 : 0.5;
+    soundToggle.disabled = !keyboardEnabled;
+    soundToggle.checked = soundEnabled;
+    soundToggleWrapper.style.opacity = keyboardEnabled ? 1 : 0.5;
 
-      //  Initialize visibility input
-      visibilityInput.disabled = !keyboardEnabled;
-      visibilityInput.value = storedOpacity;
-      opacityLevel.textContent = `${storedOpacity}%`;
-      updateSliderTrackColor(visibilityInput, storedOpacity);
-    });
+    //  Initialize visibility input
+    visibilityInput.disabled = !keyboardEnabled;
+    visibilityInput.value = storedOpacity;
+    opacityLevel.textContent = `${storedOpacity}%`;
+    updateSliderTrackColor(visibilityInput, storedOpacity);
+  }
+
+  function updateLangDisplay(spanText, imgSrc) {
+    const langFlag = document.getElementById("langFlag");
+    const langNameSpan = document.getElementById("langName");
+
+    if (langFlag && langNameSpan) {
+      langFlag.src = imgSrc || "";
+      langNameSpan.textContent = spanText || "Language";
+    }
   }
 });
