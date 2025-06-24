@@ -168,7 +168,7 @@ const createEl = (tag, options = {}) => {
 
 // ===== WRAPPER RENDERING ======
 function renderWrapper() {
-  const existing = document.getElementById("keyboard-wrapper");
+  const existing = document.getElementById("keyboard-shadow-host");
   if (existing) existing.remove();
 
   const shadowHost = createEl("div", {
@@ -202,7 +202,7 @@ function renderKeyboard(language) {
   const numbersLayout = navigator.userAgentData.platform.includes("macOS") ? numbersMacLayout : numbersWindowsLayout;
   const layout = navigator.userAgentData.platform.includes("macOS") ? macLayout : windowsLayout;
 
-  const box = createEl("div", {
+  box = createEl("div", {
     id: "keyboard-box",
     style: {
       background: "var(--key-wrapper)",
@@ -425,6 +425,10 @@ function shutdown() {
 // ====== EVENT LISTENERS ======
 chrome.runtime.onMessage.addListener((message) => {
   switch (message.type) {
+    case "LANG_CHANGE":
+      keyboardBuilder(message);
+      break;
+
     case "KEYBOARD_OPEN":
       keyboardBuilder(message);
       break;
