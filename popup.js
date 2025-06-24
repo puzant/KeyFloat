@@ -93,6 +93,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (item) {
       const selectedLang = item.dataset.lang;
       chrome.storage.local.set({ selectedLang });
+      // todo: if keyboard is not enabled don't send event to content script
+      chrome.runtime.sendMessage({
+        type: "LANG_CHANGE",
+        payload: { selectedLang },
+      });
 
       const langName = item.querySelector("span")?.textContent || "Language";
       const langImgSrc = item.querySelector("img")?.src;
