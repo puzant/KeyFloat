@@ -27,8 +27,11 @@
 
           <div class="dropdown" id="dropdown">
             <button class="dropdown-btn" id="dropdownBtn">
-              <span>Select Language</span>
-              <span class="arrow">▼</span>
+              <div class="dropdown-selected">
+                <img id="langFlag" src="./assets/general-language.svg" alt="" />
+                <span id="langName">Not selected</span>
+              </div>
+              <img src="./assets/arrow-down.svg" class="arrow" alt="" />
             </button>
 
             <div class="dropdown-content" id="dropdownContent">
@@ -42,11 +45,11 @@
           </div>
         </div>
 
-        <div class="enable-keyboard">
+        <div class="enable-keyboard" id="enableKeyboard">
           <p style="font-weight: 500; font-size: 15px">Enable Keyboard</p>
 
           <label class="switch">
-            <input type="checkbox" />
+            <input disabled type="checkbox" />
             <div></div>
           </label>
         </div>
