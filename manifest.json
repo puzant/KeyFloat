@@ -20,6 +20,8 @@
     {
       "resources": [
         "injection-script.js",
+        "assets/general-language.svg",
+        "assets/arrow-down.svg",
         "assets/key-press-sound.mp3",
         "assets/info-icon.svg",
         "assets/arabic-lang.svg",
