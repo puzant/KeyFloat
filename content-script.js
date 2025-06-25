@@ -11,15 +11,15 @@
  */
 
 const numbersWindowsLayout = [
-  { num: "`", ar: [" ّ", "ذ"], fr: ["#"], keyCode: "Backquote" },
+  { num: "`", ar: [" ّ", "ذ"], fr: ["²"], keyCode: "Backquote" },
   { num: "1", ar: [], fr: ["&"], keyCode: "Digit1" },
   { num: "2", ar: [], fr: ["é"], keyCode: "Digit2" },
   { num: "3", ar: [], fr: [""], keyCode: "Digit3" },
   { num: "4", ar: [], fr: ["'"], keyCode: "Digit4" },
   { num: "5", ar: [], fr: [""], keyCode: "Digit5" },
-  { num: "6", ar: [], fr: ["§"], keyCode: "Digit6" },
+  { num: "6", ar: [], fr: ["-"], keyCode: "Digit6" },
   { num: "7", ar: [], fr: ["è"], keyCode: "Digit7" },
-  { num: "8", ar: [], fr: ["!"], keyCode: "Digit8" },
+  { num: "8", ar: [], fr: ["_"], keyCode: "Digit8" },
   { num: "9", ar: [], fr: ["ç"], keyCode: "Digit9" },
   { num: "0", ar: [], fr: ["à"], keyCode: "Digit0" },
 ];
@@ -36,8 +36,8 @@ const windowsLayout = [
     { en: "I", ar: ["", "ه"], fr: ["", "I"], eventName: "KeyI" },
     { en: "O", ar: ["", "خ"], fr: ["", "O"], eventName: "KeyO" },
     { en: "P", ar: ["", "ح"], fr: ["", "P"], eventName: "KeyP" },
-    { en: "[", ar: ["", "ج"], fr: ["", "^"], eventName: "BracketLeft" },
-    { en: "]", ar: ["", "د"], fr: ["", "$"], eventName: "BracketRight" },
+    { en: "[", ar: ["", "ج"], fr: ["¨", "^"], eventName: "BracketLeft" },
+    { en: "]", ar: ["", "د"], fr: ["£", "$"], eventName: "BracketRight" },
   ],
   [
     { en: "A", ar: [" ِ", "ش"], fr: ["", "Q"], eventName: "KeyA" }, // Tatwil
@@ -50,7 +50,7 @@ const windowsLayout = [
     { en: "K", ar: ["", "ن"], fr: ["", "K"], eventName: "KeyK" },
     { en: "L", ar: ["", "م"], fr: ["", "L"], eventName: "KeyL" },
     { en: ";", ar: ["ك", "ك"], fr: ["", "M"], eventName: "Semicolon" }, // Shift doesn't change
-    { en: "'", ar: ["ط", "ط"], fr: ["", "ù"], eventName: "Quote" }, // Same
+    { en: "'", ar: ["ط", "ط"], fr: ["%", "ù"], eventName: "Quote" }, // Same
   ],
   [
     { en: "Z", ar: ["", "ئ"], fr: ["", "W"], eventName: "KeyZ" }, // Shifted seems to be Kasra (historically), but can be left blank
@@ -59,10 +59,10 @@ const windowsLayout = [
     { en: "V", ar: ["", "ر"], fr: ["", "V"], eventName: "KeyV" },
     { en: "B", ar: ["لآ", "لا"], fr: ["", "B"], eventName: "KeyB" },
     { en: "N", ar: ["آ", "ى"], fr: ["", "N"], eventName: "KeyN" },
-    { en: "M", ar: ["", "ة"], fr: ["", "?"], eventName: "KeyM" },
-    { en: ",", ar: ["", "و"], fr: ["", ";"], eventName: "Comma" },
-    { en: ".", ar: ["", "ز"], fr: ["", ":"], eventName: "Period" },
-    { en: "/", ar: ["؟", "ظ"], fr: ["", "+"], eventName: "Slash" }, // Arabic question mark
+    { en: "M", ar: ["", "ة"], fr: ["?", ","], eventName: "KeyM" },
+    { en: ",", ar: ["", "و"], fr: [".", ";"], eventName: "Comma" },
+    { en: ".", ar: ["", "ز"], fr: ["/", ":"], eventName: "Period" },
+    { en: "/", ar: ["؟", "ظ"], fr: ["§", "!"], eventName: "Slash" }, // Arabic question mark
   ],
 ];
 
@@ -199,8 +199,10 @@ function renderKeyboard(language) {
   const existing = shadowRoot.getElementById("keyboard-box");
   if (existing) existing.remove();
 
-  const numbersLayout = navigator.userAgentData.platform.includes("macOS") ? numbersMacLayout : numbersWindowsLayout;
-  const layout = navigator.userAgentData.platform.includes("macOS") ? macLayout : windowsLayout;
+  // const numbersLayout = navigator.userAgentData.platform.includes("macOS") ? numbersMacLayout : numbersWindowsLayout;
+  // const layout = navigator.userAgentData.platform.includes("macOS") ? macLayout : windowsLayout;
+  const numbersLayout = numbersWindowsLayout;
+  const layout = windowsLayout;
 
   box = createEl("div", {
     id: "keyboard-box",
