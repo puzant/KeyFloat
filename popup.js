@@ -87,17 +87,21 @@ document.addEventListener("DOMContentLoaded", () => {
     dropdown.classList.toggle("open");
   }
 
-  function handleDropdownSelection(e) {
+  async function handleDropdownSelection(e) {
     const item = e.target.closest(".dropdown-item");
+    const { keyboardEnabled } = await getFromStorage("keyboardEnabled");
 
     if (item) {
       const selectedLang = item.dataset.lang;
       chrome.storage.local.set({ selectedLang });
-      // todo: if keyboard is not enabled don't send event to content script
-      chrome.runtime.sendMessage({
-        type: "LANG_CHANGE",
-        payload: { selectedLang },
-      });
+
+      // ? if keyboard is not enabled don't send event to content script
+      if (keyboardEnabled) {
+        chrome.runtime.sendMessage({
+          type: "LANG_CHANGE",
+          payload: { selectedLang },
+        });
+      }
 
       const langName = item.querySelector("span")?.textContent || "Language";
       const langImgSrc = item.querySelector("img")?.src;
