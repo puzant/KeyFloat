@@ -199,10 +199,8 @@ function renderKeyboard(language) {
   const existing = shadowRoot.getElementById("keyboard-box");
   if (existing) existing.remove();
 
-  // const numbersLayout = navigator.userAgentData.platform.includes("macOS") ? numbersMacLayout : numbersWindowsLayout;
-  // const layout = navigator.userAgentData.platform.includes("macOS") ? macLayout : windowsLayout;
-  const numbersLayout = numbersWindowsLayout;
-  const layout = windowsLayout;
+  const numbersLayout = navigator.userAgentData.platform.includes("macOS") ? numbersMacLayout : numbersWindowsLayout;
+  const layout = navigator.userAgentData.platform.includes("macOS") ? macLayout : windowsLayout;
 
   box = createEl("div", {
     id: "keyboard-box",
