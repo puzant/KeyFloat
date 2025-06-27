@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const soundToggleWrapper = document.querySelector("#enableSound");
   const soundToggle = document.querySelector(".switch .sound-toggle");
   const visibilityInput = document.querySelector("#visibility-input");
+
+  const keyboardOpacityWrapper = document.querySelector("#keyboardOpacityWrapper");
   const opacityLevel = document.querySelector(".opacity-level");
 
   loadInitialSettings();
@@ -66,10 +68,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     soundToggle.disabled = !isKeyboardChecked;
-    soundToggleWrapper.style.opacity = isKeyboardChecked ? 1 : 0.5;
-
-    //  Turn on visibility slider if keyboard is enabled
     visibilityInput.disabled = !isKeyboardChecked;
+
+    soundToggleWrapper.style.opacity = isKeyboardChecked ? 1 : 0.5;
+    keyboardOpacityWrapper.style.opacity = isKeyboardChecked ? 1 : 0.5;
+
+    // reset the opacity slider to 100 and set text content to 100% when keyboard enable toggle is off
     if (!isKeyboardChecked) {
       visibilityInput.value = 100;
       opacityLevel.textContent = "100%";
@@ -134,6 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
     soundToggle.disabled = !keyboardEnabled;
     soundToggle.checked = soundEnabled;
     soundToggleWrapper.style.opacity = keyboardEnabled ? 1 : 0.5;
+    keyboardOpacityWrapper.style.opacity = keyboardEnabled ? 1 : 0.5;
 
     //  Initialize visibility input
     visibilityInput.disabled = !keyboardEnabled;
