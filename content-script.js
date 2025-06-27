@@ -106,7 +106,7 @@ const macLayout = [
     { en: "K", ar: ["", "ن"], fr: ["", "K"], eventName: "KeyK" },
     { en: "L", ar: ["", "م"], fr: ["", "L"], eventName: "KeyL" },
     { en: ";", ar: ["", "ك"], fr: ["", "M"], eventName: "Semicolon" },
-    { en: "", ar: ["", "؛"], fr: ["", "ù"], eventName: "Quote" },
+    { en: "", ar: ["", "؛"], fr: ["%", "ù"], eventName: "Quote" },
   ],
   [
     { en: "Z", ar: ["", "ظ"], fr: ["", "W"], eventName: "KeyZ" },
@@ -115,10 +115,10 @@ const macLayout = [
     { en: "V", ar: ["ء", "د"], fr: ["", "V"], eventName: "KeyV" },
     { en: "B", ar: ["أ", "ز"], fr: ["", "B"], eventName: "KeyB" },
     { en: "N", ar: ["إ", "ر"], fr: ["", "N"], eventName: "KeyN" },
-    { en: "M", ar: ["ؤ", "و"], fr: ["", "?"], eventName: "KeyM" },
+    { en: "M", ar: ["ؤ", "و"], fr: ["?", ","], eventName: "KeyM" },
     { en: ",", ar: ["", "،"], fr: ["", ";"], eventName: "Comma" },
-    { en: ".", ar: ["", "."], fr: ["", ":"], eventName: "Period" },
-    { en: "/", ar: ["", "/"], fr: ["", "+"], eventName: "Slash" },
+    { en: ".", ar: ["", "."], fr: ["/", ":"], eventName: "Period" },
+    { en: "/", ar: ["", "/"], fr: ["+", "="], eventName: "Slash" },
   ],
 ];
 
