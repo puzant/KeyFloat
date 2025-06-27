@@ -151,6 +151,7 @@ body {
       }
     }
 
+    .keyboard-opacity,
     .enable-keyboard,
     .enable-sound {
       opacity: 0.5;
