@@ -1,12 +1,12 @@
 # 🌐 KeyFloat – Floating Multilingual Keyboard Chrome Extension
 
-KeyFloat is a lightweight and customizable **floating keyboard extension** designed to help multilingual users who struggle with typing in their native language using a physical English keyboard. 
+KeyFloat is a lightweight and customizable **floating keyboard extension** designed to help multilingual users who struggle with typing in their native language using a physical English keyboard.
 
 Whether you're an Arabic speaker typing on a QWERTY keyboard or a polyglot juggling multiple languages, KeyFloat overlays an intuitive visual keyboard on your screen to make typing easier — without changing your system keyboard settings.
 
 ---
 
-## 🎯 Features – v1.0.0
+## 🎯 Features – v1.1.0
 
 - 🌙 **Dark Mode Toggle**
 - 🔘 **Enable/Disable Floating Keyboard**
@@ -22,8 +22,9 @@ Whether you're an Arabic speaker typing on a QWERTY keyboard or a polyglot juggl
 ---
 
 ## 🗺️ Languages Currently Supported
-- 🇸🇦 **Arabic**
-> Upcoming: 🇫🇷 French, 🇪🇸 Spanish, and more...
+
+- 🇸🇦 **Arabic** 🇫🇷 **French**
+  > Upcoming: , 🇪🇸 Spanish, and more...
 
 ---
 
