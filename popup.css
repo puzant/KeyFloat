@@ -71,6 +71,89 @@ body {
         visibility: visible;
         opacity: 1;
       }
+
+      .dropdown {
+        position: relative;
+        user-select: none;
+        width: 150px;
+
+        .dropdown-btn {
+          background-color: #1e293b;
+          color: #f1f5f9;
+          padding: 8px 10px;
+          border: none;
+          width: 100%;
+          border-radius: 8px;
+          text-align: left;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .arrow {
+            height: 13px;
+            width: 13px;
+            transition: transform 0.3s ease;
+          }
+
+          .dropdown-selected {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+
+            #langFlag {
+              width: 18px;
+              height: 18px;
+            }
+          }
+        }
+
+        .dropdown-content {
+          position: absolute;
+          left: 0;
+          top: 110%;
+          background-color: #b9bdbc;
+          border-radius: 8px;
+          width: 100%;
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.3s ease;
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+          z-index: 10;
+
+          .dropdown-item {
+            padding: 10px;
+            cursor: pointer;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #ccc;
+
+            img {
+              height: 20px;
+              width: 20px;
+            }
+          }
+
+          .dropdown-item:hover {
+            background-color: #334155;
+          }
+        }
+      }
+
+      .dropdown.open .dropdown-content {
+        max-height: 500px;
+      }
+
+      .dropdown.open .arrow {
+        transform: rotate(180deg);
+      }
+    }
+
+    .keyboard-opacity,
+    .enable-keyboard,
+    .enable-sound {
+      opacity: 0.5;
     }
 
     .keyboard-opacity {

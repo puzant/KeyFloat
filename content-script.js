@@ -10,87 +10,115 @@
  * * color: #DADCE0
  */
 
+const numbersWindowsLayout = [
+  { num: "`", ar: [" ّ", "ذ"], fr: ["²"], keyCode: "Backquote" },
+  { num: "1", ar: [], fr: ["&"], keyCode: "Digit1" },
+  { num: "2", ar: [], fr: ["é"], keyCode: "Digit2" },
+  { num: "3", ar: [], fr: [""], keyCode: "Digit3" },
+  { num: "4", ar: [], fr: ["'"], keyCode: "Digit4" },
+  { num: "5", ar: [], fr: [""], keyCode: "Digit5" },
+  { num: "6", ar: [], fr: ["-"], keyCode: "Digit6" },
+  { num: "7", ar: [], fr: ["è"], keyCode: "Digit7" },
+  { num: "8", ar: [], fr: ["_"], keyCode: "Digit8" },
+  { num: "9", ar: [], fr: ["ç"], keyCode: "Digit9" },
+  { num: "0", ar: [], fr: ["à"], keyCode: "Digit0" },
+];
+
 const windowsLayout = [
   [
-    { en: "Q", ar: ["َ", "ض"], eventName: "KeyQ" }, // Fatha
-    { en: "W", ar: ["ً", "ص"], eventName: "KeyW" }, // Tanwin Fatha
-    { en: "E", ar: ["ُ", "ث"], eventName: "KeyE" }, // Damma
-    { en: "R", ar: ["ٌ", "ق"], eventName: "KeyR" }, // Tanwin Damma
-    { en: "T", ar: ["لإ", "ف"], eventName: "KeyT" }, // Kasra
-    { en: "Y", ar: ["إ", "غ"], eventName: "KeyY" }, // Tanwin Kasra
-    { en: "U", ar: ["‘", "ع"], eventName: "KeyU" }, // Sukun
-    { en: "I", ar: ["", "ه"], eventName: "KeyI" },
-    { en: "O", ar: ["", "خ"], eventName: "KeyO" },
-    { en: "P", ar: ["", "ح"], eventName: "KeyP" },
-    { en: "[", ar: ["", "ج"], eventName: "BracketLeft" },
-    { en: "]", ar: ["", "د"], eventName: "BracketRight" },
+    { en: "Q", ar: ["َ", "ض"], fr: ["", "A"], eventName: "KeyQ" }, // Fatha
+    { en: "W", ar: ["ً", "ص"], fr: ["", "Z"], eventName: "KeyW" }, // Tanwin Fatha
+    { en: "E", ar: ["ُ", "ث"], fr: ["", "E"], eventName: "KeyE" }, // Damma
+    { en: "R", ar: ["ٌ", "ق"], fr: ["", "R"], eventName: "KeyR" }, // Tanwin Damma
+    { en: "T", ar: ["لإ", "ف"], fr: ["", "T"], eventName: "KeyT" }, // Kasra
+    { en: "Y", ar: ["إ", "غ"], fr: ["", "Y"], eventName: "KeyY" }, // Tanwin Kasra
+    { en: "U", ar: ["‘", "ع"], fr: ["", "U"], eventName: "KeyU" }, // Sukun
+    { en: "I", ar: ["", "ه"], fr: ["", "I"], eventName: "KeyI" },
+    { en: "O", ar: ["", "خ"], fr: ["", "O"], eventName: "KeyO" },
+    { en: "P", ar: ["", "ح"], fr: ["", "P"], eventName: "KeyP" },
+    { en: "[", ar: ["", "ج"], fr: ["¨", "^"], eventName: "BracketLeft" },
+    { en: "]", ar: ["", "د"], fr: ["£", "$"], eventName: "BracketRight" },
   ],
   [
-    { en: "A", ar: [" ِ", "ش"], eventName: "KeyA" }, // Tatwil
-    { en: "S", ar: [" ٍ", "س"], eventName: "KeyS" },
-    { en: "D", ar: ["", "ي"], eventName: "KeyD" },
-    { en: "F", ar: ["", "ب"], eventName: "KeyF" },
-    { en: "G", ar: ["لأ", "ل"], eventName: "KeyG" },
-    { en: "H", ar: ["أ", "ا"], eventName: "KeyH" },
-    { en: "J", ar: ["", "ت"], eventName: "KeyJ" },
-    { en: "K", ar: ["", "ن"], eventName: "KeyK" },
-    { en: "L", ar: ["", "م"], eventName: "KeyL" },
-    { en: ";", ar: ["ك", "ك"], eventName: "Semicolon" }, // Shift doesn't change
-    { en: "'", ar: ["ط", "ط"], eventName: "Quote" }, // Same
+    { en: "A", ar: [" ِ", "ش"], fr: ["", "Q"], eventName: "KeyA" }, // Tatwil
+    { en: "S", ar: [" ٍ", "س"], fr: ["", "S"], eventName: "KeyS" },
+    { en: "D", ar: ["", "ي"], fr: ["", "D"], eventName: "KeyD" },
+    { en: "F", ar: ["", "ب"], fr: ["", "F"], eventName: "KeyF" },
+    { en: "G", ar: ["لأ", "ل"], fr: ["", "G"], eventName: "KeyG" },
+    { en: "H", ar: ["أ", "ا"], fr: ["", "H"], eventName: "KeyH" },
+    { en: "J", ar: ["", "ت"], fr: ["", "J"], eventName: "KeyJ" },
+    { en: "K", ar: ["", "ن"], fr: ["", "K"], eventName: "KeyK" },
+    { en: "L", ar: ["", "م"], fr: ["", "L"], eventName: "KeyL" },
+    { en: ";", ar: ["ك", "ك"], fr: ["", "M"], eventName: "Semicolon" }, // Shift doesn't change
+    { en: "'", ar: ["ط", "ط"], fr: ["%", "ù"], eventName: "Quote" }, // Same
   ],
   [
-    { en: "Z", ar: ["", "ئ"], eventName: "KeyZ" }, // Shifted seems to be Kasra (historically), but can be left blank
-    { en: "X", ar: [" ْ", "ء"], eventName: "KeyX" },
-    { en: "C", ar: ["", "ؤ"], eventName: "KeyC" },
-    { en: "V", ar: ["", "ر"], eventName: "KeyV" },
-    { en: "B", ar: ["لآ", "لا"], eventName: "KeyB" },
-    { en: "N", ar: ["آ", "ى"], eventName: "KeyN" },
-    { en: "M", ar: ["", "ة"], eventName: "KeyM" },
-    { en: ",", ar: ["", "و"], eventName: "Comma" },
-    { en: ".", ar: ["", "ز"], eventName: "Period" },
-    { en: "/", ar: ["؟", "ظ"], eventName: "Slash" }, // Arabic question mark
+    { en: "Z", ar: ["", "ئ"], fr: ["", "W"], eventName: "KeyZ" }, // Shifted seems to be Kasra (historically), but can be left blank
+    { en: "X", ar: [" ْ", "ء"], fr: ["", "X"], eventName: "KeyX" },
+    { en: "C", ar: ["", "ؤ"], fr: ["", "C"], eventName: "KeyC" },
+    { en: "V", ar: ["", "ر"], fr: ["", "V"], eventName: "KeyV" },
+    { en: "B", ar: ["لآ", "لا"], fr: ["", "B"], eventName: "KeyB" },
+    { en: "N", ar: ["آ", "ى"], fr: ["", "N"], eventName: "KeyN" },
+    { en: "M", ar: ["", "ة"], fr: ["?", ","], eventName: "KeyM" },
+    { en: ",", ar: ["", "و"], fr: [".", ";"], eventName: "Comma" },
+    { en: ".", ar: ["", "ز"], fr: ["/", ":"], eventName: "Period" },
+    { en: "/", ar: ["؟", "ظ"], fr: ["§", "!"], eventName: "Slash" }, // Arabic question mark
   ],
+];
+
+const numbersMacLayout = [
+  { num: "`", ar: [], fr: ["#"], keyCode: "Backquote" },
+  { num: "1", ar: [], fr: ["&"], keyCode: "Digit1" },
+  { num: "2", ar: [], fr: ["é"], keyCode: "Digit2" },
+  { num: "3", ar: [], fr: [""], keyCode: "Digit3" },
+  { num: "4", ar: [], fr: ["'"], keyCode: "Digit4" },
+  { num: "5", ar: [], fr: [""], keyCode: "Digit5" },
+  { num: "6", ar: [], fr: ["§"], keyCode: "Digit6" },
+  { num: "7", ar: [], fr: ["è"], keyCode: "Digit7" },
+  { num: "8", ar: [], fr: ["!"], keyCode: "Digit8" },
+  { num: "9", ar: [], fr: ["ç"], keyCode: "Digit9" },
+  { num: "0", ar: [], fr: ["à"], keyCode: "Digit0" },
 ];
 
 const macLayout = [
   [
-    { en: "Q", ar: [" َ", "ض"], eventName: "KeyQ" },
-    { en: "W", ar: [" ً", "ص"], eventName: "KeyW" },
-    { en: "E", ar: [" ِ", "ث"], eventName: "KeyE" },
-    { en: "R", ar: [" ٍ", "ق"], eventName: "KeyR" },
-    { en: "T", ar: [" ُ", "ف"], eventName: "KeyT" },
-    { en: "Y", ar: [" ٌ", "غ"], eventName: "KeyY" },
-    { en: "U", ar: [" ْ", "ع"], eventName: "KeyU" },
-    { en: "I", ar: [" ّ", "ه"], eventName: "KeyI" },
-    { en: "O", ar: ["", "خ"], eventName: "KeyO" },
-    { en: "P", ar: ["", "ح"], eventName: "KeyP" },
-    { en: "{", ar: ["", "ج"], eventName: "BracketLeft" },
-    { en: "}", ar: ["", "ة"], eventName: "BracketRight" },
+    { en: "Q", ar: [" َ", "ض"], fr: ["", "A"], eventName: "KeyQ" },
+    { en: "W", ar: [" ً", "ص"], fr: ["", "Z"], eventName: "KeyW" },
+    { en: "E", ar: [" ِ", "ث"], fr: ["", "E"], eventName: "KeyE" },
+    { en: "R", ar: [" ٍ", "ق"], fr: ["", "R"], eventName: "KeyR" },
+    { en: "T", ar: [" ُ", "ف"], fr: ["", "T"], eventName: "KeyT" },
+    { en: "Y", ar: [" ٌ", "غ"], fr: ["", "Y"], eventName: "KeyY" },
+    { en: "U", ar: [" ْ", "ع"], fr: ["", "U"], eventName: "KeyU" },
+    { en: "I", ar: [" ّ", "ه"], fr: ["", "I"], eventName: "KeyI" },
+    { en: "O", ar: ["", "خ"], fr: ["", "O"], eventName: "KeyO" },
+    { en: "P", ar: ["", "ح"], fr: ["", "P"], eventName: "KeyP" },
+    { en: "{", ar: ["", "ج"], fr: ["", "^"], eventName: "BracketLeft" },
+    { en: "}", ar: ["", "ة"], fr: ["", "$"], eventName: "BracketRight" },
   ],
   [
-    { en: "A", ar: ["", "ش"], eventName: "KeyA" },
-    { en: "S", ar: ["", "س"], eventName: "KeyS" },
-    { en: "D", ar: ["ى", "ي"], eventName: "KeyD" },
-    { en: "F", ar: ["", "ب"], eventName: "KeyF" },
-    { en: "G", ar: ["", "ل"], eventName: "KeyG" },
-    { en: "H", ar: ["آ", "ا"], eventName: "KeyH" },
-    { en: "J", ar: ["", "ت"], eventName: "KeyJ" },
-    { en: "K", ar: ["", "ن"], eventName: "KeyK" },
-    { en: "L", ar: ["", "م"], eventName: "KeyL" },
-    { en: ";", ar: ["", "ك"], eventName: "Semicolon" },
-    { en: "", ar: ["", "؛"], eventName: "Quote" },
+    { en: "A", ar: ["", "ش"], fr: ["", "Q"], eventName: "KeyA" },
+    { en: "S", ar: ["", "س"], fr: ["", "S"], eventName: "KeyS" },
+    { en: "D", ar: ["ى", "ي"], fr: ["", "D"], eventName: "KeyD" },
+    { en: "F", ar: ["", "ب"], fr: ["", "F"], eventName: "KeyF" },
+    { en: "G", ar: ["", "ل"], fr: ["", "G"], eventName: "KeyG" },
+    { en: "H", ar: ["آ", "ا"], fr: ["", "H"], eventName: "KeyH" },
+    { en: "J", ar: ["", "ت"], fr: ["", "J"], eventName: "KeyJ" },
+    { en: "K", ar: ["", "ن"], fr: ["", "K"], eventName: "KeyK" },
+    { en: "L", ar: ["", "م"], fr: ["", "L"], eventName: "KeyL" },
+    { en: ";", ar: ["", "ك"], fr: ["", "M"], eventName: "Semicolon" },
+    { en: "", ar: ["", "؛"], fr: ["%", "ù"], eventName: "Quote" },
   ],
   [
-    { en: "Z", ar: ["", "ظ"], eventName: "KeyZ" },
-    { en: "X", ar: ["", "ط"], eventName: "KeyX" },
-    { en: "C", ar: ["ئ", "ذ"], eventName: "KeyC" },
-    { en: "V", ar: ["ء", "د"], eventName: "KeyV" },
-    { en: "B", ar: ["أ", "ز"], eventName: "KeyB" },
-    { en: "N", ar: ["إ", "ر"], eventName: "KeyN" },
-    { en: "M", ar: ["ؤ", "و"], eventName: "KeyM" },
-    { en: ",", ar: ["", "،"], eventName: "Comma" },
-    { en: ".", ar: ["", "."], eventName: "Period" },
-    { en: "/", ar: ["", "/"], eventName: "Slash" },
+    { en: "Z", ar: ["", "ظ"], fr: ["", "W"], eventName: "KeyZ" },
+    { en: "X", ar: ["", "ط"], fr: ["", "X"], eventName: "KeyX" },
+    { en: "C", ar: ["ئ", "ذ"], fr: ["", "C"], eventName: "KeyC" },
+    { en: "V", ar: ["ء", "د"], fr: ["", "V"], eventName: "KeyV" },
+    { en: "B", ar: ["أ", "ز"], fr: ["", "B"], eventName: "KeyB" },
+    { en: "N", ar: ["إ", "ر"], fr: ["", "N"], eventName: "KeyN" },
+    { en: "M", ar: ["ؤ", "و"], fr: ["?", ","], eventName: "KeyM" },
+    { en: ",", ar: ["", "،"], fr: ["", ";"], eventName: "Comma" },
+    { en: ".", ar: ["", "."], fr: ["/", ":"], eventName: "Period" },
+    { en: "/", ar: ["", "/"], fr: ["+", "="], eventName: "Slash" },
   ],
 ];
 
@@ -140,7 +168,7 @@ const createEl = (tag, options = {}) => {
 
 // ===== WRAPPER RENDERING ======
 function renderWrapper() {
-  const existing = document.getElementById("keyboard-wrapper");
+  const existing = document.getElementById("keyboard-shadow-host");
   if (existing) existing.remove();
 
   const shadowHost = createEl("div", {
@@ -168,24 +196,13 @@ function renderWrapper() {
 
 // ====== KEYBOARD RENDERING ======
 function renderKeyboard(language) {
-  const numbersArr = [
-    { key: [" ّ", "ذ"], keyCode: "Backquote" }, // Shadda
-    { key: ["١"], keyCode: "Digit1" },
-    { key: ["٢"], keyCode: "Digit2" },
-    { key: ["٣"], keyCode: "Digit3" },
-    { key: ["٤"], keyCode: "Digit4" },
-    { key: ["٥"], keyCode: "Digit5" },
-    { key: ["٦"], keyCode: "Digit6" },
-    { key: ["٧"], keyCode: "Digit7" },
-    { key: ["٨"], keyCode: "Digit8" },
-    { key: ["٩"], keyCode: "Digit9" },
-    { key: ["٠"], keyCode: "Digit0" },
-  ];
-
   const existing = shadowRoot.getElementById("keyboard-box");
   if (existing) existing.remove();
 
-  const box = createEl("div", {
+  const numbersLayout = navigator.userAgentData.platform.includes("macOS") ? numbersMacLayout : numbersWindowsLayout;
+  const layout = navigator.userAgentData.platform.includes("macOS") ? macLayout : windowsLayout;
+
+  box = createEl("div", {
     id: "keyboard-box",
     style: {
       background: "var(--key-wrapper)",
@@ -209,46 +226,42 @@ function renderKeyboard(language) {
   box.innerHTML = header;
   wrapper.appendChild(box);
 
-  if (navigator.userAgentData.platform.includes("Windows")) {
-    const numbersRows = createEl("div", {
-      id: "numbers-row",
-      style: {
-        textAlign: "center",
-      },
-    });
+  const numbersRows = createEl("div", {
+    id: "numbers-row",
+    style: {
+      textAlign: "center",
+    },
+  });
 
-    numbersArr.forEach((element) => {
-      const numberKeyContent = `
+  numbersLayout.forEach((element) => {
+    const numberKeyContent = `
         <div style="display: flex; justify-content: space-between">
-          <span>${element.key[0]}</span>
-          <span>${element.key[1] ?? ""}</span>
+          <span>${element.num}</span>
+          <span>${element[language].join(" ") ?? ""}</span>
         </div>
       `;
 
-      const numberBtn = createEl("button", {
-        id: "number-btn",
-        innerHTML: numberKeyContent,
-        "data-key": element.keyCode,
-        classList: ["key"],
-        style: {
-          width: "50px",
-          margin: "4px",
-          fontSize: "17px",
-          border: "none",
-          borderRadius: "4px",
-          cursor: "pointer",
-          color: "var(--key-color)",
-          background: "var(--key-bg)",
-        },
-      });
-
-      numbersRows.appendChild(numberBtn);
+    const numberBtn = createEl("button", {
+      id: "number-btn",
+      innerHTML: numberKeyContent,
+      "data-key": element.keyCode,
+      classList: ["key"],
+      style: {
+        width: "50px",
+        margin: "4px",
+        fontSize: "17px",
+        border: "none",
+        borderRadius: "4px",
+        cursor: "pointer",
+        color: "var(--key-color)",
+        background: "var(--key-bg)",
+      },
     });
 
-    box.appendChild(numbersRows);
-  }
+    numbersRows.appendChild(numberBtn);
+  });
 
-  const layout = navigator.userAgentData.platform.includes("macOS") ? macLayout : windowsLayout;
+  box.appendChild(numbersRows);
 
   layout.forEach((row) => {
     const rowDiv = createEl("div", {
@@ -412,6 +425,10 @@ function shutdown() {
 // ====== EVENT LISTENERS ======
 chrome.runtime.onMessage.addListener((message) => {
   switch (message.type) {
+    case "LANG_CHANGE":
+      keyboardBuilder(message);
+      break;
+
     case "KEYBOARD_OPEN":
       keyboardBuilder(message);
       break;

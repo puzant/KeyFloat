@@ -11,6 +11,13 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   if (!tab?.id) return;
 
   switch (message.type) {
+    case "LANG_CHANGE":
+      chrome.tabs.sendMessage(tab.id, {
+        type: "LANG_CHANGE",
+        payload: { lng: message.payload.selectedLang },
+      });
+      break;
+
     case "TOGGLE_SOUND":
       chrome.tabs.sendMessage(tab.id, {
         type: "SOUND_TOGGLE",
@@ -27,7 +34,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
         chrome.tabs.sendMessage(tab.id, {
           type: "KEYBOARD_OPEN",
-          payload: { lng: "ar" },
+          payload: { lng: message.payload.selectedLang },
         });
       } else {
         chrome.tabs.sendMessage(tab.id, {
