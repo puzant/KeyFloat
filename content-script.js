@@ -133,7 +133,16 @@ const SOUND_POOL_SIZE = 5;
 const clickSounds = [];
 let currentSoundIndex = 0;
 
-let themeToggleBtn, toggleBtn, collapsdeBtn, shutdownBtn, box, offsetX, offsetY;
+let wrapperX = 0,
+  wrapperY = 0;
+
+let mouseX = 0,
+  mouseY = 0;
+
+let offsetX = 0,
+  offsetY = 0;
+
+let themeToggleBtn, toggleBtn, collapsdeBtn, shutdownBtn, box;
 let shadowRoot, wrapper;
 let isDragging = false,
   dragged = false;
@@ -187,6 +196,7 @@ function renderWrapper() {
       top: "20px",
       left: `${window.innerWidth - 700 - 20}px`,
       zIndex: 999999,
+      willChange: "transform",
     },
   });
 
@@ -342,29 +352,42 @@ function keyboardBuilder(message) {
   injectStyles(shadowRoot);
 
   toggleBtn.addEventListener("mousedown", onToggleMouseDown);
-  shadowRoot.addEventListener("mousemove", onMouseMove);
-  shadowRoot.addEventListener("mouseup", onMouseUp);
+  document.addEventListener("mousemove", onMouseMove);
+  document.addEventListener("mouseup", onMouseUp);
   themeToggleBtn.addEventListener("click", onThemeToggleClick);
   collapsdeBtn.addEventListener("click", onCollapseClick);
   toggleBtn.addEventListener("click", onToggleClick);
   shutdownBtn.addEventListener("click", shutdown);
 }
 
+function updatePosition() {
+  if (isDragging) {
+    wrapperX = mouseX - offsetX;
+    wrapperY = mouseY - offsetY;
+
+    wrapper.style.transform = `translate(${wrapperX}px, ${wrapperY}px)`;
+    requestAnimationFrame(updatePosition);
+  }
+}
+
 function onToggleMouseDown(e) {
   e.preventDefault();
   isDragging = true;
-  offsetX = e.clientX - wrapper.offsetLeft;
-  offsetY = e.clientY - wrapper.offsetTop;
-  wrapper.style.cursor = "grabbing";
+  offsetX = e.clientX - wrapperX;
+  offsetY = e.clientY - wrapperY;
+  mouseX = e.clientX;
+  mouseY = e.clientY;
 
   toggleBtn.classList.add("noselect");
+  requestAnimationFrame(updatePosition);
 }
 
 function onMouseMove(e) {
   if (isDragging) {
     dragged = true;
-    wrapper.style.left = `${e.clientX - offsetX}px`;
-    wrapper.style.top = `${e.clientY - offsetY}px`;
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    wrapper.style.cursor = "grabbing";
   }
 }
 
