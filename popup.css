@@ -129,6 +129,10 @@ body {
             gap: 10px;
             border-bottom: 1px solid #ccc;
 
+            span {
+              font-weight: bold;
+            }
+
             img {
               height: 20px;
               width: 20px;
