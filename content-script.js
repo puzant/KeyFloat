@@ -67,58 +67,58 @@ const windowsLayout = [
 ];
 
 const numbersMacLayout = [
-  { num: "`", ar: [], fr: ["#"], keyCode: "Backquote" },
-  { num: "1", ar: [], fr: ["&"], keyCode: "Digit1" },
-  { num: "2", ar: [], fr: ["é"], keyCode: "Digit2" },
-  { num: "3", ar: [], fr: [""], keyCode: "Digit3" },
-  { num: "4", ar: [], fr: ["'"], keyCode: "Digit4" },
-  { num: "5", ar: [], fr: [""], keyCode: "Digit5" },
-  { num: "6", ar: [], fr: ["§"], keyCode: "Digit6" },
-  { num: "7", ar: [], fr: ["è"], keyCode: "Digit7" },
-  { num: "8", ar: [], fr: ["!"], keyCode: "Digit8" },
-  { num: "9", ar: [], fr: ["ç"], keyCode: "Digit9" },
-  { num: "0", ar: [], fr: ["à"], keyCode: "Digit0" },
+  { num: "`", ar: [], fr: ["#"], sp: [], keyCode: "Backquote" },
+  { num: "1", ar: [], fr: ["&"], sp: [], keyCode: "Digit1" },
+  { num: "2", ar: [], fr: ["é"], sp: [], keyCode: "Digit2" },
+  { num: "3", ar: [], fr: [""], sp: [], keyCode: "Digit3" },
+  { num: "4", ar: [], fr: ["'"], sp: [], keyCode: "Digit4" },
+  { num: "5", ar: [], fr: [""], sp: [], keyCode: "Digit5" },
+  { num: "6", ar: [], fr: ["§"], sp: [], keyCode: "Digit6" },
+  { num: "7", ar: [], fr: ["è"], sp: [], keyCode: "Digit7" },
+  { num: "8", ar: [], fr: ["!"], sp: [], keyCode: "Digit8" },
+  { num: "9", ar: [], fr: ["ç"], sp: [], keyCode: "Digit9" },
+  { num: "0", ar: [], fr: ["à"], sp: [], keyCode: "Digit0" },
 ];
 
 const macLayout = [
   [
-    { en: "Q", ar: [" َ", "ض"], fr: ["", "A"], eventName: "KeyQ" },
-    { en: "W", ar: [" ً", "ص"], fr: ["", "Z"], eventName: "KeyW" },
-    { en: "E", ar: [" ِ", "ث"], fr: ["", "E"], eventName: "KeyE" },
-    { en: "R", ar: [" ٍ", "ق"], fr: ["", "R"], eventName: "KeyR" },
-    { en: "T", ar: [" ُ", "ف"], fr: ["", "T"], eventName: "KeyT" },
-    { en: "Y", ar: [" ٌ", "غ"], fr: ["", "Y"], eventName: "KeyY" },
-    { en: "U", ar: [" ْ", "ع"], fr: ["", "U"], eventName: "KeyU" },
-    { en: "I", ar: [" ّ", "ه"], fr: ["", "I"], eventName: "KeyI" },
-    { en: "O", ar: ["", "خ"], fr: ["", "O"], eventName: "KeyO" },
-    { en: "P", ar: ["", "ح"], fr: ["", "P"], eventName: "KeyP" },
-    { en: "{", ar: ["", "ج"], fr: ["", "^"], eventName: "BracketLeft" },
-    { en: "}", ar: ["", "ة"], fr: ["", "$"], eventName: "BracketRight" },
+    { en: "Q", ar: [" َ", "ض"], fr: ["", "A"], sp: ["", "Q"], eventName: "KeyQ" },
+    { en: "W", ar: [" ً", "ص"], fr: ["", "Z"], sp: ["", "W"], eventName: "KeyW" },
+    { en: "E", ar: [" ِ", "ث"], fr: ["", "E"], sp: ["", "E"], eventName: "KeyE" },
+    { en: "R", ar: [" ٍ", "ق"], fr: ["", "R"], sp: ["", "R"], eventName: "KeyR" },
+    { en: "T", ar: [" ُ", "ف"], fr: ["", "T"], sp: ["", "T"], eventName: "KeyT" },
+    { en: "Y", ar: [" ٌ", "غ"], fr: ["", "Y"], sp: ["", "Y"], eventName: "KeyY" },
+    { en: "U", ar: [" ْ", "ع"], fr: ["", "U"], sp: ["", "U"], eventName: "KeyU" },
+    { en: "I", ar: [" ّ", "ه"], fr: ["", "I"], sp: ["", "I"], eventName: "KeyI" },
+    { en: "O", ar: ["", "خ"], fr: ["", "O"], sp: ["", "O"], eventName: "KeyO" },
+    { en: "P", ar: ["", "ح"], fr: ["", "P"], sp: ["", "P"], eventName: "KeyP" },
+    { en: "{", ar: ["", "ج"], fr: ["", "^"], sp: ["", "´"], eventName: "BracketLeft" },
+    { en: "}", ar: ["", "ة"], fr: ["", "$"], sp: ["", "+"], eventName: "BracketRight" },
   ],
   [
-    { en: "A", ar: ["", "ش"], fr: ["", "Q"], eventName: "KeyA" },
-    { en: "S", ar: ["", "س"], fr: ["", "S"], eventName: "KeyS" },
-    { en: "D", ar: ["ى", "ي"], fr: ["", "D"], eventName: "KeyD" },
-    { en: "F", ar: ["", "ب"], fr: ["", "F"], eventName: "KeyF" },
-    { en: "G", ar: ["", "ل"], fr: ["", "G"], eventName: "KeyG" },
-    { en: "H", ar: ["آ", "ا"], fr: ["", "H"], eventName: "KeyH" },
-    { en: "J", ar: ["", "ت"], fr: ["", "J"], eventName: "KeyJ" },
-    { en: "K", ar: ["", "ن"], fr: ["", "K"], eventName: "KeyK" },
-    { en: "L", ar: ["", "م"], fr: ["", "L"], eventName: "KeyL" },
-    { en: ";", ar: ["", "ك"], fr: ["", "M"], eventName: "Semicolon" },
-    { en: "", ar: ["", "؛"], fr: ["%", "ù"], eventName: "Quote" },
+    { en: "A", ar: ["", "ش"], fr: ["", "Q"], sp: ["", "A"], eventName: "KeyA" },
+    { en: "S", ar: ["", "س"], fr: ["", "S"], sp: ["", "S"], eventName: "KeyS" },
+    { en: "D", ar: ["ى", "ي"], fr: ["", "D"], sp: ["", "D"], eventName: "KeyD" },
+    { en: "F", ar: ["", "ب"], fr: ["", "F"], sp: ["", "F"], eventName: "KeyF" },
+    { en: "G", ar: ["", "ل"], fr: ["", "G"], sp: ["", "G"], eventName: "KeyG" },
+    { en: "H", ar: ["آ", "ا"], fr: ["", "H"], sp: ["", "H"], eventName: "KeyH" },
+    { en: "J", ar: ["", "ت"], fr: ["", "J"], sp: ["", "J"], eventName: "KeyJ" },
+    { en: "K", ar: ["", "ن"], fr: ["", "K"], sp: ["", "K"], eventName: "KeyK" },
+    { en: "L", ar: ["", "م"], fr: ["", "L"], sp: ["", "L"], eventName: "KeyL" },
+    { en: ";", ar: ["", "ك"], fr: ["", "M"], sp: ["", "ñ"], eventName: "Semicolon" },
+    { en: "\u200B", ar: ["", "؛"], fr: ["%", "ù"], sp: ["", "{"], eventName: "Quote" },
   ],
   [
-    { en: "Z", ar: ["", "ظ"], fr: ["", "W"], eventName: "KeyZ" },
-    { en: "X", ar: ["", "ط"], fr: ["", "X"], eventName: "KeyX" },
-    { en: "C", ar: ["ئ", "ذ"], fr: ["", "C"], eventName: "KeyC" },
-    { en: "V", ar: ["ء", "د"], fr: ["", "V"], eventName: "KeyV" },
-    { en: "B", ar: ["أ", "ز"], fr: ["", "B"], eventName: "KeyB" },
-    { en: "N", ar: ["إ", "ر"], fr: ["", "N"], eventName: "KeyN" },
-    { en: "M", ar: ["ؤ", "و"], fr: ["?", ","], eventName: "KeyM" },
-    { en: ",", ar: ["", "،"], fr: ["", ";"], eventName: "Comma" },
-    { en: ".", ar: ["", "."], fr: ["/", ":"], eventName: "Period" },
-    { en: "/", ar: ["", "/"], fr: ["+", "="], eventName: "Slash" },
+    { en: "Z", ar: ["", "ظ"], fr: ["", "W"], sp: ["", "Z"], eventName: "KeyZ" },
+    { en: "X", ar: ["", "ط"], fr: ["", "X"], sp: ["", "X"], eventName: "KeyX" },
+    { en: "C", ar: ["ئ", "ذ"], fr: ["", "C"], sp: ["", "C"], eventName: "KeyC" },
+    { en: "V", ar: ["ء", "د"], fr: ["", "V"], sp: ["", "V"], eventName: "KeyV" },
+    { en: "B", ar: ["أ", "ز"], fr: ["", "B"], sp: ["", "B"], eventName: "KeyB" },
+    { en: "N", ar: ["إ", "ر"], fr: ["", "N"], sp: ["", "N"], eventName: "KeyN" },
+    { en: "M", ar: ["ؤ", "و"], fr: ["?", ","], sp: ["", "M"], eventName: "KeyM" },
+    { en: ",", ar: ["", "،"], fr: ["", ";"], sp: ["", ","], eventName: "Comma" },
+    { en: ".", ar: ["", "."], fr: ["/", ":"], sp: ["", "."], eventName: "Period" },
+    { en: "/", ar: ["", "/"], fr: ["+", "="], sp: ["", "-"], eventName: "Slash" },
   ],
 ];
 
@@ -175,6 +175,16 @@ const createEl = (tag, options = {}) => {
   return el;
 };
 
+function getLanguageName(lang) {
+  const languages = {
+    ar: "العربية",
+    fr: "Français",
+    sp: "Español",
+  };
+
+  return languages[lang];
+}
+
 // ===== WRAPPER RENDERING ======
 function renderWrapper() {
   const existing = document.getElementById("keyboard-shadow-host");
@@ -224,7 +234,7 @@ function renderKeyboard(language) {
 
   const header = `
     <div style="margin: 7px 0; color: var(--key-color); display: flex; justify-content: space-between; align-items: center">
-      <span>${language.toUpperCase()}</span> 
+      <span style="font-size: 20px;">${getLanguageName(language)}</span> 
 
       <div style="display: flex; gap: 12px;">
         <img id="toggle-theme" style="cursor: pointer" src=${chrome.runtime.getURL("assets/moon-icon.svg")} />
@@ -281,11 +291,11 @@ function renderKeyboard(language) {
     row.forEach((key) => {
       const keyContent = `
         <div style="display: flex; flex-direction: column; line-height: 1; height: 100%; justify-content: space-evenly;">
-          <div style="display: flex; justify-content: space-around">
+          <div style="display: flex; justify-content: space-between">
             <span>${key.en}</span>
             <span style="font-size: 22px;">${key[language]?.[0] ?? ""}</span>
           </div>
-          <span style="font-size: 20px; margin: 0 18px;">${key[language]?.[1] ?? ""}</span>
+          <span style="font-size: 20px; text-align: right">${key[language]?.[1] ?? ""}</span>
         </div>
       `;
 
