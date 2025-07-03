@@ -11,58 +11,58 @@
  */
 
 const numbersWindowsLayout = [
-  { num: "`", ar: [" ّ", "ذ"], fr: ["²"], keyCode: "Backquote" },
-  { num: "1", ar: [], fr: ["&"], keyCode: "Digit1" },
-  { num: "2", ar: [], fr: ["é"], keyCode: "Digit2" },
-  { num: "3", ar: [], fr: [""], keyCode: "Digit3" },
-  { num: "4", ar: [], fr: ["'"], keyCode: "Digit4" },
-  { num: "5", ar: [], fr: [""], keyCode: "Digit5" },
-  { num: "6", ar: [], fr: ["-"], keyCode: "Digit6" },
-  { num: "7", ar: [], fr: ["è"], keyCode: "Digit7" },
-  { num: "8", ar: [], fr: ["_"], keyCode: "Digit8" },
-  { num: "9", ar: [], fr: ["ç"], keyCode: "Digit9" },
-  { num: "0", ar: [], fr: ["à"], keyCode: "Digit0" },
+  { num: "`", ar: [" ّ", "ذ"], fr: ["²"], sp: [], keyCode: "Backquote" },
+  { num: "1", ar: [], fr: ["&"], sp: [], keyCode: "Digit1" },
+  { num: "2", ar: [], fr: ["é"], sp: [], keyCode: "Digit2" },
+  { num: "3", ar: [], fr: [""], sp: [], keyCode: "Digit3" },
+  { num: "4", ar: [], fr: ["'"], sp: [], keyCode: "Digit4" },
+  { num: "5", ar: [], fr: [""], sp: [], keyCode: "Digit5" },
+  { num: "6", ar: [], fr: ["-"], sp: [], keyCode: "Digit6" },
+  { num: "7", ar: [], fr: ["è"], sp: [], keyCode: "Digit7" },
+  { num: "8", ar: [], fr: ["_"], sp: [], keyCode: "Digit8" },
+  { num: "9", ar: [], fr: ["ç"], sp: [], keyCode: "Digit9" },
+  { num: "0", ar: [], fr: ["à"], sp: [], keyCode: "Digit0" },
 ];
 
 const windowsLayout = [
   [
-    { en: "Q", ar: ["َ", "ض"], fr: ["", "A"], eventName: "KeyQ" }, // Fatha
-    { en: "W", ar: ["ً", "ص"], fr: ["", "Z"], eventName: "KeyW" }, // Tanwin Fatha
-    { en: "E", ar: ["ُ", "ث"], fr: ["", "E"], eventName: "KeyE" }, // Damma
-    { en: "R", ar: ["ٌ", "ق"], fr: ["", "R"], eventName: "KeyR" }, // Tanwin Damma
-    { en: "T", ar: ["لإ", "ف"], fr: ["", "T"], eventName: "KeyT" }, // Kasra
-    { en: "Y", ar: ["إ", "غ"], fr: ["", "Y"], eventName: "KeyY" }, // Tanwin Kasra
-    { en: "U", ar: ["‘", "ع"], fr: ["", "U"], eventName: "KeyU" }, // Sukun
-    { en: "I", ar: ["", "ه"], fr: ["", "I"], eventName: "KeyI" },
-    { en: "O", ar: ["", "خ"], fr: ["", "O"], eventName: "KeyO" },
-    { en: "P", ar: ["", "ح"], fr: ["", "P"], eventName: "KeyP" },
-    { en: "[", ar: ["", "ج"], fr: ["¨", "^"], eventName: "BracketLeft" },
-    { en: "]", ar: ["", "د"], fr: ["£", "$"], eventName: "BracketRight" },
+    { en: "Q", ar: ["َ", "ض"], fr: ["", "A"], sp: ["", "Q"], eventName: "KeyQ" }, // Fatha
+    { en: "W", ar: ["ً", "ص"], fr: ["", "Z"], sp: ["", "W"], eventName: "KeyW" }, // Tanwin Fatha
+    { en: "E", ar: ["ُ", "ث"], fr: ["", "E"], sp: ["", "E"], eventName: "KeyE" }, // Damma
+    { en: "R", ar: ["ٌ", "ق"], fr: ["", "R"], sp: ["", "R"], eventName: "KeyR" }, // Tanwin Damma
+    { en: "T", ar: ["لإ", "ف"], fr: ["", "T"], sp: ["", "T"], eventName: "KeyT" }, // Kasra
+    { en: "Y", ar: ["إ", "غ"], fr: ["", "Y"], sp: ["", "Y"], eventName: "KeyY" }, // Tanwin Kasra
+    { en: "U", ar: ["‘", "ع"], fr: ["", "U"], sp: ["", "U"], eventName: "KeyU" }, // Sukun
+    { en: "I", ar: ["", "ه"], fr: ["", "I"], sp: ["", "I"], eventName: "KeyI" },
+    { en: "O", ar: ["", "خ"], fr: ["", "O"], sp: ["", "O"], eventName: "KeyO" },
+    { en: "P", ar: ["", "ح"], fr: ["", "P"], sp: ["", "P"], eventName: "KeyP" },
+    { en: "[", ar: ["", "ج"], fr: ["¨", "^"], sp: ["", "`"], eventName: "BracketLeft" },
+    { en: "]", ar: ["", "د"], fr: ["£", "$"], sp: ["", "+"], eventName: "BracketRight" },
   ],
   [
-    { en: "A", ar: [" ِ", "ش"], fr: ["", "Q"], eventName: "KeyA" }, // Tatwil
-    { en: "S", ar: [" ٍ", "س"], fr: ["", "S"], eventName: "KeyS" },
-    { en: "D", ar: ["", "ي"], fr: ["", "D"], eventName: "KeyD" },
-    { en: "F", ar: ["", "ب"], fr: ["", "F"], eventName: "KeyF" },
-    { en: "G", ar: ["لأ", "ل"], fr: ["", "G"], eventName: "KeyG" },
-    { en: "H", ar: ["أ", "ا"], fr: ["", "H"], eventName: "KeyH" },
-    { en: "J", ar: ["", "ت"], fr: ["", "J"], eventName: "KeyJ" },
-    { en: "K", ar: ["", "ن"], fr: ["", "K"], eventName: "KeyK" },
-    { en: "L", ar: ["", "م"], fr: ["", "L"], eventName: "KeyL" },
-    { en: ";", ar: ["ك", "ك"], fr: ["", "M"], eventName: "Semicolon" }, // Shift doesn't change
-    { en: "'", ar: ["ط", "ط"], fr: ["%", "ù"], eventName: "Quote" }, // Same
+    { en: "A", ar: [" ِ", "ش"], fr: ["", "Q"], sp: ["", "A"], eventName: "KeyA" }, // Tatwil
+    { en: "S", ar: [" ٍ", "س"], fr: ["", "S"], sp: ["", "S"], eventName: "KeyS" },
+    { en: "D", ar: ["", "ي"], fr: ["", "D"], sp: ["", "D"], eventName: "KeyD" },
+    { en: "F", ar: ["", "ب"], fr: ["", "F"], sp: ["", "F"], eventName: "KeyF" },
+    { en: "G", ar: ["لأ", "ل"], fr: ["", "G"], sp: ["", "G"], eventName: "KeyG" },
+    { en: "H", ar: ["أ", "ا"], fr: ["", "H"], sp: ["", "H"], eventName: "KeyH" },
+    { en: "J", ar: ["", "ت"], fr: ["", "J"], sp: ["", "J"], eventName: "KeyJ" },
+    { en: "K", ar: ["", "ن"], fr: ["", "K"], sp: ["", "K"], eventName: "KeyK" },
+    { en: "L", ar: ["", "م"], fr: ["", "L"], sp: ["", "L"], eventName: "KeyL" },
+    { en: ";", ar: ["ك", "ك"], fr: ["", "M"], sp: ["", "ñ"], eventName: "Semicolon" }, // Shift doesn't change
+    { en: "'", ar: ["ط", "ط"], fr: ["%", "ù"], sp: ["", "´"], eventName: "Quote" }, // Same
   ],
   [
-    { en: "Z", ar: ["", "ئ"], fr: ["", "W"], eventName: "KeyZ" }, // Shifted seems to be Kasra (historically), but can be left blank
-    { en: "X", ar: [" ْ", "ء"], fr: ["", "X"], eventName: "KeyX" },
-    { en: "C", ar: ["", "ؤ"], fr: ["", "C"], eventName: "KeyC" },
-    { en: "V", ar: ["", "ر"], fr: ["", "V"], eventName: "KeyV" },
-    { en: "B", ar: ["لآ", "لا"], fr: ["", "B"], eventName: "KeyB" },
-    { en: "N", ar: ["آ", "ى"], fr: ["", "N"], eventName: "KeyN" },
-    { en: "M", ar: ["", "ة"], fr: ["?", ","], eventName: "KeyM" },
-    { en: ",", ar: ["", "و"], fr: [".", ";"], eventName: "Comma" },
-    { en: ".", ar: ["", "ز"], fr: ["/", ":"], eventName: "Period" },
-    { en: "/", ar: ["؟", "ظ"], fr: ["§", "!"], eventName: "Slash" }, // Arabic question mark
+    { en: "Z", ar: ["", "ئ"], fr: ["", "W"], sp: ["", "Z"], eventName: "KeyZ" }, // Shifted seems to be Kasra (historically), but can be left blank
+    { en: "X", ar: [" ْ", "ء"], fr: ["", "X"], sp: ["", "X"], eventName: "KeyX" },
+    { en: "C", ar: ["", "ؤ"], fr: ["", "C"], sp: ["", "C"], eventName: "KeyC" },
+    { en: "V", ar: ["", "ر"], fr: ["", "V"], sp: ["", "V"], eventName: "KeyV" },
+    { en: "B", ar: ["لآ", "لا"], fr: ["", "B"], sp: ["", "B"], eventName: "KeyB" },
+    { en: "N", ar: ["آ", "ى"], fr: ["", "N"], sp: ["", "N"], eventName: "KeyN" },
+    { en: "M", ar: ["", "ة"], fr: ["?", ","], sp: ["", "M"], eventName: "KeyM" },
+    { en: ",", ar: ["", "و"], fr: [".", ";"], sp: ["", ","], eventName: "Comma" },
+    { en: ".", ar: ["", "ز"], fr: ["/", ":"], sp: ["", "."], eventName: "Period" },
+    { en: "/", ar: ["؟", "ظ"], fr: ["§", "!"], sp: ["", "-"], eventName: "Slash" }, // Arabic question mark
   ],
 ];
 
@@ -234,7 +234,7 @@ function renderKeyboard(language) {
 
   const header = `
     <div style="margin: 7px 0; color: var(--key-color); display: flex; justify-content: space-between; align-items: center">
-      <span style="font-size: 20px;">${getLanguageName(language)}</span> 
+      <span style="font-size: 18px;">${getLanguageName(language)}</span> 
 
       <div style="display: flex; gap: 12px;">
         <img id="toggle-theme" style="cursor: pointer" src=${chrome.runtime.getURL("assets/moon-icon.svg")} />
