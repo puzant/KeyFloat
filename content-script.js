@@ -180,6 +180,7 @@ function getLanguageName(lang) {
     ar: "العربية",
     fr: "Français",
     sp: "Español",
+    am: "հաերեն",
   };
 
   return languages[lang];
