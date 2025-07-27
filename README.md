@@ -6,7 +6,7 @@ Whether you're an Arabic speaker typing on a QWERTY keyboard or a polyglot juggl
 
 ---
 
-## 🎯 Features – v1.1.0
+## 🎯 Features – v1.2.0 - Lingua Nova
 
 - 🌙 **Dark Mode Toggle**
 - 🔘 **Enable/Disable Floating Keyboard**
@@ -21,10 +21,9 @@ Whether you're an Arabic speaker typing on a QWERTY keyboard or a polyglot juggl
 
 ---
 
-## 🗺️ Languages Currently Supported
+## 🗺️ Currently Supported Languages
 
-- 🇸🇦 **Arabic** 🇫🇷 **French**
-  > Upcoming: , 🇪🇸 Spanish, and more...
+- 🇸🇦 **Arabic** 🇫🇷 **French** 🇦🇲 **Armenian** 🇪🇸 **Spanish**
 
 ---
 
