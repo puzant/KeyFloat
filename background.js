@@ -1,3 +1,5 @@
+import { numbersMacLayout, numbersWindowsLayout, windowsLayout, macLayout } from "./languagesMap.js";
+
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.local.set({
     keyboardEnabled: false,
@@ -10,11 +12,18 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if (!tab?.id) return;
 
+  const OSLayout = navigator.userAgentData.platform.includes("macOS") ? macLayout : windowsLayout;
+  const numbersLayout = navigator.userAgentData.platform.includes("macOS") ? numbersMacLayout : numbersWindowsLayout;
+
   switch (message.type) {
     case "LANG_CHANGE":
       chrome.tabs.sendMessage(tab.id, {
         type: "LANG_CHANGE",
-        payload: { lng: message.payload.selectedLang },
+        payload: {
+          lng: message.payload.selectedLang,
+          numbersLayout: numbersLayout,
+          layout: OSLayout,
+        },
       });
       break;
 
@@ -34,7 +43,11 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
         chrome.tabs.sendMessage(tab.id, {
           type: "KEYBOARD_OPEN",
-          payload: { lng: message.payload.selectedLang },
+          payload: {
+            lng: message.payload.selectedLang,
+            numbersLayout: numbersLayout,
+            layout: OSLayout,
+          },
         });
       } else {
         chrome.tabs.sendMessage(tab.id, {
