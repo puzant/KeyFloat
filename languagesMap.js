@@ -26,6 +26,7 @@ export const windowsLayout = [
     { en: "P", ar: ["", "ح"], fr: ["", "P"], sp: ["", "P"], am: ["", "պ"], eventName: "KeyP" },
     { en: "[", ar: ["", "ج"], fr: ["¨", "^"], sp: ["", "`"], am: ["", "խ"], eventName: "BracketLeft" },
     { en: "]", ar: ["", "د"], fr: ["£", "$"], sp: ["", "+"], am: ["", "ծ"], eventName: "BracketRight" },
+    { en: "\\", ar: ["", ""], fr: ["", ""], sp: ["", ""], am: ["", "շ"], eventName: "Backslash" },    
   ],
   [
     { en: "A", ar: [" ِ", "ش"], fr: ["", "Q"], sp: ["", "A"], am: ["", "ա"], eventName: "KeyA" }, // Tatwil
@@ -37,8 +38,8 @@ export const windowsLayout = [
     { en: "J", ar: ["", "ت"], fr: ["", "J"], sp: ["", "J"], am: ["", "յ"], eventName: "KeyJ" },
     { en: "K", ar: ["", "ن"], fr: ["", "K"], sp: ["", "K"], am: ["", "կ"], eventName: "KeyK" },
     { en: "L", ar: ["", "م"], fr: ["", "L"], sp: ["", "L"], am: ["", "լ"], eventName: "KeyL" },
-    { en: ";", ar: ["ك", "ك"], fr: ["", "M"], sp: ["", "ñ"], am: ["", ";"], eventName: "Semicolon" }, // Shift doesn't change
-    { en: "'", ar: ["ط", "ط"], fr: ["%", "ù"], sp: ["", "´"], am: ["", "՛"], eventName: "Quote" }, // Same
+    { en: ";", ar: ["", "ك"], fr: ["", "M"], sp: ["", "ñ"], am: ["", ";"], eventName: "Semicolon" }, // Shift doesn't change
+    { en: "'", ar: ["", "ط"], fr: ["%", "ù"], sp: ["", "´"], am: ["", "՛"], eventName: "Quote" }, // Same
   ],
   [
     { en: "Z", ar: ["", "ئ"], fr: ["", "W"], sp: ["", "Z"], am: ["", "զ"], eventName: "KeyZ" }, // Shifted seems to be Kasra (historically), but can be left blank
