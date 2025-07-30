@@ -1,3 +1,8 @@
+import './components/mainKeyboard.js'
+
+// const mainKeyboard = document.createElement('main-keyboard')
+// document.body.appendChild(mainKeyboard)
+
 function attachKeyListenerToIframe(iframe) {
   try {
     if (iframe.contentWindow && !iframe.__keyListenerAttached) {
