@@ -1,17 +1,20 @@
-import './components/mainKeyboard.js'
+import "./components/mainKeyboard.js";
+import "./components/keyboardHeader.js";
 
-// const mainKeyboard = document.createElement('main-keyboard')
-// document.body.appendChild(mainKeyboard)
+// const mainKeyboard = document.createElement("main-keyboard");
+// document.body.appendChild(mainKeyboard);
 
 function attachKeyListenerToIframe(iframe) {
   try {
     if (iframe.contentWindow && !iframe.__keyListenerAttached) {
-      iframe.contentWindow.addEventListener('keydown', (e) => {
-        window.dispatchEvent(new CustomEvent('FROM_INJECTED_KEYDOWN', {
-          detail: { code: e.code }
-        }))
-      })
-      iframe.__keyListenerAttached = true
+      iframe.contentWindow.addEventListener("keydown", (e) => {
+        window.dispatchEvent(
+          new CustomEvent("FROM_INJECTED_KEYDOWN", {
+            detail: { code: e.code },
+          })
+        );
+      });
+      iframe.__keyListenerAttached = true;
     }
   } catch (err) {
     // Ignore cross-origin iframe errors
@@ -20,22 +23,24 @@ function attachKeyListenerToIframe(iframe) {
 
 function observeForEditors() {
   const observer = new MutationObserver(() => {
-    const iframes = document.querySelectorAll('iframe')
+    const iframes = document.querySelectorAll("iframe");
 
-    iframes.forEach(iframe => {
-      if (iframe.className.includes('docs-texteventtarget-iframe')) {
-        attachKeyListenerToIframe(iframe)
+    iframes.forEach((iframe) => {
+      if (iframe.className.includes("docs-texteventtarget-iframe")) {
+        attachKeyListenerToIframe(iframe);
       }
-    })
-  })
+    });
+  });
 
-  observer.observe(document.body, { childList: true, subtree: true })
+  observer.observe(document.body, { childList: true, subtree: true });
 }
 
-window.addEventListener('keydown', (e) => {
-  window.dispatchEvent(new CustomEvent('FROM_INJECTED_KEYDOWN', {
-    detail: { code: e.code }
-  }))
-})
+window.addEventListener("keydown", (e) => {
+  window.dispatchEvent(
+    new CustomEvent("FROM_INJECTED_KEYDOWN", {
+      detail: { code: e.code },
+    })
+  );
+});
 
-observeForEditors()
+observeForEditors();
