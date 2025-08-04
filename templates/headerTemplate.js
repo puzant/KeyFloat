@@ -1,4 +1,5 @@
 const headerTemplate = document.createElement("template")
+
 headerTemplate.innerHTML = `
   <style>
     .keyboard-header {
