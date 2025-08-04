@@ -36,18 +36,6 @@ let shadowRoot, wrapper;
 let isDragging = false,
   dragged = false;
 
-// // ====== UTILITIES ======
-// function getLanguageName(lang) {
-//   const languages = {
-//     ar: "العربية",
-//     fr: "Français",
-//     sp: "Español",
-//     am: "հաերեն",
-//   };
-
-//   return languages[lang];
-// }
-
 // ===== WRAPPER RENDERING ======
 function renderWrapper() {
   const existing = document.getElementById("keyboard-shadow-host");
