@@ -10,16 +10,17 @@
  * * color: #DADCE0
  */
 
+import injectStyles from "./dom/injectStyles";
+import createEl from "./dom/createElement";
+import playClickSound from "./sound";
+import { getLanguageName } from "./utils";
+
 //  inject script into page context
 const script = document.createElement("script");
 script.src = chrome.runtime.getURL("injection-script.js");
 script.type = "module";
 (document.head || document.documentElement).appendChild(script);
 script.onload = () => script.remove();
-
-const SOUND_POOL_SIZE = 5;
-const clickSounds = [];
-let currentSoundIndex = 0;
 
 let wrapperX = 0,
   wrapperY = 0;
@@ -35,44 +36,17 @@ let shadowRoot, wrapper;
 let isDragging = false,
   dragged = false;
 
-for (let i = 0; i < SOUND_POOL_SIZE; i++) {
-  const sound = new Audio(chrome.runtime.getURL("assets/key-press-sound.mp3"));
-  sound.preload = "auto";
-  clickSounds.push(sound);
-}
+// // ====== UTILITIES ======
+// function getLanguageName(lang) {
+//   const languages = {
+//     ar: "العربية",
+//     fr: "Français",
+//     sp: "Español",
+//     am: "հաերեն",
+//   };
 
-function playClickSound() {
-  const sound = clickSounds[currentSoundIndex];
-  sound.pause();
-  sound.currentTime = 0;
-  sound.play();
-
-  currentSoundIndex = (currentSoundIndex + 1) % SOUND_POOL_SIZE;
-}
-
-// ====== UTILITIES ======
-const createEl = (tag, options = {}) => {
-  const el = document.createElement(tag);
-
-  Object.entries(options).forEach(([key, value]) => {
-    if (key === "style") Object.assign(el.style, value);
-    else if (key === "classList") el.classList.add(...value);
-    else if (key === "innerHTML") el.innerHTML = value;
-    else el.setAttribute(key, value);
-  });
-  return el;
-};
-
-function getLanguageName(lang) {
-  const languages = {
-    ar: "العربية",
-    fr: "Français",
-    sp: "Español",
-    am: "հաերեն",
-  };
-
-  return languages[lang];
-}
+//   return languages[lang];
+// }
 
 // ===== WRAPPER RENDERING ======
 function renderWrapper() {
@@ -387,73 +361,3 @@ window.addEventListener("FROM_INJECTED_KEYDOWN", (e) => {
   }
 });
 
-// ====== INJECT STYLES ======
-function injectStyles(shadowRoot) {
-  const style = createEl("style", {
-    innerHTML: `
-      :host {
-        --key-wrapper: #C8CDD1;
-        --key-bg: #ECECEC;
-        --key-color: #000;
-        --key-bg-highlight: #111111;
-        --key-color-highlight: #ffffff;
-      }
-
-      #keyboard-wrapper.dark {
-        --key-wrapper: #1D2228;
-        --key-bg: #2A3139;
-        --key-color: #DADCE0;
-        --key-bg-highlight: #FFFFFF;
-        --key-color-highlight: #3C4043;
-      }
-
-      .key.highlight {
-        background-color: var(--key-bg-highlight) !important;
-        color: var(--key-color-highlight) !important;
-      }
-
-      @keyframes pressAnimation {
-        0% { transform: scale(1); box-shadow: 0 0 10px #FFFFFF; }
-        50% { transform: scale(0.9); box-shadow: 0 0 5px #FFFFFF; }
-        100% { transform: scale(1); box-shadow: 0 0 10px #FFFFFF; }
-      }
-
-      .key.pressed {
-        animation: pressAnimation 0.2s ease;
-      }
-
-      #keyboard-box {
-        transition: transform 0.4s ease, opacity 0.4s ease, background-color 0.3s ease, color 0.3s ease;
-        transform-origin: top right;
-      }
-
-      #keyboard-box.collapsing {
-        transform: scale(0);
-        opacity: 0;
-        pointer-events: none;
-      }
-
-      #keyboard-toggle-btn {
-        transition: transform 0.4s ease, opacity 0.4s ease;
-        transform: scale(0);
-        opacity: 0;
-        pointer-events: none;
-      }
-
-       #keyboard-toggle-btn.show {
-        transform: scale(1);
-        opacity: 1;
-        pointer-events: all;
-      }
-
-      .noselect {
-        user-select: none;
-        -webkit-user-select: none; /* Safari */
-        -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* IE10+ */
-      }
-    `,
-  });
-
-  shadowRoot.appendChild(style);
-}
