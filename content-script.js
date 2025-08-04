@@ -15,6 +15,9 @@ import createEl from "./dom/createElement";
 import playClickSound from "./sound";
 import { getLanguageName } from "./utils";
 
+import headerTemplate from "./templates/headerTemplate";
+import buttonTemplate from "./templates/buttonTemplate";
+
 //  inject script into page context
 const script = document.createElement("script");
 script.src = chrome.runtime.getURL("injection-script.js");
@@ -80,18 +83,10 @@ function renderKeyboard(language, numbersLayout, layout) {
     },
   });
 
-  const header = `
-    <div style="margin: 7px 0; color: var(--key-color); display: flex; justify-content: space-between; align-items: center">
-      <span style="font-size: 18px;">${getLanguageName(language)}</span>
+  const headerNode = headerTemplate.content.cloneNode(true)
+  headerNode.getElementById("selected-lang").textContent = getLanguageName(language)
 
-      <div style="display: flex; gap: 12px;">
-        <img id="toggle-theme" style="cursor: pointer" src=${chrome.runtime.getURL("assets/moon-icon.svg")} />
-        <img id="shutdown-btn" style="cursor: pointer" src=${chrome.runtime.getURL("assets/shutdown-icon-dark.svg")} />
-        <img id="collapse-btn" style="cursor: pointer" src=${chrome.runtime.getURL("assets/collapse-icon-dark.svg")} />
-      </div>
-    </div>
-  `;
-  box.innerHTML = header;
+  box.appendChild(headerNode)
   wrapper.appendChild(box);
 
   const numbersRows = createEl("div", {
@@ -136,20 +131,16 @@ function renderKeyboard(language, numbersLayout, layout) {
       style: { marginBottom: "2px", textAlign: "center", display: "flex", justifyContent: "center" },
     });
 
+
     row.forEach((key) => {
-      const keyContent = `
-        <div style="display: flex; flex-direction: column; line-height: 1; height: 100%; justify-content: space-evenly;">
-          <div style="display: flex; justify-content: space-between">
-            <span>${key.en}</span>
-            <span style="font-size: 22px;">${key[language]?.[0] ?? ""}</span>
-          </div>
-          <span style="font-size: 20px; text-align: right">${key[language]?.[1] ?? ""}</span>
-        </div>
-      `;
+      const buttonNode = buttonTemplate.content.cloneNode(true)
+
+      buttonNode.querySelector(".english-letter").textContent = key.en
+      buttonNode.querySelector(".primary-letter").textContent = key[language]?.[0]
+      buttonNode.querySelector(".secondary-letter").textContent = key[language]?.[1]
 
       const keyBtn = createEl("button", {
         classList: ["key"],
-        innerHTML: keyContent,
         "data-key": key.eventName,
         style: {
           width: "50px",
@@ -164,6 +155,7 @@ function renderKeyboard(language, numbersLayout, layout) {
         },
       });
 
+      keyBtn.appendChild(buttonNode)
       rowDiv.appendChild(keyBtn);
     });
 
