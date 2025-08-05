@@ -17,6 +17,7 @@ import { getLanguageName } from "./utils";
 
 import headerTemplate from "./templates/headerTemplate";
 import buttonTemplate from "./templates/buttonTemplate";
+import numberButtonTemplate from "./templates/numberButtonTemplate";
 
 //  inject script into page context
 const script = document.createElement("script");
@@ -97,16 +98,13 @@ function renderKeyboard(language, numbersLayout, layout) {
   });
 
   numbersLayout.forEach((element) => {
-    const numberKeyContent = `
-        <div style="display: flex; justify-content: space-between">
-          <span>${element.num}</span>
-          <span>${element[language].join(" ") ?? ""}</span>
-        </div>
-      `;
+    const numberButtonNode = numberButtonTemplate.content.cloneNode(true)
+
+    numberButtonNode.querySelector(".container > span:first-child").textContent = element.num
+    numberButtonNode.querySelector(".container > span:nth-child(2)").textContent = element[language].join(" ")
 
     const numberBtn = createEl("button", {
       id: "number-btn",
-      innerHTML: numberKeyContent,
       "data-key": element.keyCode,
       classList: ["key"],
       style: {
@@ -121,6 +119,7 @@ function renderKeyboard(language, numbersLayout, layout) {
       },
     });
 
+    numberBtn.appendChild(numberButtonNode)
     numbersRows.appendChild(numberBtn);
   });
 
