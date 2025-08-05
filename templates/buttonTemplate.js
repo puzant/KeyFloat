@@ -10,7 +10,7 @@ buttonTemplate.innerHTML = `
       justify-content: space-evenly;
     }
 
-    .key-content-container span {
+    .key-content-container .secondary-letter {
       font-size: 20px;
       text-align: right;
     }
