@@ -14,6 +14,7 @@ import injectStyles from "./dom/injectStyles";
 import createEl from "./dom/createElement";
 import playClickSound from "./sound";
 import { getLanguageName } from "./utils";
+import { state } from "./state";
 
 import headerTemplate from "./templates/headerTemplate";
 import buttonTemplate from "./templates/buttonTemplate";
@@ -26,21 +27,8 @@ script.type = "module";
 (document.head || document.documentElement).appendChild(script);
 script.onload = () => script.remove();
 
-const state = {
-  wrapperX: 0,
-  wrapperY: 0,
-  mouseX: 0,
-  mouseY: 0,
-  offsetX: 0,
-  offsetY: 0,
-  isDragging: false,
-  dragged: false, 
-}
-
 let themeToggleBtn, toggleBtn, collapsdeBtn, shutdownBtn, box;
 let shadowRoot, wrapper;
-// let isDragging = false,
-  // dragged = false;
 
 // ===== WRAPPER RENDERING ======
 function renderWrapper() {
