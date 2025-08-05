@@ -26,19 +26,21 @@ script.type = "module";
 (document.head || document.documentElement).appendChild(script);
 script.onload = () => script.remove();
 
-let wrapperX = 0,
-  wrapperY = 0;
-
-let mouseX = 0,
-  mouseY = 0;
-
-let offsetX = 0,
-  offsetY = 0;
+const state = {
+  wrapperX: 0,
+  wrapperY: 0,
+  mouseX: 0,
+  mouseY: 0,
+  offsetX: 0,
+  offsetY: 0,
+  isDragging: false,
+  dragged: false, 
+}
 
 let themeToggleBtn, toggleBtn, collapsdeBtn, shutdownBtn, box;
 let shadowRoot, wrapper;
-let isDragging = false,
-  dragged = false;
+// let isDragging = false,
+  // dragged = false;
 
 // ===== WRAPPER RENDERING ======
 function renderWrapper() {
@@ -130,7 +132,6 @@ function renderKeyboard(language, numbersLayout, layout) {
       style: { marginBottom: "2px", textAlign: "center", display: "flex", justifyContent: "center" },
     });
 
-
     row.forEach((key) => {
       const buttonNode = buttonTemplate.content.cloneNode(true)
 
@@ -210,38 +211,38 @@ function keyboardBuilder(message) {
 }
 
 function updatePosition() {
-  if (isDragging) {
-    wrapperX = mouseX - offsetX;
-    wrapperY = mouseY - offsetY;
+  if (state.isDragging) {
+    state.wrapperX = state.mouseX - state.offsetX;
+    state.wrapperY = state.mouseY - state.offsetY;
 
-    wrapper.style.transform = `translate(${wrapperX}px, ${wrapperY}px)`;
+    wrapper.style.transform = `translate(${state.wrapperX}px, ${state.wrapperY}px)`;
     requestAnimationFrame(updatePosition);
   }
 }
 
 function onToggleMouseDown(e) {
   e.preventDefault();
-  isDragging = true;
-  offsetX = e.clientX - wrapperX;
-  offsetY = e.clientY - wrapperY;
-  mouseX = e.clientX;
-  mouseY = e.clientY;
+  state.isDragging = true;
+  state.offsetX = e.clientX - state.wrapperX;
+  state.offsetY = e.clientY - state.wrapperY;
+  state.mouseX = e.clientX;
+  state.mouseY = e.clientY;
 
   toggleBtn.classList.add("noselect");
   requestAnimationFrame(updatePosition);
 }
 
 function onMouseMove(e) {
-  if (isDragging) {
-    dragged = true;
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+  if (state.isDragging) {
+    state.dragged = true;
+    state.mouseX = e.clientX;
+    state.mouseY = e.clientY;
     wrapper.style.cursor = "grabbing";
   }
 }
 
 function onMouseUp() {
-  isDragging = false;
+  state.isDragging = false;
   wrapper.style.cursor = "grab";
   toggleBtn.classList.remove("noselect");
 }
@@ -270,10 +271,10 @@ function onCollapseClick() {
 }
 
 function onToggleClick(e) {
-  if (dragged) {
+  if (state.dragged) {
     e.preventDefault();
     e.stopImmediatePropagation();
-    dragged = false;
+    state.dragged = false;
     return;
   }
 
@@ -339,4 +340,3 @@ window.addEventListener("FROM_INJECTED_KEYDOWN", (e) => {
     );
   }
 });
-
