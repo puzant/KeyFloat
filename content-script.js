@@ -1,14 +1,12 @@
-/**
- * * light theme colors
- * * wrapper background: #ffffff
- * * background color: #ECECEC
- * * color: #686868
- *
- * * dark theme colors
- * * wrapper background: #1D2228
- * * background color: #2A3139
- * * color: #DADCE0
- */
+import injectStyles from "./dom/injectStyles";
+import createEl from "./dom/createElement";
+import playClickSound from "./sound";
+import { getLanguageName } from "./utils";
+import { state } from "./state";
+
+import headerTemplate from "./templates/headerTemplate";
+import buttonTemplate from "./templates/buttonTemplate";
+import numberButtonTemplate from "./templates/numberButtonTemplate";
 
 //  inject script into page context
 const script = document.createElement("script");
@@ -17,62 +15,8 @@ script.type = "module";
 (document.head || document.documentElement).appendChild(script);
 script.onload = () => script.remove();
 
-const SOUND_POOL_SIZE = 5;
-const clickSounds = [];
-let currentSoundIndex = 0;
-
-let wrapperX = 0,
-  wrapperY = 0;
-
-let mouseX = 0,
-  mouseY = 0;
-
-let offsetX = 0,
-  offsetY = 0;
-
 let themeToggleBtn, toggleBtn, collapsdeBtn, shutdownBtn, box;
 let shadowRoot, wrapper;
-let isDragging = false,
-  dragged = false;
-
-for (let i = 0; i < SOUND_POOL_SIZE; i++) {
-  const sound = new Audio(chrome.runtime.getURL("assets/key-press-sound.mp3"));
-  sound.preload = "auto";
-  clickSounds.push(sound);
-}
-
-function playClickSound() {
-  const sound = clickSounds[currentSoundIndex];
-  sound.pause();
-  sound.currentTime = 0;
-  sound.play();
-
-  currentSoundIndex = (currentSoundIndex + 1) % SOUND_POOL_SIZE;
-}
-
-// ====== UTILITIES ======
-const createEl = (tag, options = {}) => {
-  const el = document.createElement(tag);
-
-  Object.entries(options).forEach(([key, value]) => {
-    if (key === "style") Object.assign(el.style, value);
-    else if (key === "classList") el.classList.add(...value);
-    else if (key === "innerHTML") el.innerHTML = value;
-    else el.setAttribute(key, value);
-  });
-  return el;
-};
-
-function getLanguageName(lang) {
-  const languages = {
-    ar: "العربية",
-    fr: "Français",
-    sp: "Español",
-    am: "հաերեն",
-  };
-
-  return languages[lang];
-}
 
 // ===== WRAPPER RENDERING ======
 function renderWrapper() {
@@ -118,18 +62,10 @@ function renderKeyboard(language, numbersLayout, layout) {
     },
   });
 
-  const header = `
-    <div style="margin: 7px 0; color: var(--key-color); display: flex; justify-content: space-between; align-items: center">
-      <span style="font-size: 18px;">${getLanguageName(language)}</span> 
+  const headerNode = headerTemplate.content.cloneNode(true);
+  headerNode.getElementById("selected-lang").textContent = getLanguageName(language);
 
-      <div style="display: flex; gap: 12px;">
-        <img id="toggle-theme" style="cursor: pointer" src=${chrome.runtime.getURL("assets/moon-icon.svg")} />
-        <img id="shutdown-btn" style="cursor: pointer" src=${chrome.runtime.getURL("assets/shutdown-icon-dark.svg")} />
-        <img id="collapse-btn" style="cursor: pointer" src=${chrome.runtime.getURL("assets/collapse-icon-dark.svg")} />
-      </div>
-    </div>
-  `;
-  box.innerHTML = header;
+  box.appendChild(headerNode);
   wrapper.appendChild(box);
 
   const numbersRows = createEl("div", {
@@ -140,16 +76,13 @@ function renderKeyboard(language, numbersLayout, layout) {
   });
 
   numbersLayout.forEach((element) => {
-    const numberKeyContent = `
-        <div style="display: flex; justify-content: space-between">
-          <span>${element.num}</span>
-          <span>${element[language].join(" ") ?? ""}</span>
-        </div>
-      `;
+    const numberButtonNode = numberButtonTemplate.content.cloneNode(true);
+
+    numberButtonNode.querySelector(".container > span:first-child").textContent = element.num;
+    numberButtonNode.querySelector(".container > span:nth-child(2)").textContent = element[language].join(" ");
 
     const numberBtn = createEl("button", {
       id: "number-btn",
-      innerHTML: numberKeyContent,
       "data-key": element.keyCode,
       classList: ["key"],
       style: {
@@ -164,6 +97,7 @@ function renderKeyboard(language, numbersLayout, layout) {
       },
     });
 
+    numberBtn.appendChild(numberButtonNode);
     numbersRows.appendChild(numberBtn);
   });
 
@@ -175,19 +109,14 @@ function renderKeyboard(language, numbersLayout, layout) {
     });
 
     row.forEach((key) => {
-      const keyContent = `
-        <div style="display: flex; flex-direction: column; line-height: 1; height: 100%; justify-content: space-evenly;">
-          <div style="display: flex; justify-content: space-between">
-            <span>${key.en}</span>
-            <span style="font-size: 22px;">${key[language]?.[0] ?? ""}</span>
-          </div>
-          <span style="font-size: 20px; text-align: right">${key[language]?.[1] ?? ""}</span>
-        </div>
-      `;
+      const buttonNode = buttonTemplate.content.cloneNode(true);
+
+      buttonNode.querySelector(".english-letter").textContent = key.en;
+      buttonNode.querySelector(".primary-letter").textContent = key[language]?.[0];
+      buttonNode.querySelector(".secondary-letter").textContent = key[language]?.[1];
 
       const keyBtn = createEl("button", {
         classList: ["key"],
-        innerHTML: keyContent,
         "data-key": key.eventName,
         style: {
           width: "50px",
@@ -202,6 +131,7 @@ function renderKeyboard(language, numbersLayout, layout) {
         },
       });
 
+      keyBtn.appendChild(buttonNode);
       rowDiv.appendChild(keyBtn);
     });
 
@@ -257,38 +187,38 @@ function keyboardBuilder(message) {
 }
 
 function updatePosition() {
-  if (isDragging) {
-    wrapperX = mouseX - offsetX;
-    wrapperY = mouseY - offsetY;
+  if (state.isDragging) {
+    state.wrapperX = state.mouseX - state.offsetX;
+    state.wrapperY = state.mouseY - state.offsetY;
 
-    wrapper.style.transform = `translate(${wrapperX}px, ${wrapperY}px)`;
+    wrapper.style.transform = `translate(${state.wrapperX}px, ${state.wrapperY}px)`;
     requestAnimationFrame(updatePosition);
   }
 }
 
 function onToggleMouseDown(e) {
   e.preventDefault();
-  isDragging = true;
-  offsetX = e.clientX - wrapperX;
-  offsetY = e.clientY - wrapperY;
-  mouseX = e.clientX;
-  mouseY = e.clientY;
+  state.isDragging = true;
+  state.offsetX = e.clientX - state.wrapperX;
+  state.offsetY = e.clientY - state.wrapperY;
+  state.mouseX = e.clientX;
+  state.mouseY = e.clientY;
 
   toggleBtn.classList.add("noselect");
   requestAnimationFrame(updatePosition);
 }
 
 function onMouseMove(e) {
-  if (isDragging) {
-    dragged = true;
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+  if (state.isDragging) {
+    state.dragged = true;
+    state.mouseX = e.clientX;
+    state.mouseY = e.clientY;
     wrapper.style.cursor = "grabbing";
   }
 }
 
 function onMouseUp() {
-  isDragging = false;
+  state.isDragging = false;
   wrapper.style.cursor = "grab";
   toggleBtn.classList.remove("noselect");
 }
@@ -317,10 +247,10 @@ function onCollapseClick() {
 }
 
 function onToggleClick(e) {
-  if (dragged) {
+  if (state.dragged) {
     e.preventDefault();
     e.stopImmediatePropagation();
-    dragged = false;
+    state.dragged = false;
     return;
   }
 
@@ -386,74 +316,3 @@ window.addEventListener("FROM_INJECTED_KEYDOWN", (e) => {
     );
   }
 });
-
-// ====== INJECT STYLES ======
-function injectStyles(shadowRoot) {
-  const style = createEl("style", {
-    innerHTML: `
-      :host {
-        --key-wrapper: #C8CDD1;
-        --key-bg: #ECECEC;
-        --key-color: #000;
-        --key-bg-highlight: #111111;
-        --key-color-highlight: #ffffff;
-      }
-  
-      #keyboard-wrapper.dark {
-        --key-wrapper: #1D2228;
-        --key-bg: #2A3139;
-        --key-color: #DADCE0;
-        --key-bg-highlight: #FFFFFF;
-        --key-color-highlight: #3C4043;
-      }
-  
-      .key.highlight {
-        background-color: var(--key-bg-highlight) !important;
-        color: var(--key-color-highlight) !important;
-      }
-  
-      @keyframes pressAnimation {
-        0% { transform: scale(1); box-shadow: 0 0 10px #FFFFFF; }
-        50% { transform: scale(0.9); box-shadow: 0 0 5px #FFFFFF; }
-        100% { transform: scale(1); box-shadow: 0 0 10px #FFFFFF; }
-      }
-  
-      .key.pressed {
-        animation: pressAnimation 0.2s ease;
-      }
-  
-      #keyboard-box {
-        transition: transform 0.4s ease, opacity 0.4s ease, background-color 0.3s ease, color 0.3s ease;
-        transform-origin: top right;
-      }
-  
-      #keyboard-box.collapsing {
-        transform: scale(0);
-        opacity: 0;
-        pointer-events: none;
-      }
-  
-      #keyboard-toggle-btn {
-        transition: transform 0.4s ease, opacity 0.4s ease;
-        transform: scale(0);
-        opacity: 0;
-        pointer-events: none;
-      }
-  
-       #keyboard-toggle-btn.show {
-        transform: scale(1);
-        opacity: 1;
-        pointer-events: all;
-      }
-  
-      .noselect {
-        user-select: none;
-        -webkit-user-select: none; /* Safari */
-        -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* IE10+ */
-      }
-    `,
-  });
-
-  shadowRoot.appendChild(style);
-}

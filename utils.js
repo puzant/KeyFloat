@@ -13,3 +13,15 @@ export function updateSliderTrackColor(inputEl, value) {
 }
 
 export const getFromStorage = (key) => new Promise((resolve) => chrome.storage.local.get(key, resolve));
+
+// ====== UTILITIES ======
+export const getLanguageName = (lang) => {
+  const languages = {
+    ar: "العربية",
+    fr: "Français",
+    sp: "Español",
+    am: "հաերեն",
+  };
+
+  return languages[lang];
+}
