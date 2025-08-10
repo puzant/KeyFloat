@@ -1,4 +1,4 @@
-const headerTemplate = document.createElement("template")
+const headerTemplate = document.createElement("template");
 
 headerTemplate.innerHTML = `
   <style>
@@ -22,7 +22,6 @@ headerTemplate.innerHTML = `
     .keyboard-controls img {
       cursor: pointer;
     }
-
   </style>
 
   <div class="keyboard-header">
@@ -34,6 +33,6 @@ headerTemplate.innerHTML = `
       <img id="collapse-btn" src=${chrome.runtime.getURL("assets/collapse-icon-dark.svg")} />
     </div>
   </div>
-`
+`;
 
-export default headerTemplate
+export default headerTemplate;

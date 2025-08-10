@@ -1,4 +1,4 @@
-const numberButtonTemplate = document.createElement("template")
+const numberButtonTemplate = document.createElement("template");
 
 numberButtonTemplate.innerHTML = `
   <style>
@@ -12,6 +12,6 @@ numberButtonTemplate.innerHTML = `
     <span></span>
     <span></span>
   </div>
-`
+`;
 
-export default numberButtonTemplate
+export default numberButtonTemplate;
