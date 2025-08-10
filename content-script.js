@@ -1,15 +1,3 @@
-/**
- * * light theme colors
- * * wrapper background: #ffffff
- * * background color: #ECECEC
- * * color: #686868
- *
- * * dark theme colors
- * * wrapper background: #1D2228
- * * background color: #2A3139
- * * color: #DADCE0
- */
-
 import injectStyles from "./dom/injectStyles";
 import createEl from "./dom/createElement";
 import playClickSound from "./sound";
@@ -74,10 +62,10 @@ function renderKeyboard(language, numbersLayout, layout) {
     },
   });
 
-  const headerNode = headerTemplate.content.cloneNode(true)
-  headerNode.getElementById("selected-lang").textContent = getLanguageName(language)
+  const headerNode = headerTemplate.content.cloneNode(true);
+  headerNode.getElementById("selected-lang").textContent = getLanguageName(language);
 
-  box.appendChild(headerNode)
+  box.appendChild(headerNode);
   wrapper.appendChild(box);
 
   const numbersRows = createEl("div", {
@@ -88,10 +76,10 @@ function renderKeyboard(language, numbersLayout, layout) {
   });
 
   numbersLayout.forEach((element) => {
-    const numberButtonNode = numberButtonTemplate.content.cloneNode(true)
+    const numberButtonNode = numberButtonTemplate.content.cloneNode(true);
 
-    numberButtonNode.querySelector(".container > span:first-child").textContent = element.num
-    numberButtonNode.querySelector(".container > span:nth-child(2)").textContent = element[language].join(" ")
+    numberButtonNode.querySelector(".container > span:first-child").textContent = element.num;
+    numberButtonNode.querySelector(".container > span:nth-child(2)").textContent = element[language].join(" ");
 
     const numberBtn = createEl("button", {
       id: "number-btn",
@@ -109,7 +97,7 @@ function renderKeyboard(language, numbersLayout, layout) {
       },
     });
 
-    numberBtn.appendChild(numberButtonNode)
+    numberBtn.appendChild(numberButtonNode);
     numbersRows.appendChild(numberBtn);
   });
 
@@ -121,11 +109,11 @@ function renderKeyboard(language, numbersLayout, layout) {
     });
 
     row.forEach((key) => {
-      const buttonNode = buttonTemplate.content.cloneNode(true)
+      const buttonNode = buttonTemplate.content.cloneNode(true);
 
-      buttonNode.querySelector(".english-letter").textContent = key.en
-      buttonNode.querySelector(".primary-letter").textContent = key[language]?.[0]
-      buttonNode.querySelector(".secondary-letter").textContent = key[language]?.[1]
+      buttonNode.querySelector(".english-letter").textContent = key.en;
+      buttonNode.querySelector(".primary-letter").textContent = key[language]?.[0];
+      buttonNode.querySelector(".secondary-letter").textContent = key[language]?.[1];
 
       const keyBtn = createEl("button", {
         classList: ["key"],
@@ -143,7 +131,7 @@ function renderKeyboard(language, numbersLayout, layout) {
         },
       });
 
-      keyBtn.appendChild(buttonNode)
+      keyBtn.appendChild(buttonNode);
       rowDiv.appendChild(keyBtn);
     });
 

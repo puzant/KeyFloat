@@ -1,3 +1,15 @@
+/**
+ * * light theme colors
+ * * wrapper background: #ffffff
+ * * background color: #ECECEC
+ * * color: #686868
+ *
+ * * dark theme colors
+ * * wrapper background: #1D2228
+ * * background color: #2A3139
+ * * color: #DADCE0
+ */
+
 import createEl from "./createElement";
 
 // ====== INJECT STYLES ======
@@ -69,6 +81,6 @@ const injectStyles = (shadowRoot) => {
   });
 
   shadowRoot.appendChild(style);
-}
+};
 
-export default injectStyles
+export default injectStyles;
