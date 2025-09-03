@@ -34,10 +34,9 @@ function renderWrapper() {
   wrapper = createEl("div", {
     id: "keyboard-wrapper",
     style: {
-      width: "700px",
       position: "absolute",
       top: "20px",
-      left: `${window.innerWidth - 700 - 20}px`,
+      right: '10px',
       zIndex: 999999,
       willChange: "transform",
     },

@@ -1,5 +1,5 @@
 export const numbersWindowsLayout = [
-  { num: "`", ar: [" ّ", "ذ"], fr: ["²"], sp: [], am: [], keyCode: "Backquote" },
+  { num: "`", ar: [" ّ", "ذ"], fr: ["²"], sp: ["º"], am: [], keyCode: "Backquote" },
   { num: "1", ar: [], fr: ["&"], sp: [], am: ["է"], keyCode: "Digit1" },
   { num: "2", ar: [], fr: ["é"], sp: [], am: ["թ"], keyCode: "Digit2" },
   { num: "3", ar: [], fr: [""], sp: [], am: ["փ"], keyCode: "Digit3" },
@@ -10,6 +10,8 @@ export const numbersWindowsLayout = [
   { num: "8", ar: [], fr: ["_"], sp: [], am: ["ր"], keyCode: "Digit8" },
   { num: "9", ar: [], fr: ["ç"], sp: [], am: ["չ"], keyCode: "Digit9" },
   { num: "0", ar: [], fr: ["à"], sp: [], am: ["ճ"], keyCode: "Digit0" },
+  { num: "-", ar: [], fr: [], sp: ["¿"], am: [], keyCode: "Minus" },
+  { num: "=", ar: [], fr: [], sp: ["?"], am: ["ժ"], keyCode: "Equal" },
 ];
 
 export const windowsLayout = [
