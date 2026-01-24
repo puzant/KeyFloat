@@ -34,9 +34,9 @@ function renderWrapper() {
   wrapper = createEl("div", {
     id: "keyboard-wrapper",
     style: {
-      position: "absolute",
+      position: "fixed",
       top: "20px",
-      right: '10px',
+      right: "10px",
       zIndex: 999999,
       willChange: "transform",
     },
@@ -237,6 +237,8 @@ function onThemeToggleClick() {
   shutdownBtn.src = isDarkNow
     ? chrome.runtime.getURL("assets/shutdown-icon.svg")
     : chrome.runtime.getURL("assets/shutdown-icon-dark.svg");
+
+  chrome.runtime.sendMessage({ type: "SAVE_THEME", payload: { darkModeEnabled: isDarkNow } });
 }
 
 function onCollapseClick() {
