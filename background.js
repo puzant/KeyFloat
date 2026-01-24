@@ -5,6 +5,8 @@ chrome.runtime.onInstalled.addListener(() => {
     keyboardEnabled: false,
     soundEnabled: false,
     opacityLevel: 100,
+    darkModeEnabled: false,
+    dragPosition: null,
   });
 });
 
@@ -16,6 +18,10 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   const numbersLayout = navigator.userAgentData.platform.includes("macOS") ? numbersMacLayout : numbersWindowsLayout;
 
   switch (message.type) {
+    case "SAVE_THEME":
+      chrome.storage.local.set({ darkModeEnabled: message.payload.darkModeEnabled });
+      break;
+
     case "LANG_CHANGE":
       chrome.tabs.sendMessage(tab.id, {
         type: "LANG_CHANGE",
