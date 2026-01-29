@@ -1,4 +1,4 @@
-const buttonTemplate = document.createElement("template")
+const buttonTemplate = document.createElement("template");
 
 buttonTemplate.innerHTML = `
   <style>
@@ -22,6 +22,7 @@ buttonTemplate.innerHTML = `
 
     .sub-container span:nth-of-type(2) {
       font-size: 22px;
+      color: #cb5353;
     }
   </style>
 
@@ -33,6 +34,6 @@ buttonTemplate.innerHTML = `
     
     <span class="secondary-letter"></span>
   </div>
-`
+`;
 
-export default buttonTemplate
+export default buttonTemplate;
