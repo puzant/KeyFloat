@@ -9,7 +9,7 @@ import keypressSound from '@/assets/key-press-sound.mp3'
 import { numbersMacLayout, macLayout, numbersWindowsLayout, windowsLayout } from '@/languagesMap'
 
 interface KeyboardProps {
-  selectedLanguage: LanguageItem | null
+  selectedLanguage: LanguageItem 
   soundEnabled: boolean
   visibility: number
   isDarkMode: boolean 
@@ -120,7 +120,7 @@ const Keyboard = (props: KeyboardProps) => {
             <button key={n.num} className={pressedKey === n.num ? styles.highlight : ''}>
               <div className={styles['chars-container']}>
                 <span>{n.num}</span>
-                <span>{n[selectedLanguage?.lng]}</span>
+                <span>{n[lng]}</span>
               </div>
             </button>
           ))}
@@ -134,10 +134,10 @@ const Keyboard = (props: KeyboardProps) => {
                   <div className={styles['key-content-container']}>
                     <div className={styles['sub-container']}>
                       <span className={styles['english-letter']}>{keyObj.en}</span>
-                      <span className={styles['primary-letter']}>{keyObj[lng]?.[0]}</span>
+                      <span className={styles['primary-letter']}>{keyObj[lng][0]}</span>
                     </div>
 
-                    <span className={styles['secondary-letter']}>{keyObj[lng]?.[1]}</span>
+                    <span className={styles['secondary-letter']}>{keyObj[lng][1]}</span>
                   </div>
                 </button>
               ))}
