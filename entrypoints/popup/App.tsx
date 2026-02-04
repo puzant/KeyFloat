@@ -4,6 +4,8 @@ import styles from './index.module.scss'
 import { usePreferences } from '@/hooks/usePreferences'
 import LanguageSelector from '@/components/languageSelector'
 import KeyboardOpacity from '@/components/keyboardOpacity'
+import Switch from '@/components/switch'
+
 import { LanguageItem, MessageType } from '@/types'
 
 import keyBoardIconDark from '@/assets/keyboard-icon-dark.png'
@@ -20,7 +22,7 @@ function App() {
     visibility: preferences.visibility
   })
 
-  const percentage = (prefs.visibility / 100) * 100
+  const percentage: number = (prefs.visibility / 100) * 100
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
@@ -106,33 +108,21 @@ function App() {
           onLangSelection={handleLangSelection}
         />
 
-        <div className={`${styles['enable-keyboard']} ${prefs.selectedLanguage && styles['visibility']}`}>
-          <p className={styles.title}>Enable Keyboard</p>
+        <Switch 
+          className={`${styles['enable-keyboard']} ${prefs.selectedLanguage && styles['visibility']}`}
+          onToggle={handleKeyboardToggle}
+          checked={prefs.keyboardEnabled}
+          disabled={!prefs.selectedLanguage}
+          title="Enable Keyboard"
+        />
 
-          <label className={styles.switch}>
-            <input 
-              onChange={handleKeyboardToggle} 
-              checked={prefs.keyboardEnabled} 
-              disabled={!prefs.selectedLanguage} 
-              type="checkbox" 
-            />
-            <div></div>
-          </label>
-        </div>
-
-        <div className={`${styles['enable-sound']} ${prefs.keyboardEnabled && styles['visibility']}`}>
-          <p className={styles.title}>Sound on Key Press</p>
-
-          <label className={styles.switch}>
-            <input 
-              onChange={handleSoundToggle}
-              checked={prefs.soundEnabled}
-              disabled={!prefs.keyboardEnabled} 
-              type="checkbox" 
-            />
-            <div></div>
-          </label>
-        </div>
+        <Switch 
+          className={`${styles['enable-sound']} ${prefs.keyboardEnabled && styles['visibility']}`}
+          onToggle={handleSoundToggle}
+          checked={prefs.soundEnabled}
+          disabled={!prefs.keyboardEnabled}
+          title="Enable Sound"
+        />
 
         <KeyboardOpacity 
           isKeyboardEnabled={prefs.keyboardEnabled}
