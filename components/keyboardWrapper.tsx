@@ -12,8 +12,8 @@ const KeyboardWrapper = ({ initialPrefs }: any) => {
   const [isMac, setIsMac] = useState(false)
 
   const posRef = useRef(initialPos)
-  const dragging = useRef(false)
-  const didDrag = useRef(false)
+  const dragging = useRef<boolean>(false)
+  const didDrag = useRef<boolean>(false)
   const saveTimeout = useRef<number | null>(null)
   const dragStart = useRef({ mouseX: 0, mouseY: 0, x: 0, y: 0 })
 
