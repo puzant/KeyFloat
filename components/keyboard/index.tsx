@@ -117,7 +117,7 @@ const Keyboard = (props: KeyboardProps) => {
 
         <div className={styles['numbers-row']}>
           {numbersLayout.map(n => (
-            <button key={n.num}>
+            <button key={n.num} className={pressedKey === n.num ? styles.highlight : ''}>
               <div className={styles['chars-container']}>
                 <span>{n.num}</span>
                 <span>{n[selectedLanguage?.lng]}</span>
