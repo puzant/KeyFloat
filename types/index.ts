@@ -13,7 +13,7 @@ export const MessageType = {
 export interface LanguageItem {
   title: string 
   icon: string
-  lng: string
+  lng: 'am' | 'sp' | 'fr' | 'ar' 
 }
 
 export type MessageType = keyof typeof MessageType;
