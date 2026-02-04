@@ -23,6 +23,7 @@ export default defineContentScript({
         app.style.left = '0'
         app.style.width = '0'
         app.style.height = '0'
+        app.style.zIndex = '9999'
         container.appendChild(app)
 
         const root = ReactDOM.createRoot(app)
