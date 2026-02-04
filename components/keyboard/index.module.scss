@@ -86,10 +86,16 @@
     cursor: pointer;
     color: var(--key-color);
     background-color: var(--key-bg);
-    .chars-container {
-    display: flex;
-    justify-content: space-between;
 
+    &.highlight {
+      color: var(--key-color-highlight);
+      background-color: var(--key-bg-highlight);
+      animation: pressAnimation 0.2s ease;
+    }
+
+    .chars-container {
+      display: flex;
+      justify-content: space-between;
     }
   }
 }
