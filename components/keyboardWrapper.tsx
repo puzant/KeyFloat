@@ -55,7 +55,7 @@ const KeyboardWrapper = ({ initialPrefs }: any) => {
     }
   }, [])
 
-  const onDragStart = (e) => {
+  const onDragStart = (e: MouseEvent) => {
     dragging.current = true
     didDrag.current = false
     dragStart.current = {
@@ -68,7 +68,7 @@ const KeyboardWrapper = ({ initialPrefs }: any) => {
     e.preventDefault()
   }
 
-  const onDragMove = (e) => {
+  const onDragMove = (e: MouseEvent) => {
     if (!dragging.current) return 
 
     didDrag.current = true
