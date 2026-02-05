@@ -58,7 +58,7 @@ const Keyboard = (props: KeyboardProps) => {
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      setPressedKey(e.key.toUpperCase())
+      setPressedKey(e.code)
 
       if (soundEnabled && audioRef.current) {
         audioRef.current.currentTime = 0 
@@ -117,7 +117,7 @@ const Keyboard = (props: KeyboardProps) => {
 
         <div className={styles['numbers-row']}>
           {numbersLayout.map(n => (
-            <button key={n.num} className={pressedKey === n.num ? styles.highlight : ''}>
+            <button key={n.num} className={pressedKey === n.eventName ? styles.highlight : ''}>
               <div className={styles['chars-container']}>
                 <span>{n.num}</span>
                 <span>{n[lng]}</span>
@@ -130,7 +130,7 @@ const Keyboard = (props: KeyboardProps) => {
           {layout.map((row, rowIndex) => (
             <div key={rowIndex} className={styles['row']}>
               {row.map((keyObj, keyIndex) => (
-                <button key={keyIndex} className={`${styles['key']} ${pressedKey === keyObj.en ? styles.highlight : ''} `}>
+                <button key={keyIndex} className={`${styles['key']} ${pressedKey === keyObj.eventName ? styles.highlight : ''} `}>
                   <div className={styles['key-content-container']}>
                     <div className={styles['sub-container']}>
                       <span className={styles['english-letter']}>{keyObj.en}</span>
