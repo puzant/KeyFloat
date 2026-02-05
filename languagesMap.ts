@@ -12,6 +12,22 @@ export const numbersMacLayout = [
   { num: "0", ar: [], fr: ["à"], sp: [], am: ["օ"], keyCode: "Digit0" },
 ];
 
+export const numbersWindowsLayout = [
+  { num: "`", ar: [" ّ", "ذ"], fr: ["²"], sp: ["º"], am: [], keyCode: "Backquote" },
+  { num: "1", ar: [], fr: ["&"], sp: [], am: ["է"], keyCode: "Digit1" },
+  { num: "2", ar: [], fr: ["é"], sp: [], am: ["թ"], keyCode: "Digit2" },
+  { num: "3", ar: [], fr: [""], sp: [], am: ["փ"], keyCode: "Digit3" },
+  { num: "4", ar: [], fr: ["'"], sp: [], am: ["ձ"], keyCode: "Digit4" },
+  { num: "5", ar: [], fr: [""], sp: [], am: ["ջ"], keyCode: "Digit5" },
+  { num: "6", ar: [], fr: ["-"], sp: [], am: ["ւ"], keyCode: "Digit6" },
+  { num: "7", ar: [], fr: ["è"], sp: [], am: ["և"], keyCode: "Digit7" },
+  { num: "8", ar: [], fr: ["_"], sp: [], am: ["ր"], keyCode: "Digit8" },
+  { num: "9", ar: [], fr: ["ç"], sp: [], am: ["չ"], keyCode: "Digit9" },
+  { num: "0", ar: [], fr: ["à"], sp: [], am: ["ճ"], keyCode: "Digit0" },
+  { num: "-", ar: [], fr: [], sp: ["¿"], am: [], keyCode: "Minus" },
+  { num: "=", ar: [], fr: [], sp: ["?"], am: ["ժ"], keyCode: "Equal" },
+];
+
 export const macLayout = [
   [
     { en: "Q", ar: [" َ", "ض"], fr: ["", "A"], sp: ["", "Q"], am: ["", "խ"], eventName: "KeyQ" },
@@ -52,22 +68,6 @@ export const macLayout = [
     { en: ".", ar: ["", "."], fr: ["/", ":"], sp: ["", "."], am: ["", "ղ"], eventName: "Period" },
     { en: "/", ar: ["", "/"], fr: ["+", "="], sp: ["", "-"], am: ["", "ծ"], eventName: "Slash" },
   ],
-];
-
-export const numbersWindowsLayout = [
-  { num: "`", ar: [" ّ", "ذ"], fr: ["²"], sp: ["º"], am: [], keyCode: "Backquote" },
-  { num: "1", ar: [], fr: ["&"], sp: [], am: ["է"], keyCode: "Digit1" },
-  { num: "2", ar: [], fr: ["é"], sp: [], am: ["թ"], keyCode: "Digit2" },
-  { num: "3", ar: [], fr: [""], sp: [], am: ["փ"], keyCode: "Digit3" },
-  { num: "4", ar: [], fr: ["'"], sp: [], am: ["ձ"], keyCode: "Digit4" },
-  { num: "5", ar: [], fr: [""], sp: [], am: ["ջ"], keyCode: "Digit5" },
-  { num: "6", ar: [], fr: ["-"], sp: [], am: ["ւ"], keyCode: "Digit6" },
-  { num: "7", ar: [], fr: ["è"], sp: [], am: ["և"], keyCode: "Digit7" },
-  { num: "8", ar: [], fr: ["_"], sp: [], am: ["ր"], keyCode: "Digit8" },
-  { num: "9", ar: [], fr: ["ç"], sp: [], am: ["չ"], keyCode: "Digit9" },
-  { num: "0", ar: [], fr: ["à"], sp: [], am: ["ճ"], keyCode: "Digit0" },
-  { num: "-", ar: [], fr: [], sp: ["¿"], am: [], keyCode: "Minus" },
-  { num: "=", ar: [], fr: [], sp: ["?"], am: ["ժ"], keyCode: "Equal" },
 ];
 
 export const windowsLayout = [

@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client'
 import { preferences } from "@/storage/preferences"
-import KeyboardWrapper from '@/components/keyboardWrapper';
-import { MessageType } from '@/types';
+import KeyboardWrapper from '@/components/keyboardWrapper'
+import { MessageType } from '@/types'
 
 export default defineContentScript({
   matches: ['<all_urls>'],

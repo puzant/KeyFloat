@@ -4,7 +4,7 @@ import styles from './index.module.scss'
 import { usePreferences } from '@/hooks/usePreferences'
 import LanguageSelector from '@/components/languageSelector'
 import KeyboardOpacity from '@/components/keyboardOpacity'
-import Switch from '@/components/switch'
+import Toggle from '@/components/toggle'
 
 import { LanguageItem, MessageType } from '@/types'
 
@@ -108,7 +108,7 @@ function App() {
           onLangSelection={handleLangSelection}
         />
 
-        <Switch 
+        <Toggle 
           className={`${styles['enable-keyboard']} ${prefs.selectedLanguage && styles['visibility']}`}
           onToggle={handleKeyboardToggle}
           checked={prefs.keyboardEnabled}
@@ -116,7 +116,7 @@ function App() {
           title="Enable Keyboard"
         />
 
-        <Switch 
+        <Toggle 
           className={`${styles['enable-sound']} ${prefs.keyboardEnabled && styles['visibility']}`}
           onToggle={handleSoundToggle}
           checked={prefs.soundEnabled}
