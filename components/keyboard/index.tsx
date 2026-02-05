@@ -101,7 +101,7 @@ const Keyboard = (props: KeyboardProps) => {
     
       <div 
         className={`${styles.root} ${isCollapsed ? styles.collapsing : ''}`}
-        style={{ opacity: visibility / 100 }}
+        style={{ opacity: visibility / 100, width: isMac ? 700 : 755 }}
         data-theme = {isDarkMode ? 'dark' : 'light'}
       >
         <div className={styles.header}>
