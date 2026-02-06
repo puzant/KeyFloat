@@ -6,11 +6,12 @@
   --key-color-highlight: #ffffff;
 
   background-color: var(--bg);
-  padding: 5px 10px;
+  padding: 5px 7px;
   border-radius: 8px;
   z-index: 9999;
   transition: background-color 400ms ease, color 400ms ease, opacity 400ms ease, transform 400ms ease;
   transform-origin: top right;
+  width: min-content;
 
   &.collapsing {
     transform: scale(0);
@@ -77,7 +78,7 @@
   text-align: center;
 
   button {
-    width: 50px;
+    width: 45px;
     height: 25px;
     margin: 2px 4px;
     font-size: 17px;
@@ -114,8 +115,8 @@
     .key {
       color: var(--key-color);
       background-color: var(--key-bg);
-      width: 50px;
-      height: 50px;
+      width: 45px;
+      height: 45px;
       margin: 4px;
       font-size: 14px;
       border: none;
