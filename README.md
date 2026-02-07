@@ -6,7 +6,7 @@ Whether you're an Arabic speaker typing on a QWERTY keyboard or a polyglot juggl
 
 ---
 
-## 🎯 Features – v1.3.0 - Lexicon
+## 🎯 Features – v1.4.0 - Terra Nova
 
 - 🌙 **Dark Mode Toggle**
 - 🔘 **Enable/Disable Floating Keyboard**

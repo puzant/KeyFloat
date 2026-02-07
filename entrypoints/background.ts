@@ -7,7 +7,7 @@ interface MsgType<T = any> {
 }
 
 async function updatePrefs (updater: (prefs: UserPreferences) => UserPreferences) {
- const prefs = await preferences.getValue() ?? preferences.fallback
+  const prefs = await preferences.getValue() ?? preferences.fallback
   const newPrefs = updater(prefs)
   await preferences.setValue(newPrefs) 
 }
