@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import styles from './index.module.scss'
 
 import { usePreferences } from '@/hooks/usePreferences'

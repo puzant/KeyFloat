@@ -37,4 +37,8 @@ export default defineBackground(() => {
     handlers[message.type]?.(message)
     return true
   })
+
+  browser.commands.onCommand.addListener((command) => {
+    handlers[command]?.()
+  })
 })
