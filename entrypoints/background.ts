@@ -12,6 +12,15 @@ async function updatePrefs (updater: (prefs: UserPreferences) => UserPreferences
   await preferences.setValue(newPrefs) 
 }
 
+async function queryTab(): Promise<number> {
+  const [tab] = await browser.tabs.query({ active: true, currentWindow: true })
+
+  if (!tab.id) 
+    throw new Error("No active tab found")
+
+  return tab.id
+}
+
 const handlers = {
   [MessageType.APPLY_LANGUAGE]: (msg: MsgType) => updatePrefs(p => ({ ...p, selectedLanguage: msg.payload.selectedLanguage })),
   [MessageType.APPLY_SOUND]: (msg: MsgType) => updatePrefs(p => ({ ...p, soundEnabled: msg.payload.soundEnabled })),
@@ -20,15 +29,22 @@ const handlers = {
   [MessageType.TOGGLE_COLLAPSE]: () => updatePrefs(p => ({ ...p, isCollapsed: !p.isCollapsed })),
   [MessageType.SAVE_POSITION]: (msg: MsgType) => updatePrefs(p => ({ ...p, position: msg.payload.position })),
   [MessageType.SET_KEYBOARD_MASTER]: async (msg: MsgType) => {
-    
     const { visible } = msg.payload
-
     await updatePrefs(prefs => ({ ...prefs, keyboardEnabled: visible }))
-    const [tab] = await browser.tabs.query({ active: true, currentWindow: true })
+
+    const tabId = await queryTab()
+    await browser.tabs.sendMessage(tabId, { type: MessageType.APPLY_KEYBOARD_VISIBILITY, payload: { visible } })
+  }
+}
+
+const commandHandlers = {
+  [MessageType.TOGGLE_THEME]: () => updatePrefs(p => ({ ...p, isDarkMode: !p.isDarkMode })),
+  [MessageType.TOGGLE_COLLAPSE]: () => updatePrefs(p => ({ ...p, isCollapsed: !p.isCollapsed })),
+  [MessageType.SET_KEYBOARD_MASTER]: async () => {
+    await updatePrefs(p => ({ ...p, keyboardEnabled: !p.keyboardEnabled }))
     
-    if (!tab?.id) return
-    
-    await browser.tabs.sendMessage(tab.id, { type: MessageType.APPLY_KEYBOARD_VISIBILITY, payload: { visible } })
+    const tabId = await queryTab()
+    await browser.tabs.sendMessage(tabId, { type: MessageType.APPLY_KEYBOARD_VISIBILITY, payload: { visible: false } })
   }
 }
 
@@ -39,6 +55,6 @@ export default defineBackground(() => {
   })
 
   browser.commands.onCommand.addListener((command) => {
-    handlers[command]?.()
+    commandHandlers[command]?.()
   })
 })
