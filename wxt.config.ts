@@ -19,9 +19,9 @@ export default defineConfig({
         suggested_key: { default: 'Ctrl+Shift+T', mac: 'Command+Shift+T' },
         description: 'Toggle between dark and light mode'
       },
-
+      
       SET_KEYBOARD_MASTER: {
-        suggested_key: { default: 'Ctrl+Shift+Y', mac: 'Command+Shift+Y' },
+        suggested_key: { default: 'Ctrl+Shift+P', mac: 'Command+Shift+P' },
         description: 'Shutdown / hide the floating keyboard'
       }
     }
