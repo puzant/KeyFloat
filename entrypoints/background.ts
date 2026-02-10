@@ -1,25 +1,5 @@
-import { preferences, UserPreferences } from "@/storage/preferences"
-import { MessageType } from "@/types"
-
-interface MsgType<T = any> {
-  type: string 
-  payload: T
-}
-
-async function updatePrefs (updater: (prefs: UserPreferences) => UserPreferences) {
-  const prefs = await preferences.getValue() ?? preferences.fallback
-  const newPrefs = updater(prefs)
-  await preferences.setValue(newPrefs) 
-}
-
-async function queryTab(): Promise<number> {
-  const [tab] = await browser.tabs.query({ active: true, currentWindow: true })
-
-  if (!tab.id) 
-    throw new Error("No active tab found")
-
-  return tab.id
-}
+import { updatePrefs, queryTab, sendMessageToTab } from "@/utils"
+import { MessageType, MsgType } from "@/types"
 
 const handlers = {
   [MessageType.APPLY_LANGUAGE]: (msg: MsgType) => updatePrefs(p => ({ ...p, selectedLanguage: msg.payload.selectedLanguage })),
@@ -33,7 +13,11 @@ const handlers = {
     await updatePrefs(prefs => ({ ...prefs, keyboardEnabled: visible }))
 
     const tabId = await queryTab()
-    await browser.tabs.sendMessage(tabId, { type: MessageType.APPLY_KEYBOARD_VISIBILITY, payload: { visible } })
+    await browser.scripting.executeScript({
+      target: { tabId: tabId },
+      files: ['content-scripts/content.js']
+    })
+    sendMessageToTab(tabId, { type: MessageType.APPLY_KEYBOARD_VISIBILITY, payload: { visible } })
   }
 }
 
@@ -44,7 +28,7 @@ const commandHandlers = {
     await updatePrefs(p => ({ ...p, keyboardEnabled: !p.keyboardEnabled }))
     
     const tabId = await queryTab()
-    await browser.tabs.sendMessage(tabId, { type: MessageType.APPLY_KEYBOARD_VISIBILITY, payload: { visible: false } })
+    sendMessageToTab(tabId, { type: MessageType.APPLY_KEYBOARD_VISIBILITY, payload: { visible: false } })
   }
 }
 
