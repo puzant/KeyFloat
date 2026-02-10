@@ -5,7 +5,6 @@ import { MessageType } from '@/types'
 
 export default defineContentScript({
   matches: ['<all_urls>'],
-  runAt: 'document_idle',
   cssInjectionMode: 'ui',
 
   async main(ctx) {
