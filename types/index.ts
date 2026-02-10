@@ -16,4 +16,9 @@ export interface LanguageItem {
   lng: 'am' | 'sp' | 'fr' | 'ar' 
 }
 
+export interface MsgType<T = any> {
+  type: string 
+  payload: T
+}
+
 export type MessageType = keyof typeof MessageType;
