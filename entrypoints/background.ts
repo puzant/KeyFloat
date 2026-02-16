@@ -1,6 +1,17 @@
 import { updatePrefs, queryTab, sendMessageToTab } from "@/utils"
 import { MessageType, MsgType } from "@/types"
 
+async function ensureContentScript(tabId: number) {
+  try {
+    await sendMessageToTab(tabId, { type: MessageType.PING })
+  } catch (err) {
+    await browser.scripting.executeScript({
+      target: { tabId },
+      files: ['content-scripts/content.js']
+    })
+  }
+}
+
 const handlers = {
   [MessageType.APPLY_LANGUAGE]: (msg: MsgType) => updatePrefs(p => ({ ...p, selectedLanguage: msg.payload.selectedLanguage })),
   [MessageType.APPLY_SOUND]: (msg: MsgType) => updatePrefs(p => ({ ...p, soundEnabled: msg.payload.soundEnabled })),
@@ -13,10 +24,7 @@ const handlers = {
     await updatePrefs(prefs => ({ ...prefs, keyboardEnabled: visible }))
 
     const tabId = await queryTab()
-    await browser.scripting.executeScript({
-      target: { tabId: tabId },
-      files: ['content-scripts/content.js']
-    })
+    await ensureContentScript(tabId)
     sendMessageToTab(tabId, { type: MessageType.APPLY_KEYBOARD_VISIBILITY, payload: { visible } })
   }
 }
