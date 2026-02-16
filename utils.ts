@@ -17,5 +17,5 @@ export async function queryTab(): Promise<number> {
 }
 
 export function sendMessageToTab(tabId: number, msg: MsgType) {
-  browser.tabs.sendMessage(tabId, msg)
+  return browser.tabs.sendMessage(tabId, msg)
 }
