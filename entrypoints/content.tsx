@@ -8,6 +8,12 @@ export default defineContentScript({
   cssInjectionMode: 'ui',
 
   async main(ctx) {
+    if ((window as any).__KEYFLOAT_INITIALIZED__) {
+      return
+    }
+
+    ;(window as any).__KEYFLOAT_INITIALIZED__ = true
+
     const prefs = await preferences.getValue() ?? preferences.fallback
     const ui = await createShadowRootUi(ctx, {
       name: 'key-float',
