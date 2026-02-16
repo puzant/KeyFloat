@@ -16,7 +16,7 @@ export default defineConfig({
       },
 
       TOGGLE_THEME: {
-        suggested_key: { default: 'Ctrl+Shift+T', mac: 'Command+Shift+T' },
+        suggested_key: { default: 'Ctrl+Shift+O', mac: 'Command+Shift+O' },
         description: 'Toggle between dark and light mode'
       },
       
