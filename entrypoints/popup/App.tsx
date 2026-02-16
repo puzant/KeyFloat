@@ -132,7 +132,7 @@ function App() {
         />
       </div>
 
-      <p className={styles.version}>v1.4.0 - <i>Terra Nova</i></p>
+      <p className={styles.version}>v1.4.1 - <i>Terra Nova</i></p>
     </div>
   )
 }
