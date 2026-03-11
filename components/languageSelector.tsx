@@ -7,7 +7,7 @@ import arrowDownIcon from '@/assets/arrow-down.svg'
 import frenchLangIcon from '@/assets/french-lang.svg'
 import arabicLangIcon from '@/assets/arabic-lang.svg'
 import armenianLangIcon from '@/assets/armenian-lang.svg'
-import spanishLangIcon from '@/assets/spanish-lang.svg'
+import russianLangIcon from '@/assets/russian-lang.svg'
 
 interface LanguageSelectorProps {
   selectedLang: LanguageItem | null
@@ -16,12 +16,17 @@ interface LanguageSelectorProps {
   onLangSelection: (selectedLang: LanguageItem) => void
 }
 
-const LanguageSelector = ({ selectedLang, isDropdownOpen, onDropdownBtnClick, onLangSelection }: LanguageSelectorProps) => {
+const LanguageSelector = ({ 
+  selectedLang, 
+  isDropdownOpen, 
+  onDropdownBtnClick, 
+  onLangSelection 
+}: LanguageSelectorProps) => {
   const languages: LanguageItem[] = [
     {title: 'Français', icon: frenchLangIcon, lng: 'fr'},
     {title: 'العربية', icon: arabicLangIcon, lng: 'ar'},
-    {title: 'Spanish', icon: spanishLangIcon, lng: 'sp'},
     {title: 'հաերեն', icon: armenianLangIcon, lng: 'am'},
+    {title: 'русский', icon: russianLangIcon, lng: 'ru'},
   ]
 
   return (
