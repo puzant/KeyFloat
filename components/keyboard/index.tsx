@@ -39,6 +39,7 @@ const Keyboard = (props: KeyboardProps) => {
   const [pressedKey, setPressedKey] = useState<string | null>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  const lastFocusedInput = useRef<HTMLElement | null>(null)
 
   const handleCollapseToggle = () => {
     browser.runtime.sendMessage({ type: MessageType.TOGGLE_COLLAPSE })
@@ -51,6 +52,65 @@ const Keyboard = (props: KeyboardProps) => {
   const handleClose = () => {
     browser.runtime.sendMessage({ type: MessageType.SET_KEYBOARD_MASTER, payload: { visible: false } })
   }
+
+  const insertCharacter = (char: string, eventName: string) => {
+    setPressedKey(eventName)
+
+    if (timeoutRef.current) 
+      clearTimeout(timeoutRef.current)
+
+    timeoutRef.current = setTimeout(() => {
+      setPressedKey(null)
+    }, 300)
+
+    const el = lastFocusedInput.current
+    
+    if (!el) {
+      console.log("No previously focused input/textarea found")
+      return
+    }
+
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+      const input = el as HTMLInputElement | HTMLTextAreaElement
+      const start = input.selectionStart ?? 0
+      const end = input.selectionEnd ?? start
+
+      input.value = input.value.slice(0, start) + char + input.value.slice(end)
+      const newPos = start + char.length
+      input.setSelectionRange(newPos, newPos)
+      input.focus() // put focus back so cursor blinks
+
+      input.dispatchEvent(new Event('input', { bubbles: true }))
+      input.dispatchEvent(new Event('change', { bubbles: true }))
+
+      if (soundEnabled && audioRef.current) {
+        audioRef.current.currentTime = 0 
+        audioRef.current.play()
+      }
+    }
+  }
+
+  useEffect(() => {
+    const handleFocusIn = (e: FocusEvent) => {
+      const target = e.target as HTMLElement
+      
+      if (
+        target &&
+        (target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.isContentEditable)
+      ) {
+          // Optional: skip password fields
+          if (target.tagName === 'INPUT' && (target as HTMLInputElement).type === 'password') {
+            return;
+          }
+        lastFocusedInput.current = target;
+      }
+    }
+
+    document.addEventListener('focusin', handleFocusIn, true);
+    return () => document.removeEventListener('focusin', handleFocusIn, true);
+  }, [])
 
   useEffect(() => {
     audioRef.current = new Audio(keypressSound)
@@ -117,7 +177,10 @@ const Keyboard = (props: KeyboardProps) => {
 
         <div className={styles['numbers-row']}>
           {numbersLayout.map(n => (
-            <button key={n.num} className={pressedKey === n.eventName ? styles.highlight : ''}>
+            <button 
+              onClick={() => insertCharacter(n[lng], n.eventName)}
+              key={n.num} className={pressedKey === n.eventName ? styles.highlight : ''}
+              >
               <div className={styles['chars-container']}>
                 <span>{n.num}</span>
                 <span>{n[lng]}</span>
@@ -130,7 +193,11 @@ const Keyboard = (props: KeyboardProps) => {
           {layout.map((row, rowIndex) => (
             <div key={rowIndex} className={styles['row']}>
               {row.map((keyObj, keyIndex) => (
-                <button key={keyIndex} className={`${styles['key']} ${pressedKey === keyObj.eventName ? styles.highlight : ''} `}>
+                <button 
+                  key={keyIndex} 
+                  onClick={() => insertCharacter(keyObj[lng][1], keyObj.eventName)}
+                  className={`${styles['key']} ${pressedKey === keyObj.eventName ? styles.highlight : ''} `}
+                >
                   <div className={styles['key-content-container']}>
                     <div className={styles['sub-container']}>
                       <span className={styles['english-letter']}>{keyObj.en}</span>
