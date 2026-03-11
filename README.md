@@ -23,7 +23,7 @@ Whether you're an Arabic speaker typing on a QWERTY keyboard or a polyglot juggl
 
 ## 🗺️ Currently Supported Languages
 
-- 🇸🇦 **Arabic** 🇫🇷 **French** 🇦🇲 **Armenian** 🇪🇸 **Spanish**
+- 🇸🇦 **Arabic** 🇫🇷 **French** 🇦🇲 **Armenian** 🇷🇺 **Russian**
 
 ---
 
