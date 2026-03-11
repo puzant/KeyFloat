@@ -13,7 +13,7 @@ export const MessageType = {
 export interface LanguageItem {
   title: string 
   icon: string
-  lng: 'am' | 'sp' | 'fr' | 'ar' 
+  lng: 'am' | 'fr' | 'ar' | 'ru'
 }
 
 export interface MsgType<T = any> {
