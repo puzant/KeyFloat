@@ -18,8 +18,8 @@ const KeyboardControls = ({ isDarkMode, onToggleTheme, onToggleCollapse, onShutD
   return (
     <div className={styles['keyboard-controls']}>
       <img onClick={onToggleTheme} src={isDarkMode ? sunIcon : moonIcon} alt="" />
-      <img onClick={onToggleCollapse} src={isDarkMode ? collapseIcon : collapseIconDark} alt="" />
       <img onClick={onShutDown} src={isDarkMode ? shutdownIcon : shutdownIconDark} alt="" />
+      <img onClick={onToggleCollapse} src={isDarkMode ? collapseIcon : collapseIconDark} alt="" />
     </div>
   )
 }
