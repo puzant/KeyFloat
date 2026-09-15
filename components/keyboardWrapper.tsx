@@ -27,11 +27,6 @@ const KeyboardWrapper = ({ initialPrefs }: any) => {
   }, [])
 
   useEffect(() => {
-    if (!prefs?.position) return
-    setPos(prefs.position)
-  }, [prefs.position])
-
-  useEffect(() => {
     posRef.current = pos
   }, [pos])
 
@@ -61,8 +56,8 @@ const KeyboardWrapper = ({ initialPrefs }: any) => {
     dragStart.current = {
       mouseX: e.clientX,
       mouseY: e.clientY,
-      x: pos.x,
-      y: pos.y
+      x: posRef.current.x,
+      y: posRef.current.y
     }
 
     e.preventDefault()
@@ -72,13 +67,17 @@ const KeyboardWrapper = ({ initialPrefs }: any) => {
     if (!dragging.current) return 
 
     didDrag.current = true
+
     const deltaX = e.clientX - dragStart.current.mouseX
     const deltaY = e.clientY - dragStart.current.mouseY
 
-    setPos({
+    const newPos = ({
       x: dragStart.current.x + deltaX,
       y: dragStart.current.y + deltaY,
     })
+
+    posRef.current = newPos
+    setPos(newPos)
   }
 
   const onDragEnd = () => {
